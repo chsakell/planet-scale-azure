@@ -1,0 +1,17 @@
+﻿@model List<Online.Store.Website.Models.NewsViewModel>
+
+    <div class="news-panel-title">
+        <div class="news-panel-title-icon"></div>
+        <div class="news-panel-title-caption"> News </div>
+    </div>
+    <div class="clear_both panel-content">
+        <div class="news-panel-content">
+            @foreach(var item in Model)
+            { 
+            <div class="news-list">
+                <p><span class="news_date">@item.NewsDate</span> <span><a class="news_link" href="@item.NewsLink" target="_blank">Source</a></span></p>
+                <p class="news_text">@item.NewsText</p>
+            </div>
+            }
+        </div>
+    </div>

@@ -1,0 +1,76 @@
+﻿@model Online.Store.Website.Models.PagedCommunityViewModel
+@{
+    ViewBag.Title = " Welcome :: Contoso Web ::  ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Scripts.Render("~/bundles/community")*@
+<script type="text/javascript" src="~/scripts/community/community.js"></script>
+<script type="text/javascript" src="~/scripts/community/posts.js"></script>
+<script type="text/javascript" src="~/scripts/community/viewcommunity.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        community.initialize();
+    });
+</script>
+
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/Content/images/innerpage-banner.jpg">
+</div>
+<div class="container-fluid">
+    <div class="row" id="main-content-container-fluid-first-row">
+        <div class="col-lg-8">
+            <div class="col-sm-12 no_padding">
+                <div class="row community_title_panel">
+                    <div class="community-icon"></div>
+                    <div class="community_title_caption">Community</div>
+                    <div class="span5 pull-right community_title_panel_filter">
+                        <label for="filter" style="font-weight: normal;">Filter</label>
+                        @{
+                            if (ViewBag.Selected == "all" || ViewBag.Selected == null)
+                            {
+                                <select name="filter" id="filter">
+                                    <option value="all" selected="selected">All</option>
+                                    <option value="image">Image</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            }
+                            else if (ViewBag.Selected == "image")
+                            {
+                                <select name="filter" id="filter">
+                                    <option value="all">All</option>
+                                    <option value="image" selected="selected">Image</option>
+                                    <option value="video">Video</option>
+                                </select>
+                            }
+                            else if (ViewBag.Selected == "video")
+                            {
+                                <select name="filter" id="filter">
+                                    <option value="all">All</option>
+                                    <option value="image">Image</option>
+                                    <option value="video" selected="selected">Video</option>
+                                </select>
+                            }
+}
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- End col-sm-12 -->
+            <div id="status_msg" class="alert" style="display:none;"></div>
+            <div id="disc-content" class="col-sm-12 background_white dis_list_box">
+                @{
+                    Html.RenderPartial("_CommunityPostView", Model);
+                }
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            @{
+                Html.RenderPartial("_TwitterView");
+            }
+            @{
+                Html.RenderPartial("_TopFiveUsersView");
+            }
+        </div>
+    </div>
+</div>

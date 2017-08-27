@@ -1,0 +1,70 @@
+﻿@model Online.Store.Website.Models.UserAccountDetailsViewModel
+@{
+    ViewBag.Title = "Welcome :: Contoso Web ::";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/content/images/innerpage-banner.jpg">
+</div>
+<div class="container-fluid" id="show-profile-div">
+    <div class="row" id="main-content-container-fluid-first-row">
+        <div class="col-lg-12">
+            <div class="col-sm-12 background_white">
+                <h1 class="show-profile-label lbl-profile-head">My Profile</h1>
+                <br>
+                <div class="row">
+                    <div class="col-sm-3">
+
+                        <img class="media-object" src="@Model.ImageUrl" width="125" alt="">
+                        <br/>
+                        <span>Posts: 0</span>
+                        <br/>
+                        <span>Replies: 0</span>
+                    </div>
+                        <div class="col-sm-9">
+                            <h4 class="show-profile-label lbl-name">@Model.FullName</h4>
+                            <span>@Model.Email</span>
+                            <br/>
+                            <h5 class="show-profile-label lbl-addr">Address:</h5>
+                            <span>@Model.City</span>
+                            <span>@Model.State</span>
+                            <br/>
+                            <h5 class="show-profile-label">Twitter Handle:</h5>
+                            <span>@Model.TwitterHandle</span>
+                            <br/>
+                            <h5 class="show-profile-label lbl-noti">Notification Preferences:</h5>
+                            <ul>
+                                @if(Model.Notifications)
+                                { 
+                                    <li><i class="fa fa-check-square-o"></i> Notify me about special offers and discounts</li>
+                                }
+                                @if (Model.ProductNotification)
+                                {
+                                    <li><i class="fa fa-check-square-o"></i> Notify me about product announcements</li>
+                                }
+                                @if (Model.PostNotification)
+                                {
+                                    <li><i class="fa fa-check-square-o"></i> Notify me when someone responds to a comment or question I post about the product.</li>
+                                }
+                                @if (Model.TweetNotification)
+                                {
+                                    <li><i class="fa fa-check-square-o"></i> Notify me when someone responds to a tweet I make about the product.</li>
+                                }
+                            </ul>
+                        </div>
+                </div>
+                <!--/ End row -->
+
+                <div class="row btnRow">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-9"><button id="btn-edit-profile" onclick="location.href='@Url.Action("Edit","Users")'">Edit Profile</button></div>
+                </div>
+                <!--/ End row -->
+
+            </div>
+            <!--/End col-sm-12 -->
+        </div>
+        <!--/End col-lg-12 -->
+    </div>
+    <!--/End row -->
+</div>

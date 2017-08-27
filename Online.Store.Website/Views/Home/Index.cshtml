@@ -1,0 +1,54 @@
+﻿@model Online.Store.Website.Models.MainViewModel
+
+@{
+    ViewBag.Title = "Welcome Contoso Web";
+}
+
+ <!-- product image carousel -->
+<div id="product-carousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#product-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#product-carousel" data-slide-to="1"></li>
+        <li data-target="#product-carousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+        @{
+            Html.RenderPartial("_HomeCarouselView", Model.CarousalItems);
+        }
+       
+    <!-- Controls -->
+    <a class="left carousel-control" href="#product-carousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#product-carousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
+
+<!-- panels -->
+<div class="section">
+    <div class="container-fluid">
+        <div class="row" id="main-content-container-fluid-first-row">
+            <div class="col-lg-4 col-md-4">
+                @{
+                    Html.RenderPartial("_HomeNewsView", Model.News);
+                }
+            </div>
+            <div class="col-lg-4 col-md-4">
+                @{
+                    Html.RenderPartial("_HomeCommunityView", Model.Community);
+                }
+            </div>
+            <div class="col-lg-4 col-md-4">
+                @{
+                    Html.RenderPartial("_TwitterView");
+                }
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+</div>

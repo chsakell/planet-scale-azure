@@ -1,0 +1,15 @@
+﻿@model List<Online.Store.Website.Models.CarouselItemViewModel>
+
+<!-- Wrapper for slides -->
+<div class="carousel-inner">
+    @foreach (var item in Model)
+    {
+        <div class="@item.DivisionClassName" onclick="location.href = '@Url.Action("Index", "Product")'">
+            <img data-src="~/content/images/@item.ImageUrl" alt="900x500" src="~/content/images/@item.AlternateImageUrl">
+            <div class="carousel-caption">
+                <h3>@item.ItemHeading</h3>
+                <p>@item.ItemDescription</p>
+            </div>
+        </div>
+    }
+</div>

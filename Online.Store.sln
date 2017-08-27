@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.Website", "Online.Store.Website\Online.Store.Website.csproj", "{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.AppServices", "Online.Store.AppServices\Online.Store.AppServices.csproj", "{45EED195-FA77-47A2-8C13-1E9FC4D19507}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.Core", "Online.Store.Core\Online.Store.Core.csproj", "{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.DocumentDB", "Online.Store.DocumentDB\Online.Store.DocumentDB.csproj", "{B10CCEC5-1CDD-497E-A831-CC7465344214}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.ElasticScale", "Online.Store.ElasticScale\Online.Store.ElasticScale.csproj", "{463CE8DA-014A-49DF-960C-6E5020F40E4D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{1B255F12-5F5D-43FC-BF7A-6FF7FA2AAA87}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45EED195-FA77-47A2-8C13-1E9FC4D19507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45EED195-FA77-47A2-8C13-1E9FC4D19507}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45EED195-FA77-47A2-8C13-1E9FC4D19507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45EED195-FA77-47A2-8C13-1E9FC4D19507}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B10CCEC5-1CDD-497E-A831-CC7465344214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B10CCEC5-1CDD-497E-A831-CC7465344214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B10CCEC5-1CDD-497E-A831-CC7465344214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B10CCEC5-1CDD-497E-A831-CC7465344214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463CE8DA-014A-49DF-960C-6E5020F40E4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463CE8DA-014A-49DF-960C-6E5020F40E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463CE8DA-014A-49DF-960C-6E5020F40E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463CE8DA-014A-49DF-960C-6E5020F40E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+		SolutionGuid = {C4EBA847-C3EF-4DCA-BB11-98CD97FDBC55}
+	EndGlobalSection
+EndGlobal

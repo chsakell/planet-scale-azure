@@ -1,0 +1,121 @@
+﻿@model Online.Store.Website.Models.CartViewModel
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Scripts.Render("~/bundles/product")*@
+<script type="text/javascript" src="~/scripts/product/product.js"></script>
+<script type="text/javascript" src="~/scripts/product/startNewDiscussionLoginCheck.js"></script>
+<script type="text/javascript" src="~/scripts/product/viewcart.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        viewCart.initialize();
+    });
+</script>
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/content/images/innerpage-banner.jpg">
+</div>
+<div class="container-fluid">
+    <div class="row" id="main-content-container-fluid-first-row">
+        <div class="col-lg-8">
+            <div class="col-sm-12 background_white prdcontainer">
+                <div id="prd_componentss">
+                     <h1>Cart</h1>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-10 col-md-offset-1">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (Model != null && Model.CartItems.Any())
+                                    {
+                                        foreach (var item in Model.CartItems)
+                                        {
+                                            <tr>
+                                                <td class="col-sm-10 col-md-10">
+                                                   
+                                                    <div class="media">
+                                                        <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/@item.Products.ProductURL"> </a>
+                                                        <div class="media-body">
+                                                            <h4 class="media-heading">
+                                                                <a href="@Url.Action("Details", "Product", new { id = item.Products.ProductId })">@item.Products.ProductHeading</a>
+                                                            </h4>
+                                                        </div>
+
+                                                    </div>
+                                                </td>
+                                                <td class="col-sm-1 col-md-1" style="text-align: left">
+                                                   @String.Format("{0:C}", @item.Products.ProductPrice)
+                                                </td>
+                                                <td class="col-sm-1 col-md-1" style="text-align: center">
+                                                    <input type="text" class="form-control itemQty" id="itemQty" data-cartid="@Model.UserId" data-productid="@item.Products.ProductId" value="@item.Qty">
+                                                </td>
+                                                <td class="col-sm-1 col-md-1">
+                                                    <button type="button" class="btn btn-danger removeItem" data-cartid="@Model.UserId" data-productid="@item.Products.ProductId">
+                                                        <span class="glyphicon glyphicon-remove"></span> Remove
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                        <tr>
+                                            <td>   </td>
+                                            <td>
+                                                <a href="@Url.Action("Index", "Product")" class="btn btn-default">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.Action("CheckOut", "Product")" class="btn btn-success" id="checkOut">
+                                                    Checkout <span class="glyphicon glyphicon-play"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="2"> No Items In Cart</td>
+                                            <td>
+                                                <a href="@Url.Action("Index", "Product")" class="btn btn-default pull-right">
+                                                    <span class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="clear_both"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!-- column 4 (sidebar) Panels -->
+            @*<!-- Twitter Widget panel -->
+            @{
+                Html.RenderPartial("_TwitterView");
+            }
+
+            <!-- TOP 5 Users -->
+            @{
+                Html.RenderPartial("_TopFiveUsersView");
+            }*@
+            <!-- /column 4 (sidebar) -->
+        </div>
+    </div>
+</div>
+
+
+
+

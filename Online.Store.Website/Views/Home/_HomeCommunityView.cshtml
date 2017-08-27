@@ -1,0 +1,26 @@
+﻿@model List<Online.Store.Website.Models.CommunityViewModel>
+
+<div class="discussion-panel-title" onclick="location.href = '@Url.Action("Index", "Community")'">
+    <div class="discussion-panel-title-icon"></div>
+    <div class="discussion-panel-title-caption"> Community </div>
+</div>
+
+<div class="clear_both panel-content">
+    <div class="post-panel-content">
+        @foreach (var item in Model)
+        {
+            <div class="posts-list">
+                <p>
+                    <span class="post_date">@item.PostDate.ToString("dd") <sup>th</sup> @item.PostDate.ToString("MMMM") @item.PostDate.Year</span>
+                    @{if (item.ResponseCount > 0)
+                    {
+                        <span class="post_resp">@item.ResponseCount Replies</span>
+                    }
+                    }
+                </p>
+                <p class="post_title"><a href="@Url.Action("View", "Community", new { id=item.id })">@item.PostTitle</a></p>
+                <p class="post_content"><a href="@Url.Action("View", "Community", new { id=item.id })">@item.PostContent</a></p>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,28 @@
+﻿
+.navbar-nav > li > input {
+  margin:auto 0%;
+  margin-top:34px;
+}
+#align-product{
+    margin-right:5px;
+}
+#SearchString {
+    margin-left: 5px;
+    padding-left:4px;
+    float:right;
+}
+@media (max-width: 800px) {
+    #SearchString {
+        margin-left: 110px;
+        padding-left: 4px;
+    }
+
+    @media (min-width: 300px) {
+        #SearchString {
+            margin-left: 110px;
+            padding-left: 4px;
+            margin-right: 16px;
+            margin-top:-18px;
+        }
+    }
+}

@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = " Welcome :: Contoso Web :: Search ";
+}
+@model Contoso.Ecommerce.Core.DTOs.SearchResultDTO
+<style>
+    .prdcomponent h2 a {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/Content/images/innerpage-banner.jpg">
+</div>
+<div class="container-fluid">
+    <div class="row" id="main-content-container-fluid-first-row">
+        <div class="col-lg-8">
+            <div class="col-sm-12 background_white prdcontainer">
+                <h2><u>Search - @ViewBag.SearchText</u></h2>
+                <div id="prd_componentss">
+                    @{
+                        if (Model != null)
+                        {
+                            if (Model.Product != null && Model.Product.Any())
+                            {
+                                <h1>
+                                    Products (@Model.Product.Count) :
+                                </h1>
+                                foreach (var product in Model.Product)
+                                {
+                                    <div class="prdcomponent">
+                                        <h2>
+                                            <a href="@Url.Action("Details", "Product", new { id = product.Id })">
+                                                @product.Title
+                                            </a>
+                                            @*<a class="btn addToCart" id="login-to-addcart" data-productid="@product.Id" style="float: right;"><i class="glyphicon glyphicon-shopping-cart" data-unicode="e116"></i></a>*@
+                                        </h2>
+                                        <ul class="thumb_image_list"></ul>
+                                        <div>
+                                            <a class="media_popup_parent" data-media-width="520" data-media-height="125" data-media-path="@product.Url" data-media-type="image" data-media-description="">
+                                                <img class="img-thumbnail media-object" width="150" style="float:left !important; border:none !important;" alt="" src="@Url.Content("~/"+product.Url)">
+                                            </a>
+                                        </div>
+                                        <div class="text-content short-text">@product.Description</div>
+                                        <div class="show-more"><a href="#">Show more</a></div>
+                                    </div>
+                                }
+                            }
+                            if (Model.Posts != null && Model.Posts.Any())
+                            {
+                                <h1>
+                                    Community (@Model.Posts.Count) :
+                                </h1>
+                                foreach (var post in Model.Posts)
+                                {
+                                    <div class="prdcomponent">
+                                        <h2>
+                                            <a href="@Url.Action("View", "Community", new { id = post.PostId })">
+                                                @post.Title
+                                            </a>
+                                            @*<a class="btn addToCart" id="login-to-addcart" data-productid="@product.Id" style="float: right;"><i class="glyphicon glyphicon-shopping-cart" data-unicode="e116"></i></a>*@
+                                        </h2>
+
+                                        <div class="text-content short-text">@post.Content</div>
+                                        <div class="show-more"><a href="#">Show more</a></div>
+                                    </div>
+                                }
+                            }
+                        }
+                        if(!Model.Posts.Any() && !Model.Product.Any())
+                        {
+                            <h2>No Results</h2>
+                        }
+                    }
+                </div>
+                <div class="clear_both"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!-- column 4 (sidebar) Panels -->
+            <!-- Twitter Widget panel -->
+            @{
+                Html.RenderPartial("_TwitterView");
+            }
+
+            <!-- TOP 5 Users -->
+            @{
+                Html.RenderPartial("_TopFiveUsersView");
+            }
+            <!-- /column 4 (sidebar) -->
+        </div>
+    </div>
+</div>

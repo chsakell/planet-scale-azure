@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = " Welcome :: Contoso Web ::  ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/content/images/innerpage-banner.jpg">
+</div>
+<div class="row" id="main-content-container-fluid-first-row">
+    <div class="col-lg-8">
+        <div class="col-sm-12 background_white news-page">
+            <img src="~/content/images/products/large/@ViewBag.imageName" style="max-width:100%;padding:0px 15px 0px 0px;" alt="" title="">
+            <br><br>
+            <span></span>
+        </div>
+        <div class="clear_both"></div>
+    </div>
+
+    <div class="col-lg-4">
+        <!-- column 4 (sidebar) Panels -->
+        <!-- Twitter Widget panel -->
+        @{
+            Html.RenderPartial("_TwitterView");
+        }
+        <!-- TOP 5 Users -->
+        <div class="panel" id="top-users">
+            <div class="top-users-list">
+                <strong>Top 5 Users</strong>
+                <ul>
+                    <li class="user_name">Mahesh</li>
+                    <li class="user_posts">31 Posts</li>
+                </ul>
+                <ul>
+                    <li class="user_name">Chloe</li>
+                    <li class="user_posts">14 Posts</li>
+                </ul>
+                <ul>
+                    <li class="user_name">Broad rick</li>
+                    <li class="user_posts">7 Posts</li>
+                </ul>
+                <ul>
+                    <li class="user_name">Hunter</li>
+                    <li class="user_posts">6 Posts</li>
+                </ul>
+                <ul>
+                    <li class="user_name">Savannah</li>
+                    <li class="user_posts">5 Posts</li>
+                </ul>
+
+            </div>
+        </div>
+        <!-- /column 4 (sidebar) -->
+    </div>
+</div>

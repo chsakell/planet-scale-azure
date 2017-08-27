@@ -1,0 +1,92 @@
+﻿@model List<Online.Store.Website.Models.ProductsViewModel>
+@{
+    ViewBag.Title = " Welcome :: Contoso Web ::  ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@Scripts.Render("~/bundles/imagepreview")*@
+<script type="text/javascript" src="~/scripts/imagePreview.js"></script>
+
+@*@Scripts.Render("~/bundles/product")*@
+<script type="text/javascript" src="~/scripts/product/product.js"></script>
+<script type="text/javascript" src="~/scripts/product/startNewDiscussionLoginCheck.js"></script>
+<script type="text/javascript" src="~/scripts/product/viewcart.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        imagePreview.attachImagePreviewToImages();
+        products.initialize();
+    });
+</script>
+<style>
+    .prdcomponent h2 a{
+        color : white;
+        text-decoration:none
+    }
+</style>
+<div class="container-fluid" id="innerpage-banner">
+    <img class="img-responsive" alt="" src="~/content/images/innerpage-banner.jpg">
+</div>
+<div class="container-fluid">
+    <div class="row" id="main-content-container-fluid-first-row">
+        <div class="col-lg-8">
+            <div class="col-sm-12 background_white prdcontainer">
+                <div id="prd_componentss">
+                    @if (Model != null && Model.Any())
+                    {
+                        <h1>
+                            Products
+                        </h1>
+                        foreach (var productViewModelData in Model)
+                        {
+                                <div class="prdcomponent">
+                                    <h2>
+
+                                        @String.Format("{0:C}", productViewModelData.ProductPrice) 
+                                        <a href="@Url.Action("Details", "Product", new { id = productViewModelData.ProductId })">
+                                            @productViewModelData.ProductHeading
+                                        </a>
+                                        @*@if (Request.IsAuthenticated)
+                                        {
+                                            <a class="btn addToCart" data-productid="@productViewModelData.ProductId" style="float: right;"><i class="glyphicon glyphicon-shopping-cart" data-unicode="e116"></i></a>
+                                        }*@
+                                        <a class="btn addToCart" id="login-to-addcart" data-productid="@productViewModelData.ProductId" style="float: right;"><i class="glyphicon glyphicon-shopping-cart" data-unicode="e116"></i></a>
+                                    </h2>
+
+                                    <ul class="thumb_image_list">
+                                        
+                                    </ul>
+                                    <div>
+                                        <a class="media_popup_parent" data-media-width="520" data-media-height="125" data-media-path="@productViewModelData.ProductURL" data-media-type="image" data-media-description="">
+                                            <img class="img-thumbnail media-object" width="150" style="float:left !important; border:none !important;" alt="" src="@productViewModelData.ProductURL">
+                                        </a>
+                                    </div>
+                                    <div class="text-content short-text">@productViewModelData.Description</div>
+                                    <div class="show-more"><a href="#">Show more</a></div>
+                                </div>
+                        }
+                    }
+                    else
+                    {
+                        <h1>
+                            No Products.
+                        </h1>
+                    }
+                </div>
+                <div class="clear_both"></div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <!-- column 4 (sidebar) Panels -->
+            <!-- Twitter Widget panel -->
+            @{
+                Html.RenderPartial("_TwitterView");
+            }
+
+            <!-- TOP 5 Users -->
+            @{
+                Html.RenderPartial("_TopFiveUsersView");
+            }
+            <!-- /column 4 (sidebar) -->
+        </div>
+    </div>
+</div>

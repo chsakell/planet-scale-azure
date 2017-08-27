@@ -1,0 +1,9 @@
+{
+  "projects": [
+    "Contoso.Ecommerce.AppServices",
+    "Contoso.Ecommerce.Azure.ElasticScale",
+    "Contoso.Ecommerce.Core",
+    "Contoso.Ecommerce.Repository",
+    "Contoso.Ecommerce.Website"
+  ]
+}
