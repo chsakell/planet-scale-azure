@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Online.Store.ElasticScale
 {
+    // Elastic Scale
     public class AzureElasticScaleServices
     {
         private  ShardMapManager _shardMapManager { get; set; }
