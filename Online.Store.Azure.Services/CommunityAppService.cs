@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class CommunityAppService
     {

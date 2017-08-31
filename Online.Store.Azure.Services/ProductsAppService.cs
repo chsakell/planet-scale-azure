@@ -4,7 +4,7 @@ using Online.Store.DocumentDB;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class ProductsAppService
     {

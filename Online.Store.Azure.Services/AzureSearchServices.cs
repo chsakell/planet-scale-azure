@@ -5,7 +5,7 @@ using System;
 using System.Net.Http;
 using System.Text;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class AzureSearchServices
     {

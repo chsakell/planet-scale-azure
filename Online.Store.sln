@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.Website", "Online.Store.Website\Online.Store.Website.csproj", "{E41305E0-47E1-4CB9-9EF1-F00F7F05EA3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.AppServices", "Online.Store.AppServices\Online.Store.AppServices.csproj", "{45EED195-FA77-47A2-8C13-1E9FC4D19507}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.Azure.Services", "Online.Store.Azure.Services\Online.Store.Azure.Services.csproj", "{45EED195-FA77-47A2-8C13-1E9FC4D19507}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.Core", "Online.Store.Core\Online.Store.Core.csproj", "{27FA1D0E-7A62-41E6-AC16-5DB28C85DEDF}"
 EndProject
@@ -61,8 +61,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
 		SolutionGuid = {C4EBA847-C3EF-4DCA-BB11-98CD97FDBC55}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

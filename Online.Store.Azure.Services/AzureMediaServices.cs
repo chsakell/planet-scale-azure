@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class AzureMediaServices
     {

@@ -6,7 +6,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.IO;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class AzureServices
     {

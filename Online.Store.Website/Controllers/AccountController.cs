@@ -1,4 +1,4 @@
-﻿using Online.Store.AppServices;
+﻿using Online.Store.Azure.Services;
 using Online.Store.Core.DTOs;
 using Online.Store.Website.Models;
 using Online.Store.Website.Models.AccountViewModels;

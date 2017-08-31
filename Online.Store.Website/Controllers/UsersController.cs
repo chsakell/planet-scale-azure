@@ -1,4 +1,4 @@
-﻿using Online.Store.AppServices;
+﻿using Online.Store.Azure.Services;
 using Online.Store.Website.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

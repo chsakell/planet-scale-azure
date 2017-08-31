@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 
-namespace Online.Store.AppServices
+namespace Online.Store.Azure.Services
 {
     public class SearchAppServices
     {
