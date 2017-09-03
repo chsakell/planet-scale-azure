@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Online.Store.Core;
 using Online.Store.Core.DTOs;
@@ -19,13 +20,10 @@ namespace Online.Store.DocumentDB
         private static string Key = string.Empty;
         private static DocumentClient client;
 
-        public static void Initialize(string endpoint, string key)
+        public static void Initialize(IConfiguration configuration)
         {
-            //Endpoint = configuration["DocumentDBEndpoint"];
-            //Key = configuration["DocumentDBKey"];
-
-            Endpoint = endpoint;
-            Key = key;
+            Endpoint = configuration["DocumentDBEndpoint"];
+            Key = configuration["DocumentDBKey"];
 
             client = new DocumentClient(new Uri(Endpoint), Key);
             CreateDatabaseIfNotExistsAsync("Store").Wait();
@@ -34,7 +32,7 @@ namespace Online.Store.DocumentDB
             CreateCollectionIfNotExistsAsync("Store", "Categories").Wait();
             CreateCollectionIfNotExistsAsync("Store", "Suppliers").Wait();
 
-            InitGalleryAsync(Endpoint, Key).Wait();
+            InitGalleryAsync(configuration).Wait();
         }
 
         private static async Task CreateDatabaseIfNotExistsAsync(string DatabaseId)
@@ -171,10 +169,10 @@ namespace Online.Store.DocumentDB
             }
         }
 
-        private static async Task InitGalleryAsync(string endpoint, string key)
+        private static async Task InitGalleryAsync(IConfiguration configuration)
         {
             // Init Products
-            DocumentDBStoreRepository storeRepository = new DocumentDBStoreRepository(endpoint, key);
+            DocumentDBStoreRepository storeRepository = new DocumentDBStoreRepository(configuration);
 
             await storeRepository.InitAsync("Products");
 

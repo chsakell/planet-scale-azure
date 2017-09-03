@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Online.Store.DocumentDB;
 
 namespace Online.Store.Website.Controllers
 {
@@ -13,16 +14,16 @@ namespace Online.Store.Website.Controllers
         /// <summary>
         /// The _service
         /// </summary>
-        private HomeAppService _service;
+        private IStoreService _service;
         private SearchAppServices _searchService;
         private IConfiguration _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HomeController"/> class.
         /// </summary>
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration, IStoreService storeService)
         {
-            _service = new HomeAppService(configuration["DocumentDB:DatabaseId"], configuration["DocumentDB:Endpoint"], configuration["DocumentDB:Key"]);
+            _service = storeService;
             _searchService = new SearchAppServices(configuration["SearchService:Name"], configuration["SearchService:ApiKey"]);
             _configuration = configuration;
         }
@@ -144,12 +145,12 @@ namespace Online.Store.Website.Controllers
                         Id = item.id,
                         Title = item.title,
                         Description = item.description,
-                        Url=item.url
+                        Url = item.url
                     });
                 }
                 model.Product = products;
             }
-            if (resultPost != null && resultPost.value!=null)
+            if (resultPost != null && resultPost.value != null)
             {
                 var posts = new List<CommunityDTO>();
                 foreach (var item in resultPost.value)

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Azure.Documents.Client;
+using Microsoft.Extensions.Configuration;
+using Online.Store.Core.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,22 +11,22 @@ namespace Online.Store.DocumentDB
 {
     public class DocumentDBStoreRepository : DocumentDBRepositoryBase<DocumentDBStoreRepository>, IDocumentDBRepository<DocumentDBStoreRepository>
     {
-        public DocumentDBStoreRepository(string endpoint, string key)
+        public DocumentDBStoreRepository(IConfiguration configuration)
         {
-            //Endpoint = configuration["DocumentDBEndpoint"];
-            //Key = configuration["DocumentDBKey"];
-            DatabaseId = "Store";
+            Endpoint = configuration["DocumentDB:Endpoint"];
+            Key = configuration["DocumentDB:Key"];
+            DatabaseId = configuration["DocumentDB:DatabaseId"];
         }
 
         public override async Task InitAsync(string collectionId)
         {
-            if (client == null)
-                client = new DocumentClient(new Uri(Endpoint), Key);
+            if (_client == null)
+                _client = new DocumentClient(new Uri(Endpoint), Key);
 
             if (CollectionId != collectionId)
             {
                 CollectionId = collectionId;
-                collection = await client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
+                _collection = await _client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
             }
         }
     }

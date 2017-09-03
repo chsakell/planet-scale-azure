@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Online.Store.Azure.Services;
+using Online.Store.DocumentDB;
 
 namespace Online.Store.Website
 {
@@ -50,6 +52,10 @@ namespace Online.Store.Website
 
             // Make Configuration injectable
             services.AddSingleton<IConfiguration>(Configuration);
+
+            services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
+            services.AddScoped<IStoreService, StoreService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

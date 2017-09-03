@@ -130,7 +130,7 @@
     <Compile Include="SearchServices.cs" />
     <Compile Include="AzureServices.cs" />
     <Compile Include="CommunityAppService.cs" />
-    <Compile Include="HomeAppService.cs" />
+    <Compile Include="StoreService.cs" />
     <Compile Include="ProductsAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchAppServices.cs" />
