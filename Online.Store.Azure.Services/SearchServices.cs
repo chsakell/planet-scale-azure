@@ -7,13 +7,13 @@ using System.Text;
 
 namespace Online.Store.Azure.Services
 {
-    public class AzureSearchServices
+    public class SearchServices
     {
         public const string ApiVersionString = "api-version=2016-09-01";
 
         private static readonly JsonSerializerSettings _jsonSettings;
 
-        static AzureSearchServices()
+        static SearchServices()
         {
             _jsonSettings = new JsonSerializerSettings
             {

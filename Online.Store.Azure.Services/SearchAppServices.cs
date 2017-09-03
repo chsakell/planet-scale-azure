@@ -36,10 +36,10 @@ namespace Online.Store.Azure.Services
             string orderby = BuildSort(sort);
 
             Uri uri = new Uri(_serviceUri, $"/indexes/{productIndexName}/docs?$count=true{search}{select}{paging}{orderby}");
-            HttpResponseMessage response = AzureSearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
-            AzureSearchServices.EnsureSuccessfulSearchResponse(response);
+            HttpResponseMessage response = SearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
+            SearchServices.EnsureSuccessfulSearchResponse(response);
 
-            return AzureSearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
+            return SearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
         }
 
         public dynamic SearchPost(string searchText, string sort)
@@ -52,10 +52,10 @@ namespace Online.Store.Azure.Services
             string orderby = BuildSort(sort);
 
             Uri uri = new Uri(_serviceUri, $"/indexes/{communityIndexName}/docs?$count=true{search}{select}{facets}{paging}{orderby}");
-            HttpResponseMessage response = AzureSearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
-            AzureSearchServices.EnsureSuccessfulSearchResponse(response);
+            HttpResponseMessage response = SearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
+            SearchServices.EnsureSuccessfulSearchResponse(response);
 
-            return AzureSearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
+            return SearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
         }
 
         private string BuildSort(string sort)
@@ -85,10 +85,10 @@ namespace Online.Store.Azure.Services
         {
             // we still need a default filter to exclude discontinued products from the suggestions
             Uri uri = new Uri(_serviceUri, $"/indexes/{productIndexName}/docs/suggest?$select=title&suggesterName={suggesterName}&search={Uri.EscapeDataString(searchText)}");
-            HttpResponseMessage response = AzureSearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
-            AzureSearchServices.EnsureSuccessfulSearchResponse(response);
+            HttpResponseMessage response = SearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
+            SearchServices.EnsureSuccessfulSearchResponse(response);
 
-            return AzureSearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
+            return SearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
         }
         private string EscapeODataString(string s)
         {

@@ -23,7 +23,7 @@ namespace Online.Store.Azure.Services
         /// <summary>
         /// The _media service
         /// </summary>
-        private AzureMediaServices _mediaService;
+        private MediaService _mediaService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureServices"/> class.
@@ -36,7 +36,7 @@ namespace Online.Store.Azure.Services
         {
             _storageCredentials = _storageCredentials ?? new StorageCredentials(blobAccountName, blobAccountKey);
             _storageAccount = _storageAccount ?? new CloudStorageAccount(_storageCredentials, useHttps: true);
-            _mediaService = new AzureMediaServices(mediaAccountKey, mediaAccountName, blobAccountName, blobAccountKey);
+            _mediaService = new MediaService(mediaAccountKey, mediaAccountName, blobAccountName, blobAccountKey);
         }
 
         /// <summary>

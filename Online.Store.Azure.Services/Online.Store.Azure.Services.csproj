@@ -126,8 +126,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureMediaServices.cs" />
-    <Compile Include="AzureSearchServices.cs" />
+    <Compile Include="MediaService.cs" />
+    <Compile Include="SearchServices.cs" />
     <Compile Include="AzureServices.cs" />
     <Compile Include="CommunityAppService.cs" />
     <Compile Include="HomeAppService.cs" />

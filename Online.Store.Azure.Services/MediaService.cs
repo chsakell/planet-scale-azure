@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Online.Store.Azure.Services
 {
-    public class AzureMediaServices
+    public class MediaService
     {
         #region Private Members
 
@@ -59,9 +59,9 @@ namespace Online.Store.Azure.Services
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AzureMediaServices"/> class.
+        /// Initializes a new instance of the <see cref="MediaService"/> class.
         /// </summary>
-        public AzureMediaServices(string mediaAccountKey, string mediaAccountName, string blobAccountName, string blobAccountKey)
+        public MediaService(string mediaAccountKey, string mediaAccountName, string blobAccountName, string blobAccountKey)
         {
             _accountKey = mediaAccountKey;
             _accountName = mediaAccountName;
