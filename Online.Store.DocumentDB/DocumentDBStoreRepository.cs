@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Documents.Client;
+﻿using Microsoft.Azure.Documents;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Online.Store.Core.DTOs;
 using System;
@@ -18,7 +19,7 @@ namespace Online.Store.DocumentDB
             DatabaseId = configuration["DocumentDB:DatabaseId"];
         }
 
-        public override async Task InitAsync(string collectionId)
+        public override async Task<DocumentCollection> InitAsync(string collectionId)
         {
             if (_client == null)
                 _client = new DocumentClient(new Uri(Endpoint), Key);
@@ -28,6 +29,8 @@ namespace Online.Store.DocumentDB
                 CollectionId = collectionId;
                 _collection = await _client.ReadDocumentCollectionAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId));
             }
+
+            return _collection;
         }
     }
 }

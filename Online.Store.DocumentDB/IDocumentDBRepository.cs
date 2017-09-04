@@ -22,6 +22,8 @@ namespace Online.Store.DocumentDB
 
         IEnumerable<T> CreateDocumentQuery<T>(string query, FeedOptions options) where T : class;
 
+        IEnumerable<T> CreateDocumentQuery<T>() where T : class;
+
         Task<Document> CreateItemAsync<T>(T item) where T : class;
 
         Task<Document> CreateItemAsync<T>(T item, RequestOptions options) where T : class;
@@ -40,6 +42,6 @@ namespace Online.Store.DocumentDB
 
         Task<StoredProcedureResponse<dynamic>> ExecuteStoredProcedureAsync(string procedureName, string query, string partitionKey);
 
-        Task InitAsync(string collectionId);
+        Task<DocumentCollection> InitAsync(string collectionId);
     }
 }

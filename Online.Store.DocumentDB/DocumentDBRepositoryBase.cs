@@ -140,6 +140,11 @@ namespace Online.Store.DocumentDB
             return _client.CreateDocumentQuery<T>(_collection.DocumentsLink, query, options).AsEnumerable();
         }
 
+        public IEnumerable<T> CreateDocumentQuery<T>() where T : class
+        {
+            return _client.CreateDocumentQuery<T>(_collection.DocumentsLink).AsEnumerable();
+        }
+
         public async Task<Document> CreateItemAsync<T>(T item) where T : class
         {
             return await _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
@@ -191,7 +196,7 @@ namespace Online.Store.DocumentDB
 
         }
 
-        public abstract Task InitAsync(string collectionId);
+        public abstract Task<DocumentCollection> InitAsync(string collectionId);
 
         #region Private methods
         private Database ReadOrCreateDatabase()

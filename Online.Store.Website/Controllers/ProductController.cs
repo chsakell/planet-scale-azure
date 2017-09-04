@@ -19,12 +19,14 @@ namespace Online.Store.Website.Controllers
         /// The _service
         /// </summary>
         private ProductsAppService _service;
+        private IStoreService _storeService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProductController"/> class.
         /// </summary>
-        public ProductController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public ProductController(UserManager<ApplicationUser> userManager, IConfiguration configuration,
+            IStoreService storeService)
         {
             _service = new ProductsAppService(
                 configuration["DocumentDB:DatabaseId"], 
@@ -36,6 +38,8 @@ namespace Online.Store.Website.Controllers
                 configuration["SQL:ElasticDbUsername"],
                 configuration["SQL:ElasticDbPassword"],
                 configuration["SQL:IntegratedSecurity"]);
+
+            _storeService = storeService;
             _userManager = userManager;
         }
 
@@ -49,7 +53,9 @@ namespace Online.Store.Website.Controllers
         {
             ViewBag.SelectedMenu = "Product";
             // get products from store
-            var products = await _service.GetProducts(userSearchInput.SearchString);
+            //var products = await _service.GetProducts(userSearchInput.SearchString);
+            var products = await _storeService.GetProducts(userSearchInput.SearchString);
+
             var productsViewData = new List<ProductsViewModel>();
             foreach (var product in products)
             {
@@ -60,13 +66,13 @@ namespace Online.Store.Website.Controllers
         }
 
         /// <summary>
-        /// Detailses the specified identifier.
+        /// Get product details
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         public async Task<ActionResult> Details(string id)
         {
-            var data = await _service.GetProductDetails(id);
+            var data = await _storeService.GetProductDetails(id);
             var model = new ProductsViewModel();
             if (data != null)
             {
@@ -130,9 +136,9 @@ namespace Online.Store.Website.Controllers
 
             var userId = user.Id;
 
-            var cart = await _service.GetCart(userId);
+            var cart = await _storeService.GetCart(userId);
 
-            if (cart !=null && cart.CartItems != null && cart.CartItems.Any())
+            if (cart !=null && cart.CartItems != null)
             {
                 CartItemsDTO existingcartitem = null;
 
@@ -149,12 +155,12 @@ namespace Online.Store.Website.Controllers
                 {
                     cart.CartItems.Add(new CartItemsDTO
                     {
-                        Products = await _service.GetProductDetails(productId),
+                        Products = await _storeService.GetProductDetails(productId),
                         Qty = 1,
                         Id = Guid.NewGuid().ToString()
                     });
                 }
-                await _service.UpdateToCart(cart);
+                await _storeService.UpdateToCart(cart);
             }
             else
             {
@@ -163,11 +169,11 @@ namespace Online.Store.Website.Controllers
                 cart.CreatedDate = DateTime.Now;
                 cart.CartItems.Add(new CartItemsDTO
                 {
-                    Products = await _service.GetProductDetails(productId),
+                    Products = await _storeService.GetProductDetails(productId),
                     Qty = 1,
                     Id = userId
                 });
-                await _service.AddToCart(cart);
+                await _storeService.AddToCart(cart);
             }
 
             return Json(true);
@@ -185,7 +191,7 @@ namespace Online.Store.Website.Controllers
             var cart = new CartViewModel();
             if (!string.IsNullOrEmpty(userId))
             {
-                var items = await _service.GetCart(userId);
+                var items = await _storeService.GetCart(userId);
                 if(items!=null)
                 {
                     cart.UserId = items.UserId;
@@ -216,7 +222,7 @@ namespace Online.Store.Website.Controllers
         [Route("/Product/RemoveItem/{id}/{productId}")]
         public async Task<ActionResult> RemoveItem(string id, string productId)
         {
-            var cart = await _service.GetCart(id);
+            var cart = await _storeService.GetCart(id);
             if (cart == null)
                 return Json(false);
             else
@@ -233,7 +239,7 @@ namespace Online.Store.Website.Controllers
                     });
                     cart.CartItems.Remove(existingItem);
                 }
-                await _service.UpdateToCart(cart);
+                await _storeService.UpdateToCart(cart);
             }
             return Json(true);
         }
@@ -247,7 +253,7 @@ namespace Online.Store.Website.Controllers
         [Route("/Product/UpdateQty/{id}/{productId}/{qty}")]
         public async Task<ActionResult> UpdateQty(string id, string productId, int qty)
         {
-            var cart = await _service.GetCart(id);
+            var cart = await _storeService.GetCart(id);
             if (cart == null)
                 return Json(false);
             else
@@ -261,7 +267,7 @@ namespace Online.Store.Website.Controllers
                             c.Qty = qty;
                         }
                     });
-                    await _service.UpdateToCart(cart);
+                    await _storeService.UpdateToCart(cart);
                 }
             }
             return Json(true);
