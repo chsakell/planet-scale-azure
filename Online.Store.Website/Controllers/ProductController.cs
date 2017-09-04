@@ -29,9 +29,6 @@ namespace Online.Store.Website.Controllers
             IStoreService storeService)
         {
             _service = new ProductsAppService(
-                configuration["DocumentDB:DatabaseId"], 
-                configuration["DocumentDB:Endpoint"], 
-                configuration["DocumentDB:Key"], 
                 configuration["SQL:ElasticScaleDb"],
                 configuration["SQL:ServerName"],
                 configuration["SQL:DatabaseEdition"],
@@ -52,8 +49,7 @@ namespace Online.Store.Website.Controllers
         public async Task<ActionResult> Index(SearchViewModel userSearchInput)
         {
             ViewBag.SelectedMenu = "Product";
-            // get products from store
-            //var products = await _service.GetProducts(userSearchInput.SearchString);
+
             var products = await _storeService.GetProducts(userSearchInput.SearchString);
 
             var productsViewData = new List<ProductsViewModel>();
@@ -283,7 +279,7 @@ namespace Online.Store.Website.Controllers
             var user = await _userManager.GetUserAsync(User);
             var userId = user.Id;
 
-            var products = await _service.GetCart(userId);
+            var products = await _storeService.GetCart(userId);
             if (products == null)
                 ViewBag.Error = true;
             else
@@ -292,7 +288,7 @@ namespace Online.Store.Website.Controllers
                 {
                     products.UserName = user !=null ? user.FullName : string.Empty;
                     _service.CheckOut(products);
-                    await _service.RemoveFromCart(products);
+                    await _storeService.RemoveFromCart(products);
                 }
                 catch (Exception ex)
                 {

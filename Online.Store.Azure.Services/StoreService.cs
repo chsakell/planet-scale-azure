@@ -89,6 +89,17 @@ namespace Online.Store.Azure.Services
             await _repository.UpdateItemAsync<CartDTO>(item.UserId, item);
         }
 
+        /// <summary>
+        /// Removes from cart.
+        /// </summary>
+        /// <returns></returns>
+        public async Task RemoveFromCart(CartDTO item)
+        {
+            await _repository.InitAsync(_CART_COLLECTION_ID);
+
+            await _repository.DeleteItemAsync(item.UserId);
+        }
+
         #region Private methods
         private async Task<List<ProductDTO>> GetAllProducts()
         {
@@ -155,5 +166,6 @@ namespace Online.Store.Azure.Services
         Task<CartDTO> GetCart(string cartId);
         Task AddToCart(CartDTO Item);
         Task UpdateToCart(CartDTO item);
+        Task RemoveFromCart(CartDTO Item);
     }
 }
