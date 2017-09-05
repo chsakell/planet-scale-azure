@@ -15,7 +15,7 @@ namespace Online.Store.Azure.Services
         private const string _PRODUCT_COLLECTION_ID = "Products";
         private const string _CART_COLLECTION_ID = "Cart";
         private const string _COMMUNITY_COLLECTION_ID = "Community";
-
+        private int PAGE_SIZE = 5;
         #endregion
 
         /// <summary>
@@ -100,6 +100,83 @@ namespace Online.Store.Azure.Services
             await _repository.DeleteItemAsync(item.UserId);
         }
 
+        public async Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId)
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+
+            int _pageSize = PAGE_SIZE; // todo : configuration
+            int pageSize = _pageSize;
+            var community = new PagedCommunityDto();
+            var data = new List<CommunityDTO>();
+
+            var communities = await this._repository.GetItemsAsync<CommunityDTO>();
+            data = communities.OrderByDescending(x => x.CreatedDate).ToList();
+
+            //Filter basesed on request.
+            if (id != null && id != "all")
+            {
+                var result = data.FindAll(x => !string.IsNullOrEmpty(x.ContentType) && x.ContentType.Contains(id));
+                data = result.ToList();
+            }
+
+            //Get total count and total page count.
+            var totalCount = data.Count();
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            //Implementing pagination.
+            var pages = data.Skip((pageId ?? 0) * pageSize).Take(pageSize).ToList();
+            community.Community = pages.ToList();
+            community.TotalPages = totalPages;
+            community.SelectedPage = pageId != null ? pageId.Value : 0;
+
+            return community;
+        }
+
+        /// <summary>
+        /// Gets the details of selected post.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="filterId">The filter identifier.</param>
+        /// <param name="pageId">The page identifier.</param>
+        /// <returns></returns>
+        public async Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId)
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            int pageSize = PAGE_SIZE;
+            var communityResult = new CommunityResponseDto();
+
+            var entity = await _repository.GetItemAsync<CommunityDTO>(id);
+
+            if (entity != null)
+            {
+                var communityResponses = new List<CommunityDTO>();
+                if (entity.Responses != null && entity.Responses.Any())
+                {
+                    communityResponses = entity.Responses.OrderByDescending(x => x.CreatedDate).ToList();
+                    //Filter basesed on request.
+                    if (filterId != null && filterId != "all")
+                    {
+                        var result = communityResponses.FindAll(x => !string.IsNullOrEmpty(x.ContentType) && x.ContentType.Contains(filterId));
+                        communityResponses = result.ToList();
+                    }
+
+                    //Get total count and total page count.
+                    var totalCount = communityResponses.Count();
+                    var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+                    //Implementing pagination.
+                    var pages = communityResponses.Skip((pageId ?? 0) * pageSize).Take(pageSize).ToList();
+                    entity.Responses = pages.ToList();
+
+                    communityResult.Community = entity;
+                    communityResult.TotalPages = totalPages;
+                    communityResult.SelectedPage = pageId != null ? pageId.Value : 0;
+                }
+                communityResult.Community = entity;
+            }
+            return communityResult;
+        }
+
         #region Private methods
         private async Task<List<ProductDTO>> GetAllProducts()
         {
@@ -167,5 +244,7 @@ namespace Online.Store.Azure.Services
         Task AddToCart(CartDTO Item);
         Task UpdateToCart(CartDTO item);
         Task RemoveFromCart(CartDTO Item);
+        Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId);
+        Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
     }
 }

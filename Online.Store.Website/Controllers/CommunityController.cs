@@ -19,17 +19,19 @@ namespace Online.Store.Website.Controllers
         /// The _service
         /// </summary>
         private CommunityAppService _service = null;
+        private IStoreService _storeService;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommunityController"/> class.
         /// </summary>
-        public CommunityController(UserManager<ApplicationUser> userManager, IConfiguration configuration)
+        public CommunityController(UserManager<ApplicationUser> userManager, IConfiguration configuration, IStoreService storeService)
         {
             _service = new CommunityAppService(configuration["DocumentDB:DatabaseId"], configuration["DocumentDB:Endpoint"], configuration["DocumentDB:Key"], configuration["App:PageSize"]);
             _configuration = configuration;
             _userManager = userManager;
+            _storeService = storeService;
         }
 
         // GET: Community
@@ -274,7 +276,7 @@ namespace Online.Store.Website.Controllers
         private async Task<PagedCommunityViewModel> GetCommunityDetails(string id, int? pageId)
         {
             var communityResult = new PagedCommunityViewModel();
-            var community = await _service.GetAllCommunity(id, pageId);
+            var community = await _storeService.GetAllCommunity(id, pageId);
 
             if (community != null)
             {
@@ -316,7 +318,7 @@ namespace Online.Store.Website.Controllers
         /// <returns></returns>
         private async Task<CommunityResponseViewModel> GetComunityResponseDetails(string id, string filterId, int? pageId)
         {
-            var item = await _service.GetDetails(id, filterId, pageId);
+            var item = await _storeService.GetCommunityDetails(id, filterId, pageId);
             var user = await _userManager.FindByIdAsync(item.Community.UserId);
 
             var communityResponse = new CommunityResponseViewModel();
