@@ -109,7 +109,7 @@ namespace Online.Store.Website.Controllers
 
                 post.UserId = user.Id;
 
-                var data = await _service.Post(post);
+                var data = await _storeService.AddPost(post);
 
                 var model = new CommunityViewModel()
                 {
@@ -164,7 +164,7 @@ namespace Online.Store.Website.Controllers
             }
 
             post.UserId = user.Id;
-            var data = await _service.PostReplay(post);
+            var data = await _storeService.AddPostResponse(post);
             var result = new CommunityResponseViewModel();
             var model = new CommunityViewModel()
             {

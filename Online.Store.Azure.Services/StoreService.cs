@@ -177,6 +177,70 @@ namespace Online.Store.Azure.Services
             return communityResult;
         }
 
+        /// <summary>
+        /// Add New Post.
+        /// </summary>
+        /// <param name="post">The post.</param>
+        /// <returns></returns>
+        public async Task<CommunityDTO> AddPost(PostDTO post)
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+
+            var datatoAdd = new CommunityDTO()
+            {
+                PostId = Guid.NewGuid().ToString(),
+                Content = post.Content,
+                ContentType = post.ContentType,
+                CreatedDate = DateTime.Now,
+                MediaDescription = post.MediaDescription,
+                Title = post.Title,
+                UserId = post.UserId,
+                ContentUrl = post.ContentUrl
+            };
+
+            Document created = await _repository.CreateItemAsync<CommunityDTO>(datatoAdd);
+
+            return datatoAdd;
+        }
+
+        /// <summary>
+        /// Posts the replay.
+        /// </summary>
+        /// <param name="post">The post.</param>
+        /// <returns></returns>
+        public async Task<CommunityDTO> AddPostResponse(PostDTO post)
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+
+            var datatoAdd = new CommunityDTO()
+            {
+                PostId = Guid.NewGuid().ToString(),
+                Content = post.Content,
+                ContentType = post.ContentType,
+                CreatedDate = DateTime.Now,
+                MediaDescription = post.MediaDescription,
+                Title = post.Title,
+                UserId = post.UserId,
+                ContentUrl = post.ContentUrl
+            };
+
+            if (!string.IsNullOrEmpty(post.PostId))
+            {
+                var entity = await _repository.GetItemAsync<CommunityDTO>(post.PostId);
+                if (entity != null)
+                {
+                    if (entity.Responses == null)
+                        entity.Responses = new List<CommunityDTO>();
+
+                    entity.Responses.Add(datatoAdd);
+
+                    await _repository.UpdateItemAsync<CommunityDTO>(post.PostId, entity);
+                }
+            }
+
+            return datatoAdd;
+        }
+
         #region Private methods
         private async Task<List<ProductDTO>> GetAllProducts()
         {
@@ -246,5 +310,7 @@ namespace Online.Store.Azure.Services
         Task RemoveFromCart(CartDTO Item);
         Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId);
         Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
+        Task<CommunityDTO> AddPost(PostDTO post);
+        Task<CommunityDTO> AddPostResponse(PostDTO post);
     }
 }
