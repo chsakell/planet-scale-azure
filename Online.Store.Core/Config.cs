@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Online.Store.Core
 {
+    // Configuration
     public class Config
     {
         public static string WebRootPath = string.Empty;
