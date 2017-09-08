@@ -69,6 +69,11 @@
       "from": "@angular/tsc-wrapped@4.2.5",
       "resolved": "https://registry.npmjs.org/@angular/tsc-wrapped/-/tsc-wrapped-4.2.5.tgz"
     },
+    "@ngrx/store": {
+      "version": "4.0.3",
+      "from": "@ngrx/store@latest",
+      "resolved": "https://registry.npmjs.org/@ngrx/store/-/store-4.0.3.tgz"
+    },
     "@ngtools/webpack": {
       "version": "1.5.0",
       "from": "@ngtools/webpack@latest",
