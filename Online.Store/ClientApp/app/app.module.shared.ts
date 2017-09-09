@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetchdata/fetchdata.component';
 import { CounterComponent } from './counter/counter.component';
 import { AppRoutes } from './app.routes';
+import { ProductModule } from './product/product.module';
 
 @NgModule({
     declarations: [
@@ -23,8 +24,9 @@ import { AppRoutes } from './app.routes';
         CommonModule,
         HttpModule,
         FormsModule,
-        AppRoutes
+        AppRoutes,
+        ProductModule
     ]
-})
+}) 
 export class AppModuleShared {
 }

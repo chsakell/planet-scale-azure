@@ -8,6 +8,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'counter', component: CounterComponent },
     { path: 'fetch-data', component: FetchDataComponent },
+    { path: 'products', loadChildren: './product/product.module#ProductModule' },
     { path: '**', redirectTo: 'home' }
 ];
 
