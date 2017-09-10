@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ProductState } from '../store/product.state';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'product-list',
@@ -6,7 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class ProductListComponent implements OnInit {
-    constructor() { }
+    
+    productState$: Observable<ProductState>;
+
+    constructor(private store: Store<any>) { 
+        this.productState$ = this.store.select<ProductState>(state => state.inventory.products);
+    }
 
     ngOnInit() { }
 }
