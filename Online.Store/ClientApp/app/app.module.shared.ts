@@ -31,7 +31,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         FormsModule,
         AppRoutes,
         CoreModule.forRoot(),
-        ProductModule,
         StoreModule.forRoot({}),
         StoreDevtoolsModule.instrument({
             maxAge: 25 //  Retains last 25 states

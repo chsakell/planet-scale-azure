@@ -8,10 +8,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { productReducer } from './store/product.reducer';
 import { ProductEffects } from './store/product.effects';
 import { FormsModule } from '@angular/forms';
+import { ProductComponent } from "./product.component";
 
 const PRODUCT_DIRECTIVES = [
     ProductListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProductComponent
 ];
 
 @NgModule({
