@@ -29,7 +29,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ViewModels\" />
+    <ProjectReference Include="..\Online.Store.Azure.Services\Online.Store.Azure.Services.csproj" />
+    <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
