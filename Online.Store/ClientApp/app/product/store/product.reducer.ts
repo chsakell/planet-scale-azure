@@ -11,6 +11,7 @@ export const initialState: ProductState = {
             productHeading: 'test',
             description: 'hello world',
             productURL: 'product url',
+            productComponentsList: []
         }
     ]
 };
