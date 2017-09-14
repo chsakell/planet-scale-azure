@@ -20,7 +20,7 @@ export class ProductService {
 
     constructor(private http: Http, private configuration: Configuration) {
 
-        this.actionUrl = configuration.Server + 'api/things/';
+        this.actionUrl = configuration.Server + 'api/products/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');

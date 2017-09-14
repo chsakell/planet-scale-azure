@@ -4,16 +4,7 @@ import { Action } from '@ngrx/store';
 import * as productsAction from './product.action';
 
 export const initialState: ProductState = {
-    products: [
-        {
-            productId: 'productid',
-            productPrice: 3,
-            productHeading: 'test',
-            description: 'hello world',
-            productURL: 'product url',
-            productComponentsList: []
-        }
-    ]
+    products: [ ]
 };
 
 export function productReducer(state = initialState, action: productsAction.Actions): ProductState {
