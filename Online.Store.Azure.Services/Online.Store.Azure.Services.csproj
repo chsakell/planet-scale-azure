@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
+    <ProjectReference Include="..\Online.Store.DocumentDB\Online.Store.DocumentDB.csproj" />
+  </ItemGroup>
+
+</Project>

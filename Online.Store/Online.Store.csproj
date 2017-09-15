@@ -5,6 +5,7 @@
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
+    <UserSecretsId>649600d0-c65f-419d-a488-8590c3c9d0ea</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Online.Store.Azure.Services\Online.Store.Azure.Services.csproj" />
     <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
   </ItemGroup>
 
