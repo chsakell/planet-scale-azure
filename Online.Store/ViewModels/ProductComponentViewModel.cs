@@ -7,8 +7,13 @@ namespace Online.Store.ViewModels
 {
     public class ProductComponentViewModel
     {
-        public string ProductComponentHeading { get; set; }
-        public string ProductComponentDescription { get; set; }
-        public List<ProductMediaViewModel> ProductMediaList { get; set; }
+        public ProductComponentViewModel()
+        {
+            this.Medias = new List<ProductMediaViewModel>();
+        }
+        public string ComponentType { get; set; }
+        public string ComponentTitle { get; set; }
+        public string ComponentDetail { get; set; }
+        public List<ProductMediaViewModel> Medias { get; set; }
     }
 }

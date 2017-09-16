@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Online.Store.Azure.Services;
 using Online.Store.ViewModels;
 using Online.Store.Core.DTOs;
+using AutoMapper;
 
 namespace Online.Store.Controllers
 {
@@ -23,16 +24,13 @@ namespace Online.Store.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<IEnumerable<ProductsViewModel>> Get(string SearchString)
+        public async Task<IEnumerable<ProductViewModel>> Get(string SearchString)
         {
             var products = await _storeService.GetProducts(SearchString);
 
-            var productsViewData = new List<ProductsViewModel>();
-            foreach (var product in products)
-            {
-                var productModel = this.ProductDTOToProductViewModel(product);
-                productsViewData.Add(productModel);
-            }
+            var productsViewData = new List<ProductViewModel>();
+
+            productsViewData = Mapper.Map<List<ProductViewModel>>(products);
 
             return productsViewData;
         }
@@ -68,7 +66,7 @@ namespace Online.Store.Controllers
         /// </summary>
         /// <param name="product">The product.</param>
         /// <returns></returns>
-        private ProductsViewModel ProductDTOToProductViewModel(ProductDTO product)
+        private ProductViewModel ProductDTOToProductViewModel(ProductDTO product)
         {
             var componentsList = new List<ProductComponentViewModel>();
             if (product.Components != null)
@@ -76,33 +74,38 @@ namespace Online.Store.Controllers
                 foreach (var component in product.Components)
                 {
                     var mediaList = new List<ProductMediaViewModel>();
-                    foreach (var media in component.Medias)
+                    if (component.Medias != null)
                     {
-                        mediaList.Add(new ProductMediaViewModel
+                        foreach (var media in component.Medias)
                         {
-                            ImagePath = media.Url,
-                            ImageEnlargeHeight = media.Height,
-                            ImageEnlargeWidth = media.Width
-                        });
+                            mediaList.Add(new ProductMediaViewModel
+                            {
+                                Url = media.Url,
+                                Type = media.Type
+                            });
+                        }
                     }
 
                     componentsList.Add(new ProductComponentViewModel
                     {
-                        ProductMediaList = mediaList,
-                        ProductComponentDescription = component.ComponentDetail,
-                        ProductComponentHeading = component.ComponentType
+                        Medias = mediaList,
+                        ComponentDetail = component.ComponentDetail,
+                        ComponentType = component.ComponentType,
+                        ComponentTitle = component.ComponentTitle
                     });
                 }
             }
 
-            return new ProductsViewModel
+            return new ProductViewModel
             {
-                ProductId = product.Id,
-                ProductHeading = product.Title,
-                ProductComponentsList = componentsList,
+                Id = product.Id,
+                Title = product.Title,
+                Components = componentsList,
                 Description = product.Description,
-                ProductURL = product.Url,
-                ProductPrice = product.Price
+                Image = product.Image,
+                Price = product.Price,
+                Model = product.Model,
+                SKU = product.SKU
             };
         }
         #endregion

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Online.Store.Azure.Services;
 using Online.Store.DocumentDB;
+using Online.Store.Mappings;
 
 namespace Online_Store
 {
@@ -50,6 +51,8 @@ namespace Online_Store
             }
 
             app.UseStaticFiles();
+
+            AutoMapperConfiguration.Configure();
 
             app.UseMvc(routes =>
             {

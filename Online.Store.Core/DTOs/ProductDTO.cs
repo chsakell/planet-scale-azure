@@ -6,17 +6,28 @@ namespace Online.Store.Core.DTOs
 {
     public class ProductDTO
     {
+        public ProductDTO()
+        {
+            this.Components = new List<ProductComponentDTO>();
+        }
+
         [JsonProperty(PropertyName="id")]
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
+        [JsonProperty(PropertyName = "model")]
+        public string Model { get; set; }
+
+        [JsonProperty(PropertyName = "sku")]
+        public string SKU { get; set; }
+
         [JsonProperty(PropertyName = "price")]
         public double Price { get; set; }
 
-        [JsonProperty(PropertyName="url")]
-        public string Url { get; set; }
+        [JsonProperty(PropertyName="image")]
+        public string Image { get; set; }
 
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
@@ -28,6 +39,6 @@ namespace Online.Store.Core.DTOs
         public DateTime? UpdatedDate { get; set; }
 
         [JsonProperty(PropertyName="components")]
-        public ProductComponentDTO[] Components { get; set; }
+        public List<ProductComponentDTO> Components { get; set; }
     }
 }

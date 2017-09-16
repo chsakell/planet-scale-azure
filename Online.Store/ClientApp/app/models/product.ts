@@ -2,10 +2,12 @@
 import { ProductComponent } from "./product-component";
 
 export class Product {
-    public productId: string;
-    public productPrice: number;
-    public productHeading: string;
+    public id: string;
+    public model: string;
+    public sku: string;
+    public price: number;
+    public title: string;
     public description: string;
-    public productURL: string;
+    public image: string;
     public productComponentsList: ProductComponent[];
 }

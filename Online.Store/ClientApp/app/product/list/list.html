@@ -1,5 +1,3 @@
-<h1>Product list</h1>
-
 <div class="container-fluid">
     <!-- Page Header -->
     <div class="row">
@@ -11,13 +9,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-6 col-md-4 portfolio-item" *ngFor="let product of products; let i = index">
+        <div class="col-xs-6 col-sm-4 col-md-3 portfolio-item" *ngFor="let product of products; let i = index">
             <a href="#">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                <img class="img-responsive" [src]="product.image" alt="">
             </a>
-            <h3>
-                <a href="#">{{product.productHeading}}</a>
-            </h3>
+            <h4>
+                <a href="#">{{product.title}}</a>
+            </h4>
             <p>{{product.description}}</p>
         </div>
     </div>

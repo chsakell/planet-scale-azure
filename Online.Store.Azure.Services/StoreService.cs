@@ -12,7 +12,7 @@ namespace Online.Store.Azure.Services
     {
         #region "Private Constant Members"
 
-        private const string _PRODUCT_COLLECTION_ID = "Products";
+        private const string _PRODUCT_COLLECTION_ID = "Items";
         private const string _CART_COLLECTION_ID = "Cart";
         private const string _COMMUNITY_COLLECTION_ID = "Community";
         private int PAGE_SIZE = 5;
@@ -43,7 +43,7 @@ namespace Online.Store.Azure.Services
             return data ?? new List<CommunityDTO>();
         }
 
-        public async Task<List<ProductDTO>> GetProducts(string filter)
+        public async Task<IEnumerable<ProductDTO>> GetProducts(string filter)
         {
             return await GetAllProducts();
         }
@@ -242,10 +242,15 @@ namespace Online.Store.Azure.Services
         }
 
         #region Private methods
-        private async Task<List<ProductDTO>> GetAllProducts()
+        private async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {
             List<ProductDTO> products = new List<ProductDTO>();
             await _repository.InitAsync(_PRODUCT_COLLECTION_ID);
+
+            return await _repository.GetItemsAsync<ProductDTO>();
+
+            #region Obsolete
+            /*
 
             dynamic allProducts = _repository.CreateDocumentQuery<Document>().AsEnumerable();
             foreach (var product in allProducts)
@@ -254,25 +259,29 @@ namespace Online.Store.Azure.Services
                 foreach (var component in product.components)
                 {
                     var componentMedias = new List<ProductMediaDTO>();
-                    foreach (var media in component.medias)
+                    if (component.medias != null)
                     {
-                        componentMedias.Add(new ProductMediaDTO
+                        foreach (var media in component.medias)
                         {
-                            Id = media.id,
-                            Name = media.name,
-                            Type = media.type,
-                            UpdatedDate = media.updated,
-                            Url = media.url,
-                            CreatedDate = media.created,
-                            Height = media.height,
-                            Width = media.width
-                        });
+                            componentMedias.Add(new ProductMediaDTO
+                            {
+                                Id = media.id,
+                                Name = media.name,
+                                Type = media.type,
+                                UpdatedDate = media.updated,
+                                Url = media.url,
+                                CreatedDate = media.created,
+                                Height = media.height,
+                                Width = media.width
+                            });
+                        }
                     }
 
                     components.Add(new ProductComponentDTO
                     {
                         Id = component.id,
                         ComponentType = component.componenttype,
+                        ComponentTitle = component.title,
                         UpdatedDate = component.updated,
                         CreatedDate = component.created,
                         ComponentDetail = component.detail,
@@ -293,7 +302,8 @@ namespace Online.Store.Azure.Services
                 });
             }
 
-            return products;
+            */
+            #endregion
 
         }
         #endregion
@@ -302,7 +312,7 @@ namespace Online.Store.Azure.Services
     public interface IStoreService
     {
         Task<List<CommunityDTO>> GetTopCommunityPost();
-        Task<List<ProductDTO>> GetProducts(string filter);
+        Task<IEnumerable<ProductDTO>> GetProducts(string filter);
         Task<ProductDTO> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
         Task AddToCart(CartDTO Item);
