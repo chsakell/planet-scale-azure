@@ -1,11 +1,1 @@
-<h1>Product list</h1>
-
-<table>
-    <tr *ngFor="let product of (productState$|async)?.products; let i = index">
-        <td>{{product.productId}}</td>
-        <td>{{product.productPrice}}</td>
-        <td>{{product.productHeading}}</td>
-        <td>{{product.description}}</td>
-        <td>{{product.productURL}}</td>
-    </tr>
-</table>
+<product-list-presentation [products]="products$ | async"></product-list-presentation>

@@ -9,9 +9,11 @@ import { productReducer } from './store/product.reducer';
 import { ProductEffects } from './store/product.effects';
 import { FormsModule } from '@angular/forms';
 import { ProductComponent } from "./product.component";
+import { ProductListPresentationComponent } from './list/list';
 
 const PRODUCT_DIRECTIVES = [
     ProductListComponent,
+    ProductListPresentationComponent,
     ProductDetailsComponent,
     ProductComponent
 ];
@@ -22,7 +24,7 @@ const PRODUCT_DIRECTIVES = [
         FormsModule,
         PRODUCT_ROUTES,
         StoreModule.forFeature('inventory', {
-            products: productReducer,
+            productState: productReducer,
         }),
         EffectsModule.forFeature([ProductEffects])
     ],
