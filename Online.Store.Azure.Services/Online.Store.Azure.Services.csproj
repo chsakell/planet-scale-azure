@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
     <ProjectReference Include="..\Online.Store.DocumentDB\Online.Store.DocumentDB.csproj" />
+    <ProjectReference Include="..\Online.Store.Storage\Online.Store.Storage.csproj" />
   </ItemGroup>
 
 </Project>

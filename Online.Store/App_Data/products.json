@@ -3,7 +3,7 @@
     "id": "",
     "title": "Sony - DSC-W830 20.1-Megapixel Digital Camera - Silver",
     "price": "96.19",
-    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_sd.jpg",
+    "image": "",
     "created": "2014-11-22T09:48:52.1054935Z",
     "updated": null,
     "description": "This Sony DSC-W800 digital camera's 20.1-megapixel, 1/2.3 Super HAD CCD sensor enables you to shoot stunning photographs and 720p video footage. The 2.7 Clear Photo LCD lets you view stored content.",
@@ -188,7 +188,7 @@
     "id": "",
     "title": "Canon - PowerShot ELPH 180 20.0-Megapixel Digital Camera - Silver",
     "price": "279.99",
-    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_sd.jpg",
+    "image": "",
     "created": "2014-11-22T09:48:52.1054935Z",
     "updated": null,
     "description": "The high-sensitivity CMOS sensor and DIGIC 4+ image processor of this Canon PowerShot SX530 HS digital camera combine to form the HS SYSTEM, which helps enhance quality in low-light conditions, so you can capture the shot you want, wherever you are.",
@@ -209,7 +209,7 @@
             "id": "",
             "name": "2.jpg",
             "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156ld.jpg",
+            "url": "",
             "created": "2014-11-22T09:48:52.1054935Z",
             "updated": null
           },
@@ -217,7 +217,7 @@
             "id": "",
             "name": "3.jpg",
             "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_bd.jpg",
+            "url": "",
             "created": "2014-11-22T09:48:52.1054935Z",
             "updated": null
           },
@@ -225,7 +225,7 @@
             "id": "",
             "name": "4.jpg",
             "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_td.jpg",
+            "url": "",
             "created": "2014-11-22T09:48:52.1054935Z",
             "updated": null
           },
@@ -233,7 +233,7 @@
             "id": "",
             "name": "5.jpg",
             "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156cv11d.jpg",
+            "url": "",
             "created": "2014-11-22T09:48:52.1054935Z",
             "updated": null
           },
@@ -241,7 +241,7 @@
             "id": "",
             "name": "6.jpg",
             "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156cv12d.jpg",
+            "url": "",
             "created": "2014-11-22T09:48:52.1054935Z",
             "updated": null
           }

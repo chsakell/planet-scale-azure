@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Online.Store.Azure.Services;
 using Online.Store.DocumentDB;
 using Online.Store.Mappings;
+using Online.Store.Storage;
 
 namespace Online_Store
 {

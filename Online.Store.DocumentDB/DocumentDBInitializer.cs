@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Online.Store.Core;
 using Online.Store.Core.DTOs;
+using Online.Store.Storage;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,18 +21,22 @@ namespace Online.Store.DocumentDB
         private static string Key = string.Empty;
         private static string DatabaseId = string.Empty;
         private static DocumentClient client;
+        private static string storageAccount = string.Empty;
 
         public static void Initialize(IConfiguration configuration)
         {
             Endpoint = configuration["DocumentDB:Endpoint"];
             Key = configuration["DocumentDB:Key"];
             DatabaseId = configuration["DocumentDB:DatabaseId"];
+            storageAccount = configuration["Storage:AccountName"];
 
             client = new DocumentClient(new Uri(Endpoint), Key);
             CreateDatabaseIfNotExistsAsync(DatabaseId).Wait();
             // Products Collection
             CreateCollectionIfNotExistsAsync(DatabaseId, "Items").Wait();
 
+            StorageInitializer.Initialize(configuration);
+            StorageInitializer.InitContainerAsync("product-images").Wait();
             InitStoreAsync(configuration).Wait();
         }
 
@@ -188,7 +193,9 @@ namespace Online.Store.DocumentDB
 
                     foreach (var product in products)
                     {
-                        foreach(var component in product.Components)
+                        await UploadProductImagesAsync(product);
+
+                        foreach (var component in product.Components)
                         {
                             component.Id = Guid.NewGuid().ToString();
                             foreach(var media in component.Medias)
@@ -200,6 +207,24 @@ namespace Online.Store.DocumentDB
                         string contentType = string.Empty;
                     }
                 }
+            }
+        }
+
+        private static async Task UploadProductImagesAsync(ProductDTO product)
+        {
+            string[] images = Directory.GetFiles(Path.Combine(Config.ContentRootPath, @"App_Data\images\" + product.Model));
+
+            await StorageInitializer._repository.UploadToContainerAsync("product-images", images[0], product.Model + "/" + Path.GetFileName(images[0]));
+            product.Image = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[0]));
+
+            ProductComponentDTO mediaComponent = product.Components.Where(c => c.ComponentType == "Media").First();
+
+            for(int i=0; i<mediaComponent.Medias.Count; i++)
+            {
+                await StorageInitializer._repository.UploadToContainerAsync("product-images", images[i+1], product.Model + "/" + Path.GetFileName(images[i+1]));
+                ProductMediaDTO media = mediaComponent.Medias[i];
+                media.Name = Path.GetFileNameWithoutExtension(images[i + 1]);
+                media.Url = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[i + 1]));
             }
         }
     }
