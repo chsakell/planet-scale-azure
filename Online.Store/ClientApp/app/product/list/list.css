@@ -1,0 +1,23 @@
+﻿.camera-item {
+    margin-bottom: 30px;
+}
+
+    .camera-item img {
+        max-height: 115px;
+    }
+
+@media (max-width: 768px) {
+    .camera-item img {
+        max-height: 130px;
+    }
+}
+
+@media (max-width: 480px) {
+    .camera-item {
+        width: 100%;
+    }
+
+        .camera-item img {
+            max-height: initial;
+        }
+}

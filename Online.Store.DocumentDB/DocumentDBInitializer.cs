@@ -219,12 +219,16 @@ namespace Online.Store.DocumentDB
 
             ProductComponentDTO mediaComponent = product.Components.Where(c => c.ComponentType == "Media").First();
 
-            for(int i=0; i<mediaComponent.Medias.Count; i++)
+            for(int i=1; i < images.Length; i++)
             {
-                await StorageInitializer._repository.UploadToContainerAsync("product-images", images[i+1], product.Model + "/" + Path.GetFileName(images[i+1]));
-                ProductMediaDTO media = mediaComponent.Medias[i];
-                media.Name = Path.GetFileNameWithoutExtension(images[i + 1]);
-                media.Url = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[i + 1]));
+                await StorageInitializer._repository.UploadToContainerAsync("product-images", images[i], product.Model + "/" + Path.GetFileName(images[i]));
+                ProductMediaDTO media = new ProductMediaDTO();
+                media.Id = Guid.NewGuid().ToString();
+                media.CreatedDate = DateTime.Now;
+                media.Name = Path.GetFileNameWithoutExtension(images[i]);
+                media.Url = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[i]));
+                media.Type = "image";
+                mediaComponent.Medias.Add(media);
             }
         }
     }

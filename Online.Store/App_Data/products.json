@@ -19,32 +19,7 @@
         "detail": "",
         "created": "2014-11-22T09:48:52.1054935Z",
         "updated": null,
-        "medias": [
-          {
-            "id": "",
-            "name": "2.jpg",
-            "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_rd.jpg",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "3.jpg",
-            "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014ld.jpg",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "4.jpg",
-            "type": "image",
-            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_bd.jpg",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          }
-        ]
+        "medias": []
       },
       {
         "id": "",
@@ -204,48 +179,7 @@
         "detail": "",
         "created": "2014-11-22T09:48:52.1054935Z",
         "updated": null,
-        "medias": [
-          {
-            "id": "",
-            "name": "2.jpg",
-            "type": "image",
-            "url": "",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "3.jpg",
-            "type": "image",
-            "url": "",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "4.jpg",
-            "type": "image",
-            "url": "",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "5.jpg",
-            "type": "image",
-            "url": "",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          },
-          {
-            "id": "",
-            "name": "6.jpg",
-            "type": "image",
-            "url": "",
-            "created": "2014-11-22T09:48:52.1054935Z",
-            "updated": null
-          }
-        ]
+        "medias": []
       },
       {
         "id": "",
@@ -388,6 +322,166 @@
         "componenttype": "Imaging",
         "title": "Imaging Sensor Vertical Size",
         "detail": "4.6 millimeters",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "Sony - Cyber-shot DSC-HX80 18.2-Megapixel Digital Camera",
+    "price": "339.99",
+    "image": "",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "Keep your phone on the side, and let this Sony Cyber-shot digital camera do the work. It enjoys a 18.2-megapixel sensor and an 30x zoom so that you can focus on the action and get highly detailed shots. Powerful flash modes and solid low-light performance means this Sony Cyber-shot digital camera gets the results you want.",
+    "model": "DSC-HX80",
+    "sku": "5086573",
+    "rating": 4.6,
+    "rates": 559,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": []
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "18.2-megapixel Exmor R® CMOS",
+        "detail": "Captures high-resolution images up to 4896 x 3672 pixels.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "30x optical/60x digital zoom",
+        "detail": "Get super close and clear with the premium ZEISS® Vario-Sonnar T* lens from wide angle (24mm equivalent).",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3' color Xtra Fine LCD multi-angule display",
+        "detail": "Easily frame for selfies or to shoot objects like pets at eye-level without having to get down on the ground.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Retractable OLED Tru-Finder™ viewfinder",
+        "detail": "The electronic viewfinder faithfully displays what will appear in your recording, including the effects of your camera settings, so you can accurately monitor the results.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Movie Recording Mode",
+        "detail": "Capture 50Mbps Full HD (1920x1080) 60p high quality video with minimal compression noise even in scenes with a lot of movement.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "BIONZ® X image processor.",
+        "detail": "This brings out the full resolving power of professional lens to deliver high resolution, and stunning low-light sensitivity with improved image clarity and reduced grain for both stills and movie",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "5-axis Optical SteadyShot™ image stabilizer",
+        "detail": "Advanced technology reduce blur caused by camera shake when shooting movies, allowing you to move along with the action, and get clear images of your subject in motion, even when zoomed in.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "21.1 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "18.2 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "Exmor R CMOS",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "80-12800",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Memory Stick Duo, Memory Stick PRO Duo, Memory Stick PRO-HG Duo, Secure Digital, Secure Digital Extended Capacity (SDXC), Secure Digital High Capacity (SDHC)",
+        "detail": "Other",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "30x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Digital Zoom",
+        "detail": "60x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "DCF 2.0, Exif 2.3, JPEG, MRF",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image Resolution",
+        "detail": "4896 x 3672",
         "created": "2014-11-22T09:48:52.1054935Z",
         "updated": null
       }
