@@ -18,21 +18,21 @@ namespace Online.Store.DocumentDB
     {
         private static string Endpoint = string.Empty;
         private static string Key = string.Empty;
+        private static string DatabaseId = string.Empty;
         private static DocumentClient client;
 
         public static void Initialize(IConfiguration configuration)
         {
-            Endpoint = configuration["DocumentDBEndpoint"];
-            Key = configuration["DocumentDBKey"];
+            Endpoint = configuration["DocumentDB:Endpoint"];
+            Key = configuration["DocumentDB:Key"];
+            DatabaseId = configuration["DocumentDB:DatabaseId"];
 
             client = new DocumentClient(new Uri(Endpoint), Key);
-            CreateDatabaseIfNotExistsAsync("Store").Wait();
+            CreateDatabaseIfNotExistsAsync(DatabaseId).Wait();
             // Products Collection
-            CreateCollectionIfNotExistsAsync("Store", "Products", "category").Wait();
-            CreateCollectionIfNotExistsAsync("Store", "Categories").Wait();
-            CreateCollectionIfNotExistsAsync("Store", "Suppliers").Wait();
+            CreateCollectionIfNotExistsAsync(DatabaseId, "Items").Wait();
 
-            InitGalleryAsync(configuration).Wait();
+            InitStoreAsync(configuration).Wait();
         }
 
         private static async Task CreateDatabaseIfNotExistsAsync(string DatabaseId)
@@ -169,12 +169,12 @@ namespace Online.Store.DocumentDB
             }
         }
 
-        private static async Task InitGalleryAsync(IConfiguration configuration)
+        private static async Task InitStoreAsync(IConfiguration configuration)
         {
             // Init Products
             DocumentDBStoreRepository storeRepository = new DocumentDBStoreRepository(configuration);
 
-            await storeRepository.InitAsync("Products");
+            await storeRepository.InitAsync("Items");
 
             var productsDB = await storeRepository.GetItemsAsync<ProductDTO>();
             if (productsDB.Count() == 0)
@@ -188,60 +188,19 @@ namespace Online.Store.DocumentDB
 
                     foreach (var product in products)
                     {
+                        foreach(var component in product.Components)
+                        {
+                            component.Id = Guid.NewGuid().ToString();
+                            foreach(var media in component.Medias)
+                            {
+                                media.Id = Guid.NewGuid().ToString();
+                            }
+                        }
                         Document document = await storeRepository.CreateItemAsync(product);
                         string contentType = string.Empty;
-
-                        /*
-                        new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider().TryGetContentType(product.ProductPicUrl, out contentType);
-                        var attachment = new Attachment { ContentType = contentType, Id = "picture", MediaLink = product.ProductPicUrl };
-                        ResourceResponse<Attachment> createdAttachment = await storeRepository.CreateAttachmentAsync(document.AttachmentsLink, attachment, new RequestOptions() { PartitionKey = new PartitionKey(product.Category) });
-                        */
-                    }
-                }
-            }
-
-            await storeRepository.InitAsync("Categories");
-
-            var categoriesDB = await storeRepository.GetItemsAsync<CustomItem>();
-            if (categoriesDB.Count() == 0)
-            {
-                List<CustomItem> categories = null;
-
-                using (StreamReader r = new StreamReader(Path.Combine(Config.ContentRootPath, @"App_Data\categories.json")))
-                {
-                    string json = r.ReadToEnd();
-                    categories = JsonConvert.DeserializeObject<List<CustomItem>>(json);
-
-                    foreach (var category in categories)
-                    {
-                        Document document = await storeRepository.CreateItemAsync(category);
-                    }
-                }
-            }
-
-            await storeRepository.InitAsync("Suppliers");
-
-            var suppliersDB = await storeRepository.GetItemsAsync<CustomItem>();
-            if (suppliersDB.Count() == 0)
-            {
-                List<CustomItem> suppliers = null;
-
-                using (StreamReader r = new StreamReader(Path.Combine(Config.ContentRootPath, @"App_Data\suppliers.json")))
-                {
-                    string json = r.ReadToEnd();
-                    suppliers = JsonConvert.DeserializeObject<List<CustomItem>>(json);
-
-                    foreach (var supplier in suppliers)
-                    {
-                        Document document = await storeRepository.CreateItemAsync(supplier);
                     }
                 }
             }
         }
-    }
-
-    class CustomItem
-    {
-        public string Name { get; set; }
     }
 }

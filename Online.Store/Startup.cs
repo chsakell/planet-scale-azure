@@ -64,6 +64,8 @@ namespace Online_Store
                     name: "spa-fallback",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            DocumentDBInitializer.Initialize(Configuration);
         }
     }
 }

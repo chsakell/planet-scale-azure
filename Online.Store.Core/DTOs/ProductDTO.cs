@@ -32,6 +32,12 @@ namespace Online.Store.Core.DTOs
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
+        [JsonProperty(PropertyName = "rating")]
+        public decimal Rating { get; set; }
+
+        [JsonProperty(PropertyName = "rates")]
+        public int Rates { get; set; }
+
         [JsonProperty(PropertyName="created")]
         public DateTime? CreatedDate { get; set; }
 

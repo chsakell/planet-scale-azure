@@ -18,6 +18,8 @@ namespace Online.Store.ViewModels
         public string Image { get; set; }
         public string Model { get; set; }
         public string SKU { get; set; }
+        public decimal Rating { get; set; }
+        public int Rates { get; set; }
         public List<ProductComponentViewModel> Components { get; set; }
     }
 }

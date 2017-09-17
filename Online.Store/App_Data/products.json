@@ -1,0 +1,396 @@
+﻿[
+  {
+    "id": "",
+    "title": "Sony - DSC-W830 20.1-Megapixel Digital Camera - Silver",
+    "price": "96.19",
+    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_sd.jpg",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "This Sony DSC-W800 digital camera's 20.1-megapixel, 1/2.3 Super HAD CCD sensor enables you to shoot stunning photographs and 720p video footage. The 2.7 Clear Photo LCD lets you view stored content.",
+    "model": "DSCW830",
+    "sku": "3489014",
+    "rating": 4.4,
+    "rates": 1174,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": [
+          {
+            "id": "",
+            "name": "2.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_rd.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "3.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014ld.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "4.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/3489/3489014_bd.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          }
+        ]
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "20.1-megapixel, 1.7 Super HAD CCD sensor",
+        "detail": "Captures high-resolution images up to 5152 x 2896 pixels.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "8x optical/up to 32x digital/up to 256x total zoom",
+        "detail": "Through a Carl Zeiss Vario-Tessar lens for precise zooming and accuracy.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "2.7' LCD",
+        "detail": "Provides a clear view, so you can easily compose and review your shots.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "High-definition movie mode",
+        "detail": "Allows you to record smooth, detailed video clips in 720p resolution.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Optical SteadyShot image stabilization",
+        "detail": "With Active mode reduces image blur caused by camera shake and vibration, so you can take crisp, steady shots. ISO up to 3200 for improved image capture in low-light conditions.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Scene modes",
+        "detail": "Include high sensitivity, soft snap, soft skin, landscape, night portrait, night scene, gourmet, beach, snow, fireworks and pet to accommodate various shooting scenarios. Sweep Panorama mode lets you capture expansive landscapes.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "20.5 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "20.1 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "CCD",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "Auto, 80, 100, 200, 400, 800, 1600, 3200",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "No",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Lens Mount Compatibility",
+        "detail": "Not Applicable",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Memory Card Compatibility",
+        "detail": "Memory Stick PRO Duo, Memory Stick Micro, microSD, Secure Digital, Secure Digital Extended Capacity (SDXC), Secure Digital High Capacity (SDHC)",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "8x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Digital Zoom",
+        "detail": "32x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "JPEG",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Imaging Sensor Vertical Size",
+        "detail": "11 millimeters",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "Canon - PowerShot ELPH 180 20.0-Megapixel Digital Camera - Silver",
+    "price": "279.99",
+    "image": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_sd.jpg",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "The high-sensitivity CMOS sensor and DIGIC 4+ image processor of this Canon PowerShot SX530 HS digital camera combine to form the HS SYSTEM, which helps enhance quality in low-light conditions, so you can capture the shot you want, wherever you are.",
+    "model": "9779B001",
+    "sku": "3489014",
+    "rating": 4.5,
+    "rates": 1407,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": [
+          {
+            "id": "",
+            "name": "2.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156ld.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "3.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_bd.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "4.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156_td.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "5.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156cv11d.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          },
+          {
+            "id": "",
+            "name": "6.jpg",
+            "type": "image",
+            "url": "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2761/2761156cv12d.jpg",
+            "created": "2014-11-22T09:48:52.1054935Z",
+            "updated": null
+          }
+        ]
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "1/2.3 CMOS sensor",
+        "detail": "Captures high-resolution images up to 4608 x 3456 pixels.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "50x optical/4x digital/200x total zoom",
+        "detail": "Delivers the versatility needed to capture your subjects, whether they are nearby or far away",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3' LCD",
+        "detail": "With a screen resolution of 461,000 dots allows you to easily frame subjects and view information, even from a wide angle.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "1080p Full HD video",
+        "detail": "Helps you capture the moment as it unfolds. A dedicated movie button makes it easy to shoot video.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "DIGIC 4+ image processor",
+        "detail": "Combines with the CMOS sensor to form the Canon HS SYSTEM, which delivers a high level of quality in low light.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Intelligent IS",
+        "detail": "Reduces image blur caused by camera shake and vibration",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Scene modes",
+        "detail": "Include portrait, smart shutter, burst, snow and fireworks for simple adjustment. Creative Shot mode uses the original composition, color and lighting to add a touch of artistic flair.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "16.0 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "16 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "CMOS",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "Auto, 100 - 3200; 6400 (low-light mode)",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Lens Mount Compatibility",
+        "detail": "Other",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Memory Card Compatibility",
+        "detail": "Secure Digital",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "50x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Digital Zoom",
+        "detail": "4x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "JPEG",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Imaging Sensor Vertical Size",
+        "detail": "4.6 millimeters",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
+  }
+]
