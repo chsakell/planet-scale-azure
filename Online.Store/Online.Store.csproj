@@ -45,6 +45,7 @@
 
   <ItemGroup>
     <Folder Include="App_Data\images\DSC-HX80\" />
+    <Folder Include="App_Data\images\DC-ZS70K\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">

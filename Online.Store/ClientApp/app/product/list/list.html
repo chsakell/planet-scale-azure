@@ -14,7 +14,7 @@
                 <img class="img-responsive" [src]="product.image" alt="">
             </a>
             <h4>
-                <a href="#">{{product.title}}</a>
+                <a [routerLink]="['/products/details', product.id]">{{product.title}}</a>
             </h4>
             <p>{{product.price}}</p>
         </div>

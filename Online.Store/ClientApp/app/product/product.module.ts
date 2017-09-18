@@ -10,11 +10,13 @@ import { ProductEffects } from './store/product.effects';
 import { FormsModule } from '@angular/forms';
 import { ProductComponent } from "./product.component";
 import { ProductListPresentationComponent } from './list/list';
+import { ProductDetailsPresentationComponent } from "./details/details";
 
 const PRODUCT_DIRECTIVES = [
     ProductListComponent,
     ProductListPresentationComponent,
     ProductDetailsComponent,
+    ProductDetailsPresentationComponent,
     ProductComponent
 ];
 

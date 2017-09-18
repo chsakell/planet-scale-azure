@@ -486,5 +486,485 @@
         "updated": null
       }
     ]
+  },
+  {
+    "id": "",
+    "title": "Nikon - COOLPIX B500 16.0-Megapixel Digital Camera - Plum",
+    "price": "339.99",
+    "image": "",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "Share and transfer images easily with this Nikon Coolpix camera, equipped with Bluetooth, Wi-Fi and NFC technology. The high-definition tilting LCD screen lets you take pictures in unique angles, review and edit images and navigate around the menu. This 16-megapixel Nikon Coolpix camera takes vibrant images and supports recording of Full HD videos.",
+    "model": "26507",
+    "sku": "4997300",
+    "rating": 4.5,
+    "rates": 958,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": []
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "16.0-megapixel low-light CMOS image sensor",
+        "detail": "Captures high-resolution images up to 4608 x 3456 pixels.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "40x optical/up to 4x digital/80x total zoom",
+        "detail": "Through a NIKKOR ED glass lens for precise zooming and accuracy.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3' color Xtra Fine LCD multi-angule display",
+        "detail": "Easily frame for selfies or to shoot objects like pets at eye-level without having to get down on the ground.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3' tilting TFT-LCD display",
+        "detail": "For clear viewing and easy navigation.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Movie Recording Mode",
+        "detail": "Capture 50Mbps Full HD (1920x1080) 60p high quality video with minimal compression noise even in scenes with a lot of movement.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Video mode",
+        "detail": "Records 1080p Full HD movie clips up to 30 fps with stereo sound.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Lens-Shift Vibration Reduction (VR) technology",
+        "detail": "Counteracts camera shake to keep your shots steady and sharp.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "16.76 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "16.0 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "CMOS",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "125 - 6,400",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Remote Compatible",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Memory Card Compatibility",
+        "detail": "Secure Digital, Secure Digital Extended Capacity (SDXC), Secure Digital High Capacity (SDHC)",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "40x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Digital Zoom",
+        "detail": "4x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "JPEG, MP4",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image Resolution",
+        "detail": "4608 x 3456",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "Polaroid - Snap 10.0-Megapixel Digital Camera - White",
+    "price": "90.99",
+    "image": "",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "Instantly share your favorite moments with this Polaroid Snap digital camera, which allows you to print 2\" x3\" photos on the spot. Six shooting modes, including photobooth mode, make it easy to capture great shots.",
+    "model": "POLSP01W",
+    "sku": "4416001",
+    "rating": 4.1,
+    "rates": 872,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": []
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "10.0-megapixel CMOS sensor",
+        "detail": "Captures crisp, clear images.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "6 shooting modes",
+        "detail": "Include photobooth mode and offer preset options to suit your scene.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3 Instant printing capability",
+        "detail": "Prints 2\" x 3\" photos, so you can show off your favorite shots",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "10.0 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "10.0 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "CMOS",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "Not Applicable",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "No",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Remote Compatible",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Memory Card Compatibility",
+        "detail": "microSD",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "None",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "None",
+        "detail": "4x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "JPEG",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image Resolution",
+        "detail": "None",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "Panasonic - LUMIX DC-ZS70 20.3-Megapixel Digital Camera - Black",
+    "price": "449.99",
+    "image": "",
+    "created": "2014-11-22T09:48:52.1054935Z",
+    "updated": null,
+    "description": "Take this Panasonic LUMIX camera on your next vacation, and snap brochure-worthy photographs to share with friends. This compact point-and-shoot camera features a 20.3-megapixel lens for clear angles no matter your subject. Video recording capabilities of 4K HD mean you can take still shots and record memorable moments with this Panasonic LUMIX camera.",
+    "model": "DC-ZS70K",
+    "sku": "5866714",
+    "rating": 5,
+    "rates": 43,
+    "components": [
+      {
+        "id": "",
+        "componenttype": "Media",
+        "title": "",
+        "detail": "",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null,
+        "medias": []
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "10.0-megapixel CMOS sensor",
+        "detail": "Captures crisp, clear images.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "0.2\" Electronic View Finder with eye sensor and 1,166k dots resolution",
+        "detail": "Provides easy viewing under sunny outdoor conditions.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "3\" TFT LCD touch screen with 1040k dots resolution",
+        "detail": "Offers a 180-degree front flip-up design for simple selfie photography and easy framing for unusual perspectives.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "20.3-megapixel 1/2.3\" high-sensitivity MOS sensor",
+        "detail": "Captures high-resolution images up to 5184 x 3888 pixels.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "\"30x optical/up to 4x digital/60x Intelligent Zoom",
+        "detail": "Through LEICA DC VARIO-ELMAR ASPH lens for precise zooming and accuracy.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Feature",
+        "title": "Venus Engine image processing",
+        "detail": "The sensor works in tandem with the Venus Engine to ensure stunning pictures even in dimly lit environments with minimal image noise.",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Total Megapixels",
+        "detail": "21.1 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Effective Megapixel",
+        "detail": "20.3 megapixels",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Image Sensor Type",
+        "detail": "Other",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "ISO Settings",
+        "detail": "Still images: Auto, i.ISO, 80 - 3200, expandable to 6400; Motion pictures: Auto, 80 - 3200",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Spefication",
+        "title": "Wi-Fi Built-in",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Remote Compatible",
+        "detail": "Yes",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Compatibility",
+        "title": "Memory Card Compatibility",
+        "detail": "Secure Digital, Secure Digital Extended Capacity (SDXC), Secure Digital High Capacity (SDHC)",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom",
+        "detail": "30x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Digital Zoom",
+        "detail": "4x",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image File Format(s)",
+        "detail": "AVCHD, DPOF, JPEG, MP4, RAW",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image Resolution",
+        "detail": "5184 x 3888",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Image Stabilization",
+        "detail": "Hybrid",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      },
+      {
+        "id": "",
+        "componenttype": "Imaging",
+        "title": "Optical Zoom Type",
+        "detail": "Automatic",
+        "created": "2014-11-22T09:48:52.1054935Z",
+        "updated": null
+      }
+    ]
   }
 ]
