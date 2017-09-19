@@ -24,9 +24,9 @@ namespace Online.Store.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public async Task<IEnumerable<ProductViewModel>> Get(string SearchString)
+        public async Task<IEnumerable<ProductViewModel>> Get()
         {
-            var products = await _storeService.GetProducts(SearchString);
+            var products = await _storeService.GetProducts(null);
 
             var productsViewData = new List<ProductViewModel>();
 
@@ -37,9 +37,13 @@ namespace Online.Store.Controllers
 
         // GET: api/Products/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<ProductViewModel> Get(string id)
         {
-            return "value";
+            var productDTO = await _storeService.GetProductDetails(id);
+
+            var product = Mapper.Map<ProductViewModel>(productDTO);
+
+            return product;
         }
 
         // POST: api/Products

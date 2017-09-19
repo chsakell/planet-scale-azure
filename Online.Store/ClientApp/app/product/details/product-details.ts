@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from "rxjs/Observable";
+import * as ProductActions from '../store/product.action';
+import { Product } from "../../models/product";
 
 @Component({
     selector: 'product-details',
@@ -7,11 +11,16 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 })
 
 export class ProductDetailsComponent implements OnInit {
-    constructor(private route: ActivatedRoute) { }
+
+    product$: Observable<Product>;
+
+    constructor(private store: Store<any>, private route: ActivatedRoute) {
+        this.product$ = this.store.select<Product>(state => state.inventory.productState.selectedProduct);
+    }
 
     ngOnInit() {
         this.route.paramMap
             .subscribe((params: ParamMap) =>
-                console.log(params.get('id')));
+                this.store.dispatch(new ProductActions.SelectProductAction(params.get('id') || '')));
     }
 }

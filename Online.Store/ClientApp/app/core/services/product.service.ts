@@ -38,7 +38,7 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
     }
 
-    getSingle(id: number): Observable<Product> {
+    getSingle(id: string): Observable<Product> {
         return this.http.get(this.actionUrl + id, this.requestOptions)
             // ...and calling .json() on the response to return data
             .map((res: Response) => res.json())
