@@ -11,5 +11,5 @@ export class Product {
     public image: string;
     public rating: number;
     public rates: number;
-    public productComponentsList: ProductComponent[];
+    public components: ProductComponent[];
 }
