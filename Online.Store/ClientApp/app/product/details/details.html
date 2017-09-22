@@ -37,46 +37,42 @@
                 </div>
             </div>
             <div class="well">
-                <div class="text-right">
-                    <a class="btn btn-success">Leave a Review</a>
-                </div>
+                <h2>Features</h2>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">10 days ago</span>
-                        <p>This product was great in terms of quality. I would definitely buy another!</p>
+                    <div class="col-md-12" *ngFor="let feature of _features; let i = index">
+                        <h5><strong>{{feature.componentTitle}}</strong></h5>
+                        <p>{{feature.componentDetail}}</p>
                     </div>
                 </div>
+            </div>
+            <div class="well">
+                <h2>Specifications</h2>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">12 days ago</span>
-                        <p>I've alredy ordered another one!</p>
+                    <div class="col-xs-6 col-md-4" *ngFor="let spec of _specs; let i = index">
+                        <h5><strong>{{spec.componentTitle}}</strong></h5>
+                        <span>{{spec.componentDetail}}</span>
                     </div>
                 </div>
+            </div>
+            <div class="well">
+                <h2>Compatibility</h2>
                 <hr>
                 <div class="row">
-                    <div class="col-md-12">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        Anonymous
-                        <span class="pull-right">15 days ago</span>
-                        <p>I've seen some better than this, but not at this price. I definitely recommend this item.</p>
+                    <div class="col-md-12" *ngFor="let comp of _compatibilies; let i = index">
+                        <strong>{{comp.componentTitle}}</strong>
+                        <span>{{comp.componentDetail}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="well">
+                <h2>Imaging</h2>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-6 col-md-3" *ngFor="let img of _imaging; let i = index">
+                        <h5><strong>{{img.componentTitle}}</strong></h5>
+                        <p>{{img.componentDetail}}</p>
                     </div>
                 </div>
             </div>

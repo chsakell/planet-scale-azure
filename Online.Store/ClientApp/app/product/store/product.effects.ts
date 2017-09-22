@@ -13,7 +13,7 @@ import { ProductService } from '../../core/services/product.service';
 
 @Injectable()
 export class ProductEffects {
-    
+
     @Effect() getAll$: Observable<Action> = this.actions$.ofType(productsAction.SELECTALL)
         .switchMap(() =>
             this.productService.getAll()
@@ -23,17 +23,18 @@ export class ProductEffects {
                 .catch((error: any) => {
                     return of({ type: 'getAll_FAILED' })
                 })
-    );
+        );
 
     @Effect() getProduct$: Observable<Action> = this.actions$.ofType(productsAction.SELECT_PRODUCT)
-        .switchMap((action: productsAction.SelectProductAction) =>
-            this.productService.getSingle(action.id)
+        .switchMap((action: productsAction.SelectProductAction) => {
+            return this.productService.getSingle(action.id)
                 .map((data: Product) => {
                     return new productsAction.SelectProductCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'getProduct_FAILED' })
                 })
+        }
         );
 
     constructor(

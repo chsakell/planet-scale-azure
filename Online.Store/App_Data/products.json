@@ -71,7 +71,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "20.5 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -79,7 +79,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "20.1 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -87,7 +87,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "CCD",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -95,7 +95,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "Auto, 80, 100, 200, 400, 800, 1600, 3200",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -103,7 +103,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "No",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -119,7 +119,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Memory Card Compatibility",
         "detail": "Memory Stick PRO Duo, Memory Stick Micro, microSD, Secure Digital, Secure Digital Extended Capacity (SDXC), Secure Digital High Capacity (SDHC)",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -239,7 +239,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "16.0 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -247,7 +247,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "16 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -255,7 +255,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "CMOS",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -263,7 +263,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "Auto, 100 - 3200; 6400 (low-light mode)",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -271,7 +271,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "Yes",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -407,7 +407,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "21.1 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -415,7 +415,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "18.2 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -423,7 +423,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "Exmor R CMOS",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -431,7 +431,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "80-12800",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -439,7 +439,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "Yes",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -567,7 +567,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "16.76 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -575,7 +575,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "16.0 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -583,7 +583,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "CMOS",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -591,7 +591,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "125 - 6,400",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -599,7 +599,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "Yes",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -703,7 +703,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "10.0 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -711,7 +711,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "10.0 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -719,7 +719,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "CMOS",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -727,7 +727,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "Not Applicable",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -735,7 +735,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "No",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -863,7 +863,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Total Megapixels",
         "detail": "21.1 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -871,7 +871,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Effective Megapixel",
         "detail": "20.3 megapixels",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -879,7 +879,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Image Sensor Type",
         "detail": "Other",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -887,7 +887,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "ISO Settings",
         "detail": "Still images: Auto, i.ISO, 80 - 3200, expandable to 6400; Motion pictures: Auto, 80 - 3200",
         "created": "2014-11-22T09:48:52.1054935Z",
@@ -895,7 +895,7 @@
       },
       {
         "id": "",
-        "componenttype": "Spefication",
+        "componenttype": "Specification",
         "title": "Wi-Fi Built-in",
         "detail": "Yes",
         "created": "2014-11-22T09:48:52.1054935Z",
