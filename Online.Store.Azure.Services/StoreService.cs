@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Documents;
 using Online.Store.Core.DTOs;
 using Online.Store.DocumentDB;
+using Online.Store.RedisCache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,16 @@ namespace Online.Store.Azure.Services
         /// </summary>
         private IDocumentDBRepository<DocumentDBStoreRepository> _repository;
 
-        public StoreService(IDocumentDBRepository<DocumentDBStoreRepository> _repository)
+        private IRedisCacheRepository _cacheRepository;
+
+        public StoreService(IDocumentDBRepository<DocumentDBStoreRepository> _repository,
+                            IRedisCacheRepository cacheRepository)
         {
             this._repository = _repository;
+            this._cacheRepository = cacheRepository;
         }
 
+        #region DocumentDB
         public async Task<List<CommunityDTO>> GetTopCommunityPost()
         {
             var data = new List<CommunityDTO>();
@@ -306,6 +312,12 @@ namespace Online.Store.Azure.Services
             #endregion
 
         }
+        #endregion
+
+        #endregion
+
+        #region RedisCache
+
         #endregion
     }
 
