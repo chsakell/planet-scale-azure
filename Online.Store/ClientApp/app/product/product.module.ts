@@ -25,7 +25,7 @@ const PRODUCT_DIRECTIVES = [
         CommonModule,
         FormsModule,
         PRODUCT_ROUTES,
-        StoreModule.forFeature('inventory', {
+        StoreModule.forFeature('catalog', {
             productState: productReducer,
         }),
         EffectsModule.forFeature([ProductEffects])

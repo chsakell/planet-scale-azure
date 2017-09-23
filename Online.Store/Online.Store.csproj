@@ -35,6 +35,7 @@
     <None Remove="ClientApp\app\models\product-component.ts" />
     <None Remove="ClientApp\app\models\product-media.ts" />
     <None Remove="ClientApp\app\product\product.component.ts" />
+    <None Remove="ClientApp\app\reducers\index.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,7 @@
     <TypeScriptCompile Include="ClientApp\app\models\product-component.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\product-media.ts" />
     <TypeScriptCompile Include="ClientApp\app\product\product.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\reducers\index.ts" />
   </ItemGroup>
 
   <ItemGroup>

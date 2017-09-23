@@ -16,7 +16,7 @@ export class ProductDetailsComponent implements OnInit {
     product$: Observable<Product>;
 
     constructor(private store: Store<any>, private route: ActivatedRoute, private router: Router) {
-        this.product$ = this.store.select<Product>(state => state.inventory.productState.selectedProduct);
+        this.product$ = this.store.select<Product>(state => state.catalog.productState.selectedProduct);
     }
 
     ngOnInit() {

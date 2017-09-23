@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit {
     products$: Observable<Product[]>;
 
     constructor(private store: Store<any>) { 
-        this.products$ = this.store.select<Product[]>(state => state.inventory.productState.products);
+        this.products$ = this.store.select<Product[]>(state => state.catalog.productState.products);
     }
 
     ngOnInit() {
