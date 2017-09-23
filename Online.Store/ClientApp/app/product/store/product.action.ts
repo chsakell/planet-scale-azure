@@ -1,10 +1,13 @@
 import { Action } from '@ngrx/store';
 import { Product } from './../../models/product';
+import { Cart } from "../../models/cart";
 
 export const SELECTALL = '[Product] Select All';
 export const SELECTALL_COMPLETE = '[Product] Select All Complete';
 export const SELECT_PRODUCT = '[Product] Select Product';
 export const SELECT_PRODUCT_COMPLETE = '[Product] Select Product Complete';
+export const ADD_PRODUCT_TO_CART = '[Cart] Add Product To Cart';
+export const ADD_PRODUCT_TO_CART_COMPLETE = '[Cart] Add Product To Cart Complete';
 
 export class SelectAllAction implements Action {
     readonly type = SELECTALL;
@@ -30,9 +33,22 @@ export class SelectProductCompleteAction implements Action {
     constructor(public product: Product) { }
 }
 
+export class AddProductToCartAction implements Action {
+    readonly type = ADD_PRODUCT_TO_CART;
+
+    constructor(public id: string) { }
+}
+
+export class AddProductToCartCompleteAction implements Action {
+    readonly type = ADD_PRODUCT_TO_CART_COMPLETE;
+
+    constructor(public cart: Cart) { }
+}
+
 export type Actions
     = SelectAllAction
     | SelectAllCompleteAction
     | SelectProductAction
-    | SelectProductCompleteAction;
+    | SelectProductCompleteAction
+    | AddProductToCartAction;
 

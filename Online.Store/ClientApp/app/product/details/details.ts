@@ -49,12 +49,18 @@ export class ProductDetailsPresentationComponent {
         return this._product;
     }
 
+    @Output() addToCart: EventEmitter<string> = new EventEmitter();
+
     constructor() {
         this._medias = [];
         this._features = [];
         this._specs = [];
         this._compatibilies = [];
         this._imaging = [];
+    }
+
+    addProduct(productId: string) {
+        this.addToCart.emit(productId);
     }
 
 }

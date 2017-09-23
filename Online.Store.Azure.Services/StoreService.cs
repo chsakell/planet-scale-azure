@@ -84,6 +84,69 @@ namespace Online.Store.Azure.Services
             await _repository.CreateItemAsync<CartDTO>(item);
         }
 
+        public async Task<CartDTO> AddProductToCart(string cardId, string productId)
+        {
+            CartDTO cart = null;
+            var product = await GetProductDetails(productId);
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                cardId = Guid.NewGuid().ToString();
+
+                cart = new CartDTO()
+                {
+                    Id = cardId,
+                    CreatedDate = DateTime.Now
+                };
+
+                cart.Items.Add(new CartItemsDTO()
+                {
+                    Product = productId,
+                    ProductImage = product.Image,
+                    ProductTitle = product.Title,
+                    Quantity = 1
+                });
+            }
+            else
+            {
+                cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
+
+                if(cart == null)
+                {
+                    cart = new CartDTO()
+                    {
+                        Id = cardId,
+                        CreatedDate = DateTime.Now
+                    };
+                }
+                else
+                {
+                    cart.UpdateDate = DateTime.Now;
+                }
+
+                var productCartItem = cart.Items.Where(i => i.Product == productId).FirstOrDefault();
+
+                if (productCartItem != null)
+                {
+                    productCartItem.Quantity++;
+                }
+                else
+                {
+                    cart.Items.Add(new CartItemsDTO()
+                    {
+                        Product = productId,
+                        ProductImage = product.Image,
+                        ProductTitle = product.Title,
+                        Quantity = 1
+                    });
+                }
+            }
+
+            await _cacheRepository.SetItemAsync(cardId, cart);
+
+            return cart;
+        }
+
         /// <summary>
         /// Update cart items.
         /// </summary>
@@ -92,7 +155,7 @@ namespace Online.Store.Azure.Services
         {
             await _repository.InitAsync(_CART_COLLECTION_ID);
 
-            await _repository.UpdateItemAsync<CartDTO>(item.UserId, item);
+            await _repository.UpdateItemAsync<CartDTO>(item.Id, item);
         }
 
         /// <summary>
@@ -103,7 +166,7 @@ namespace Online.Store.Azure.Services
         {
             await _repository.InitAsync(_CART_COLLECTION_ID);
 
-            await _repository.DeleteItemAsync(item.UserId);
+            await _repository.DeleteItemAsync(item.Id);
         }
 
         public async Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId)
@@ -328,6 +391,7 @@ namespace Online.Store.Azure.Services
         Task<ProductDTO> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
         Task AddToCart(CartDTO Item);
+        Task<CartDTO> AddProductToCart(string cardId, string productId);
         Task UpdateToCart(CartDTO item);
         Task RemoveFromCart(CartDTO Item);
         Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId);

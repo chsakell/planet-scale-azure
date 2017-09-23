@@ -10,5 +10,10 @@ namespace Online.Store.RedisCache
     {
         Task SetStringAsync(string key, string value);
         Task SetStringAsync(string key, string value, int expirationMinutes);
+
+        Task SetItemAsync(string key, object item);
+        Task SetItemAsync(string key, object item, int expirationMinutes);
+
+        Task<T> GetItemAsync<T>(string key);
     }
 }

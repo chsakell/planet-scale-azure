@@ -23,4 +23,8 @@ export class ProductDetailsComponent implements OnInit {
             .subscribe((params: ParamMap) =>
                 this.store.dispatch(new ProductActions.SelectProductAction(params.get('id') || '')));
     }
+
+    addProductToCart(productId: string) {
+        this.store.dispatch(new ProductActions.AddProductToCartAction(productId));
+    }
 }

@@ -7,10 +7,10 @@ namespace Online.Store.Core.DTOs
     public class CartDTO
     {
         [JsonProperty(PropertyName = "id")]
-        public string UserId { get; set; }
+        public string Id { get; set; }
 
-        [JsonProperty(PropertyName = "cartitem")]
-        public List<CartItemsDTO> CartItems { get; set; }
+        [JsonProperty(PropertyName = "items")]
+        public List<CartItemsDTO> Items { get; set; }
 
         [JsonProperty(PropertyName = "createddate")]
         public DateTime CreatedDate { get; set; }
@@ -20,9 +20,7 @@ namespace Online.Store.Core.DTOs
 
         public CartDTO()
         {
-            this.CartItems = new List<CartItemsDTO>();
+            this.Items = new List<CartItemsDTO>();
         }
-
-        public string UserName { get; set; }
     }
 }
