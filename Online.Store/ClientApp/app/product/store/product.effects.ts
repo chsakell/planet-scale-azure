@@ -38,29 +38,6 @@ export class ProductEffects {
         }
     );
 
-    @Effect() getCart$: Observable<Action> = this.actions$.ofType(productsAction.GET_CART)
-        .switchMap(() =>
-            this.productService.getCart()
-                .map((data: Cart) => {
-                    return new productsAction.GetCartCompleteAction(data);
-                })
-                .catch((error: any) => {
-                    return of({ type: 'getCart_FAILED' })
-                })
-        );
-
-    @Effect() addProductToCart: Observable<Action> = this.actions$.ofType(productsAction.ADD_PRODUCT_TO_CART)
-        .switchMap((action: productsAction.AddProductToCartAction) => {
-            return this.productService.addProductToCart(action.id)
-                .map((data: Cart) => {
-                    return new productsAction.AddProductToCartCompleteAction(data);
-                })
-                .catch((error: any) => {
-                    return of({ type: 'addProductToCart_FAILED' })
-                })
-        }
-        );
-
     constructor(
         private productService: ProductService,
         private actions$: Actions

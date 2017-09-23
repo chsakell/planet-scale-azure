@@ -4,5 +4,4 @@ import { Cart } from "../../models/cart";
 export interface ProductState {
     products: Product[],
     selectedProduct?: Product,
-    cart?: Cart
 };

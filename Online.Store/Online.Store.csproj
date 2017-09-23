@@ -21,16 +21,15 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
-    <Compile Remove="ClientApp\app\NewFolder\**" />
     <Compile Remove="ClientApp\app\product\NewFolder\**" />
     <Content Remove="ClientApp\**" />
-    <EmbeddedResource Remove="ClientApp\app\NewFolder\**" />
     <EmbeddedResource Remove="ClientApp\app\product\NewFolder\**" />
-    <None Remove="ClientApp\app\NewFolder\**" />
     <None Remove="ClientApp\app\product\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\cart\cart.module.ts" />
+    <None Remove="ClientApp\app\cart\store\cart.action.ts" />
     <None Remove="ClientApp\app\models\cart-item.ts" />
     <None Remove="ClientApp\app\models\cart.ts" />
     <None Remove="ClientApp\app\models\product-component.ts" />
@@ -44,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\cart\cart.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\cart\store\cart.state.ts" />
+    <TypeScriptCompile Include="ClientApp\app\cart\store\cart.action.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart-item.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\product-component.ts" />

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
 import { Observable } from "rxjs/Observable";
 import * as ProductActions from '../store/product.action';
+import * as CartActions from '../../cart/store/cart.action';
 import { Product } from "../../models/product";
 
 @Component({
@@ -25,6 +26,6 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     addProductToCart(productId: string) {
-        this.store.dispatch(new ProductActions.AddProductToCartAction(productId));
+        this.store.dispatch(new CartActions.AddProductToCartAction(productId));
     }
 }

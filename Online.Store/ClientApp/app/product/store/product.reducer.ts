@@ -5,8 +5,7 @@ import * as productsAction from './product.action';
 
 export const initialState: ProductState = {
     products: [],
-    selectedProduct: undefined,
-    cart: undefined
+    selectedProduct: undefined
 };
 
 export function productReducer(state = initialState, action: productsAction.Actions): ProductState {
@@ -20,16 +19,6 @@ export function productReducer(state = initialState, action: productsAction.Acti
         case productsAction.SELECT_PRODUCT_COMPLETE:
             return Object.assign({}, state, {
                 selectedProduct: action.product
-            });
-
-        case productsAction.GET_CART_COMPLETE:
-            return Object.assign({}, state, {
-                cart: action.cart
-            });
-
-        case productsAction.ADD_PRODUCT_TO_CART_COMPLETE:
-            return Object.assign({}, state, {
-                cart: action.cart
             });
 
         default:
