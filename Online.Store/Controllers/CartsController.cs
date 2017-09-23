@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Online.Store.Azure.Services;
+using Online.Store.Core.DTOs;
 
 namespace Online.Store.Controllers
 {
@@ -19,22 +20,28 @@ namespace Online.Store.Controllers
             _storeService = storeService;
         }
 
-        // GET: api/Carts/5
-        [HttpGet("{id}", Name = "GetCart")]
-        public string Get(int id)
+        // GET: api/Carts
+        [HttpGet(Name = "GetCart")]
+        public async Task<CartDTO> GetAsync()
         {
-            return "value";
+            string cartId = Request.Cookies["cart"];
+
+            var cart = string.IsNullOrEmpty(cartId) ? null : await _storeService.GetCart(cartId);
+
+            return cart;
         }
         
         // POST: api/Carts
         [HttpPost]
-        public async Task PostAsync([FromBody]string productId)
+        public async Task<CartDTO> PostAsync([FromBody]string productId)
         {
             string cartId = Request.Cookies["cart"];
 
             var cart = await _storeService.AddProductToCart(cartId, productId);
 
             Response.Cookies.Append("cart", cart.Id);
+
+            return cart;
         }
         
         // PUT: api/Carts/5

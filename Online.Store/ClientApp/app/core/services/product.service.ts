@@ -45,6 +45,12 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
+    getCart(): Observable<Cart> {
+        return this.http.get(this.cartsURI, this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
+    }
+
     addProductToCart(id: string): Observable<Cart> {
         return this.http.post(this.cartsURI, '"' + id + '"', this.requestOptions)
             .map((res: Response) => res.json())

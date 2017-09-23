@@ -8,6 +8,8 @@ export const SELECT_PRODUCT = '[Product] Select Product';
 export const SELECT_PRODUCT_COMPLETE = '[Product] Select Product Complete';
 export const ADD_PRODUCT_TO_CART = '[Cart] Add Product To Cart';
 export const ADD_PRODUCT_TO_CART_COMPLETE = '[Cart] Add Product To Cart Complete';
+export const GET_CART = '[Cart] Get';
+export const GET_CART_COMPLETE = '[Cart] Get Complete';
 
 export class SelectAllAction implements Action {
     readonly type = SELECTALL;
@@ -45,10 +47,25 @@ export class AddProductToCartCompleteAction implements Action {
     constructor(public cart: Cart) { }
 }
 
+export class GetCartAction implements Action {
+    readonly type = GET_CART;
+
+    constructor() { }
+}
+
+export class GetCartCompleteAction implements Action {
+    readonly type = GET_CART_COMPLETE;
+
+    constructor(public cart: Cart) { }
+}
+
 export type Actions
     = SelectAllAction
     | SelectAllCompleteAction
     | SelectProductAction
     | SelectProductCompleteAction
-    | AddProductToCartAction;
+    | AddProductToCartAction
+    | AddProductToCartCompleteAction
+    | GetCartAction
+    | GetCartCompleteAction;
 

@@ -21,9 +21,12 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\app\NewFolder\**" />
     <Compile Remove="ClientApp\app\product\NewFolder\**" />
     <Content Remove="ClientApp\**" />
+    <EmbeddedResource Remove="ClientApp\app\NewFolder\**" />
     <EmbeddedResource Remove="ClientApp\app\product\NewFolder\**" />
+    <None Remove="ClientApp\app\NewFolder\**" />
     <None Remove="ClientApp\app\product\NewFolder\**" />
   </ItemGroup>
 

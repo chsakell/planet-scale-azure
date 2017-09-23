@@ -67,11 +67,7 @@ namespace Online.Store.Azure.Services
         /// <returns></returns>
         public async Task<CartDTO> GetCart(string cartId)
         {
-            CartDTO cartItem = new CartDTO();
-            await _repository.InitAsync(_CART_COLLECTION_ID);
-
-            cartItem = await _repository.GetItemAsync<CartDTO>(cartId);
-            return cartItem;
+            return await _cacheRepository.GetItemAsync<CartDTO>(cartId);
         }
 
         /// <summary>
