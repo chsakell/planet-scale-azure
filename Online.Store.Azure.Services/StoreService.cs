@@ -97,9 +97,11 @@ namespace Online.Store.Azure.Services
 
                 cart.Items.Add(new CartItemsDTO()
                 {
-                    Product = productId,
-                    ProductImage = product.Image,
-                    ProductTitle = product.Title,
+                    Id = productId,
+                    Image = product.Image,
+                    Title = product.Title,
+                    Description = product.Description,
+                    Price = product.Price,
                     Quantity = 1
                 });
             }
@@ -120,7 +122,7 @@ namespace Online.Store.Azure.Services
                     cart.UpdateDate = DateTime.Now;
                 }
 
-                var productCartItem = cart.Items.Where(i => i.Product == productId).FirstOrDefault();
+                var productCartItem = cart.Items.Where(i => i.Id == productId).FirstOrDefault();
 
                 if (productCartItem != null)
                 {
@@ -130,9 +132,11 @@ namespace Online.Store.Azure.Services
                 {
                     cart.Items.Add(new CartItemsDTO()
                     {
-                        Product = productId,
-                        ProductImage = product.Image,
-                        ProductTitle = product.Title,
+                        Id = productId,
+                        Image = product.Image,
+                        Title = product.Title,
+                        Description = product.Description,
+                        Price = product.Price,
                         Quantity = 1
                     });
                 }

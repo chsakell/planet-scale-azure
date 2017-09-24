@@ -9,16 +9,22 @@ namespace Online.Store.Core.DTOs
 {
     public class CartItemsDTO
     {
-        [JsonProperty(PropertyName = "product")]
-        public string Product { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         [JsonProperty(PropertyName = "quantity")]
         public int Quantity { get; set; }
 
-        [JsonProperty(PropertyName = "productTitle")]
-        public string ProductTitle { get; set; }
+        [JsonProperty(PropertyName = "title")]
+        public string Title { get; set; }
 
-        [JsonProperty(PropertyName = "productImage")]
-        public string ProductImage { get; set; }
+        [JsonProperty(PropertyName = "price")]
+        public double Price { get; set; }
+
+        [JsonProperty(PropertyName = "image")]
+        public string Image { get; set; }
+
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
     }
 }

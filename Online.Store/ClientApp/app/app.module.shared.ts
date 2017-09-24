@@ -10,6 +10,7 @@ import { NavMenuComponent } from './navmenu/navmenu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetchdata/fetchdata.component';
 import { CounterComponent } from './counter/counter.component';
+import { CheckoutComponent } from "./checkout/checkout.component";
 import { AppRoutes } from './app.routes';
 import { ProductModule } from './product/product.module';
 
@@ -18,6 +19,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { reducers } from "./reducers";
+import { CheckoutPresentationComponent } from "./checkout/checkout";
 
 @NgModule({
     declarations: [
@@ -25,6 +27,8 @@ import { reducers } from "./reducers";
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
+        CheckoutComponent,
+        CheckoutPresentationComponent,
         HomeComponent
     ],
     imports: [

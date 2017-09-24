@@ -30,6 +30,8 @@
   <ItemGroup>
     <None Remove="ClientApp\app\cart\cart.module.ts" />
     <None Remove="ClientApp\app\cart\store\cart.action.ts" />
+    <None Remove="ClientApp\app\checkout\checkout.component.ts" />
+    <None Remove="ClientApp\app\checkout\checkout.ts" />
     <None Remove="ClientApp\app\models\cart-item.ts" />
     <None Remove="ClientApp\app\models\cart.ts" />
     <None Remove="ClientApp\app\models\product-component.ts" />
@@ -47,6 +49,8 @@
     <TypeScriptCompile Include="ClientApp\app\cart\cart.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\cart\store\cart.state.ts" />
     <TypeScriptCompile Include="ClientApp\app\cart\store\cart.action.ts" />
+    <TypeScriptCompile Include="ClientApp\app\checkout\checkout.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\checkout\checkout.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart-item.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\product-component.ts" />

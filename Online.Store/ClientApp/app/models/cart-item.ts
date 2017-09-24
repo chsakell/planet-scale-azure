@@ -1,6 +1,8 @@
 ﻿export class CartItem {
-    public product: string;
+    public id: string;
     public quantity: number;
-    public productTitle: string;
-    public productImage: string;
+    public title: string;
+    public image: string;
+    public price: number;
+    public description: string;
 }
