@@ -140,6 +140,19 @@ namespace Online.Store.DocumentDB
             return _client.CreateDocumentQuery<T>(_collection.DocumentsLink, query, options).AsEnumerable();
         }
 
+        public async Task<IEnumerable<T>> CreateDocumentQueryAsync<T>(string query, FeedOptions options) where T : class
+        {
+            IDocumentQuery<T> response = _client.CreateDocumentQuery<T>(_collection.DocumentsLink, options).AsDocumentQuery();
+
+            List<T> results = new List<T>();
+            while (response.HasMoreResults)
+            {
+                results.AddRange(await response.ExecuteNextAsync<T>());
+            }
+
+            return results;
+        }
+
         public IEnumerable<T> CreateDocumentQuery<T>() where T : class
         {
             return _client.CreateDocumentQuery<T>(_collection.DocumentsLink).AsEnumerable();

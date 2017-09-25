@@ -22,6 +22,8 @@ namespace Online.Store.DocumentDB
 
         IEnumerable<T> CreateDocumentQuery<T>(string query, FeedOptions options) where T : class;
 
+        Task<IEnumerable<T>> CreateDocumentQueryAsync<T>(string query, FeedOptions options) where T : class;
+
         IEnumerable<T> CreateDocumentQuery<T>() where T : class;
 
         Task<Document> CreateItemAsync<T>(T item) where T : class;

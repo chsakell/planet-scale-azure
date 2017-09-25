@@ -49,6 +49,19 @@ namespace Online.Store.Azure.Services
             return data ?? new List<CommunityDTO>();
         }
 
+        public async Task<List<TopicDTO>> GetTopics()
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+
+            string query = "select c.id, c.title, c.content, c.mediaDescription, c.mediaUrl, c.mediaType, c.userId, c.createdDate from c";
+
+            var justTopics = await _repository.CreateDocumentQueryAsync<TopicDTO>(query, new Microsoft.Azure.Documents.Client.FeedOptions() { EnableCrossPartitionQuery = true });
+
+            // var topics = await _repository.GetItemsAsync<TopicDTO>();
+
+            return justTopics.ToList(); // topics.ToList();
+        }
+
         public async Task<IEnumerable<ProductDTO>> GetProducts(string filter)
         {
             return await GetAllProducts();
@@ -259,12 +272,12 @@ namespace Online.Store.Azure.Services
             {
                 PostId = Guid.NewGuid().ToString(),
                 Content = post.Content,
-                ContentType = post.ContentType,
+                ContentType = post.MediaType,
                 CreatedDate = DateTime.Now,
                 MediaDescription = post.MediaDescription,
                 Title = post.Title,
                 UserId = post.UserId,
-                ContentUrl = post.ContentUrl
+                ContentUrl = post.MediaUrl
             };
 
             Document created = await _repository.CreateItemAsync<CommunityDTO>(datatoAdd);
@@ -285,17 +298,17 @@ namespace Online.Store.Azure.Services
             {
                 PostId = Guid.NewGuid().ToString(),
                 Content = post.Content,
-                ContentType = post.ContentType,
+                ContentType = post.MediaType,
                 CreatedDate = DateTime.Now,
                 MediaDescription = post.MediaDescription,
                 Title = post.Title,
                 UserId = post.UserId,
-                ContentUrl = post.ContentUrl
+                ContentUrl = post.MediaUrl
             };
 
-            if (!string.IsNullOrEmpty(post.PostId))
+            if (!string.IsNullOrEmpty(post.Id))
             {
-                var entity = await _repository.GetItemAsync<CommunityDTO>(post.PostId);
+                var entity = await _repository.GetItemAsync<CommunityDTO>(post.Id);
                 if (entity != null)
                 {
                     if (entity.Responses == null)
@@ -303,7 +316,7 @@ namespace Online.Store.Azure.Services
 
                     entity.Responses.Add(datatoAdd);
 
-                    await _repository.UpdateItemAsync<CommunityDTO>(post.PostId, entity);
+                    await _repository.UpdateItemAsync<CommunityDTO>(post.Id, entity);
                 }
             }
 
@@ -387,6 +400,7 @@ namespace Online.Store.Azure.Services
     public interface IStoreService
     {
         Task<List<CommunityDTO>> GetTopCommunityPost();
+        Task<List<TopicDTO>> GetTopics();
         Task<IEnumerable<ProductDTO>> GetProducts(string filter);
         Task<ProductDTO> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
