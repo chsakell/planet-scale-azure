@@ -32,10 +32,15 @@
     <None Remove="ClientApp\app\cart\store\cart.action.ts" />
     <None Remove="ClientApp\app\checkout\checkout.component.ts" />
     <None Remove="ClientApp\app\checkout\checkout.ts" />
+    <None Remove="ClientApp\app\forum\forum.component.ts" />
+    <None Remove="ClientApp\app\forum\forum.module.ts" />
+    <None Remove="ClientApp\app\forum\forum.routes.ts" />
     <None Remove="ClientApp\app\models\cart-item.ts" />
     <None Remove="ClientApp\app\models\cart.ts" />
+    <None Remove="ClientApp\app\models\post.ts" />
     <None Remove="ClientApp\app\models\product-component.ts" />
     <None Remove="ClientApp\app\models\product-media.ts" />
+    <None Remove="ClientApp\app\models\topic.ts" />
     <None Remove="ClientApp\app\product\product.component.ts" />
     <None Remove="ClientApp\app\reducers\index.ts" />
   </ItemGroup>
@@ -51,10 +56,15 @@
     <TypeScriptCompile Include="ClientApp\app\cart\store\cart.action.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\forum.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\forum.module.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\forum.routes.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart-item.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\post.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\product-component.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\product-media.ts" />
+    <TypeScriptCompile Include="ClientApp\app\models\topic.ts" />
     <TypeScriptCompile Include="ClientApp\app\product\product.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\reducers\index.ts" />
   </ItemGroup>
@@ -62,6 +72,7 @@
   <ItemGroup>
     <Folder Include="App_Data\images\DSC-HX80\" />
     <Folder Include="App_Data\images\DC-ZS70K\" />
+    <Folder Include="ClientApp\app\forum\store\" />
   </ItemGroup>
 
   <Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">
