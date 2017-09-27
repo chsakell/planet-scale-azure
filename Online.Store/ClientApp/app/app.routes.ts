@@ -10,6 +10,7 @@ export const routes: Routes = [
     { path: 'counter', component: CounterComponent },
     { path: 'fetch-data', component: FetchDataComponent },
     { path: 'products', loadChildren: './product/product.module#ProductModule' },
+    { path: 'forum', loadChildren: './forum/forum.module#ForumModule' },
     { path: 'checkout', component: CheckoutComponent },
     { path: '**', redirectTo: 'home' }
 ];

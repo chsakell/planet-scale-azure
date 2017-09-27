@@ -35,6 +35,7 @@
     <None Remove="ClientApp\app\forum\forum.component.ts" />
     <None Remove="ClientApp\app\forum\forum.module.ts" />
     <None Remove="ClientApp\app\forum\forum.routes.ts" />
+    <None Remove="ClientApp\app\forum\list\list.ts" />
     <None Remove="ClientApp\app\models\cart-item.ts" />
     <None Remove="ClientApp\app\models\cart.ts" />
     <None Remove="ClientApp\app\models\post.ts" />
@@ -56,9 +57,12 @@
     <TypeScriptCompile Include="ClientApp\app\cart\store\cart.action.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\details\details.ts" />
     <TypeScriptCompile Include="ClientApp\app\forum\forum.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\forum\forum.module.ts" />
     <TypeScriptCompile Include="ClientApp\app\forum\forum.routes.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\list\list.ts" />
+    <TypeScriptCompile Include="ClientApp\app\forum\list\topic-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart-item.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\cart.ts" />
     <TypeScriptCompile Include="ClientApp\app\models\post.ts" />
