@@ -5,8 +5,8 @@ import { TopicDetailsComponent } from './details/topic-details.component';
 import { FORUM_ROUTES } from './forum.routes';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-//import { productReducer } from './store/product.reducer';
-//import { ProductEffects } from './store/product.effects';
+import { forumReducer } from './store/forum.reducer';
+import { ForumEffects } from './store/forum.effects';
 import { FormsModule } from '@angular/forms';
 import { ForumComponent } from "./forum.component";
 import { TopicListPresentationComponent } from './list/list';
@@ -25,10 +25,10 @@ const FORUM_DIRECTIVES = [
         CommonModule,
         FormsModule,
         FORUM_ROUTES,
-        //StoreModule.forFeature('catalog', {
-        //    productState: productReducer,
-        //}),
-        //EffectsModule.forFeature([ProductEffects])
+        StoreModule.forFeature('community', {
+            forumState: forumReducer,
+        }),
+        EffectsModule.forFeature([ForumEffects])
     ],
     exports: [
         ...FORUM_DIRECTIVES

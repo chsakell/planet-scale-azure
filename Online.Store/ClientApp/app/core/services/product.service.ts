@@ -11,11 +11,13 @@ import { Product } from './../../models/product';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Cart } from "../../models/cart";
+import { Topic } from '../../models/topic';
 
 @Injectable()
 export class ProductService {
 
     private productsURI: string;
+    private forumURI: string;
     private cartsURI: string;
     private headers: Headers;
     private requestOptions: RequestOptions;
@@ -23,6 +25,7 @@ export class ProductService {
     constructor(private http: Http, private configuration: Configuration) {
 
         this.productsURI = configuration.Server + 'api/products/';
+        this.forumURI = configuration.Server + 'api/forum/topics';
         this.cartsURI = configuration.Server + 'api/carts/';
 
         this.headers = new Headers();
@@ -30,7 +33,6 @@ export class ProductService {
         this.headers.append('Accept', 'application/json');
 
         this.requestOptions = new RequestOptions({ headers: this.headers })
-
     }
 
     getAll(): Observable<Product[]> {
@@ -53,6 +55,18 @@ export class ProductService {
 
     addProductToCart(id: string): Observable<Cart> {
         return this.http.post(this.cartsURI, '"' + id + '"', this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    getTopics(): Observable<Topic[]> {
+        return this.http.get(this.forumURI, this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
+    }
+
+    getTopicDetails(id: string): Observable<Topic> {
+        return this.http.get(this.forumURI + id, this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

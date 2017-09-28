@@ -7,9 +7,9 @@ import { ForumComponent } from "./forum.component";
 const routes: Routes = [
     {
         path: '', component: ForumComponent, children: [
-            { path: '', redirectTo: 'topics/list', pathMatch: 'full' },
-            { path: 'topics/list', component: TopicListComponent },
-            { path: 'topic/:id', component: TopicDetailsComponent }
+            { path: '', redirectTo: 'topics', pathMatch: 'full' },
+            { path: 'topics', component: TopicListComponent },
+            { path: 'topics/:id', component: TopicDetailsComponent }
         ]
     }
 ];
