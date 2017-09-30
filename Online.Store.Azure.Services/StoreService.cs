@@ -62,6 +62,15 @@ namespace Online.Store.Azure.Services
             return justTopics.ToList(); // topics.ToList();
         }
 
+        public async Task<TopicDTO> GetTopic(string id)
+        {
+            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+
+            var topic = await _repository.GetItemAsync<TopicDTO>(id);
+
+            return topic;
+        }
+
         public async Task<IEnumerable<ProductDTO>> GetProducts(string filter)
         {
             return await GetAllProducts();
@@ -401,6 +410,7 @@ namespace Online.Store.Azure.Services
     {
         Task<List<CommunityDTO>> GetTopCommunityPost();
         Task<List<TopicDTO>> GetTopics();
+        Task<TopicDTO> GetTopic(string id);
         Task<IEnumerable<ProductDTO>> GetProducts(string filter);
         Task<ProductDTO> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);

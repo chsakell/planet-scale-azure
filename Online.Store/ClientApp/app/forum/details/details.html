@@ -1,1 +1,40 @@
-﻿<h1>Hello from details!!</h1>
+﻿<div class="container-fluid">
+    <div class="resume" *ngIf="topic">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+                <div class="panel panel-default">
+                    <div class="bs-callout bs-callout-danger">
+                        <h4>{{topic.title}}</h4>
+                        <p>
+                            {{topic.content}}
+                        </p>
+                        <ul class="list-group" *ngIf="topic.mediaUrl">
+                            <a class="list-group-item inactive-link" href="#">
+                                <h4 class="list-group-item-heading">
+                                    {{topic.mediaDescription}}
+                                </h4>
+                                <p class="list-group-item-text">
+                                    <img [src]="topic.mediaUrl" class="img-responsive" />
+                                </p>
+                            </a>
+                        </ul>
+                    </div>
+                    <div class="bs-callout bs-callout-danger" *ngIf="topic.posts.length > 0">
+                        <h4>Responses</h4>
+                        <ul class="list-group">
+                            <a class="list-group-item inactive-link" href="#" *ngFor="let post of topic.posts; let i = index">
+                                <h4 class="list-group-item-heading">
+                                    {{post.title}}
+                                </h4>
+                                <p class="list-group-item-text">
+                                    {{post.content}}
+                                </p>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

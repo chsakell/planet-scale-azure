@@ -25,7 +25,7 @@ export class ProductService {
     constructor(private http: Http, private configuration: Configuration) {
 
         this.productsURI = configuration.Server + 'api/products/';
-        this.forumURI = configuration.Server + 'api/forum/topics';
+        this.forumURI = configuration.Server + 'api/forum/topics/';
         this.cartsURI = configuration.Server + 'api/carts/';
 
         this.headers = new Headers();

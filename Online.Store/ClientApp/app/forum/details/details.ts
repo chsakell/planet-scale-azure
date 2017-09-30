@@ -10,7 +10,7 @@ import { Topic } from "../../models/topic";
 
 export class TopicDetailsPresentationComponent {
 
-    @Input() topics: Topic[];
+    @Input() topic: Topic;
 
     constructor() { }
 

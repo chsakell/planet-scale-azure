@@ -32,9 +32,11 @@ namespace Online.Store.Controllers
 
         // GET: api/Forum/5
         [HttpGet("topics/{id}", Name = "GetTopic")]
-        public string GetTopic(string id)
+        public async Task<TopicDTO> GetTopic(string id)
         {
-            return "value";
+            var topic = await _storeService.GetTopic(id);
+
+            return topic;
         }
         
         // POST: api/Forum

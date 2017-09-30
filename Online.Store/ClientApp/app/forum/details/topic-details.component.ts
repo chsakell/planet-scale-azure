@@ -1,25 +1,27 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-//import { ProductState } from '../store/product.state';
+import { ForumState } from '../store/forum.state';
+import { Router, ActivatedRoute, ParamMap, NavigationEnd } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-//import * as ProductActions from '../store/product.action';
-//import { Product } from "../../models/product";
+import { Topic } from "../../models/topic";
+import * as forumActions from '../store/forum.actions';
 
 @Component({
     selector: 'topic-details',
-    templateUrl: './topic-details.component.html',
-
+    templateUrl: './topic-details.component.html'
 })
 
 export class TopicDetailsComponent implements OnInit {
 
-    //products$: Observable<Product[]>;
+    topic$: Observable<Topic>;
 
-    constructor(private store: Store<any>) {
-        //this.products$ = this.store.select<Product[]>(state => state.catalog.productState.products);
+    constructor(private store: Store<any>, private route: ActivatedRoute, private router: Router) {
+        this.topic$ = this.store.select<Topic>(state => state.community.forumState.selectedTopic);
     }
 
     ngOnInit() {
-        //this.store.dispatch(new ProductActions.SelectAllAction());
+        this.route.paramMap
+            .subscribe((params: ParamMap) =>
+                this.store.dispatch(new forumActions.SelectTopicAction(params.get('id') || '')));
     }
 }
