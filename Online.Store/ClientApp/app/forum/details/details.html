@@ -29,6 +29,16 @@
                                 <p class="list-group-item-text">
                                     {{post.content}}
                                 </p>
+                                <ul class="list-group" *ngIf="post.mediaUrl">
+                                    <a class="list-group-item inactive-link" href="#">
+                                        <p class="list-group-item-text">
+                                            <img [src]="post.mediaUrl" class="img-responsive" />
+                                        </p>
+                                        <h4 class="list-group-item-heading">
+                                            {{post.mediaDescription}}
+                                        </h4>
+                                    </a>
+                                </ul>
                             </a>
                         </ul>
                     </div>
