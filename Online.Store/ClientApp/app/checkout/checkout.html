@@ -16,7 +16,7 @@
             <img [src]="product.image">
         </div>
         <div class="product-details">
-            <div class="product-title"><a [routerLink]="['/products/details', product.product]">{{product.title}}</a></div>
+            <div class="product-title"><a [routerLink]="['/products/details', product.id]">{{product.title}}</a></div>
             <p class="product-description">{{product.description}}</p>
         </div>
         <div class="product-price">{{product.price}}</div>
