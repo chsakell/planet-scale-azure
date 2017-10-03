@@ -12,6 +12,10 @@ using Online.Store.DocumentDB;
 using Online.Store.Mappings;
 using Online.Store.Storage;
 using Online.Store.RedisCache;
+using Online.Store.Data;
+using Online.Store.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Online_Store
 {
@@ -32,6 +36,14 @@ namespace Online_Store
             // Make Configuration injectable
             services.AddSingleton<IConfiguration>(Configuration);
 
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                b => b.MigrationsAssembly("Online.Store")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             // Configure Cache
             services.AddDistributedRedisCache(option =>
             {
@@ -46,8 +58,6 @@ namespace Online_Store
             services.AddScoped<IStoreService, StoreService>();
 
             services.AddMvc();
-
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +77,8 @@ namespace Online_Store
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             AutoMapperConfiguration.Configure();
 
