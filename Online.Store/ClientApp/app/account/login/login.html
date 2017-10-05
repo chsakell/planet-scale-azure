@@ -1,1 +1,21 @@
-<h1>hello from login!!</h1>
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <form method="post" action="/Account/Register" novalidate="novalidate">
+                    <h4>Sign in to your account.</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input class="form-control" type="email" id="Email" name="Email" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password</label>
+                        <input class="form-control" type="password" id="Password" name="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary pull-right">Login</button>
+                </form>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>

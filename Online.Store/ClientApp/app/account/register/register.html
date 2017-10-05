@@ -1,1 +1,29 @@
-<h1>hello from register!!</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form method="post" action="/Account/Register" novalidate="novalidate">
+                <h4>Create a new account.</h4>
+                <hr>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input class="form-control" type="email" id="Email" name="Email" value="">
+                </div>
+                <div class="form-group">
+                        <label for="Username">Username</label>
+                        <input class="form-control" type="text" name="Username" value="">
+                    </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input class="form-control" type="password" id="Password" name="Password">
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmPassword">Confirm password</label>
+                    <input class="form-control" type="password" name="ConfirmPassword">
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Register</button>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
