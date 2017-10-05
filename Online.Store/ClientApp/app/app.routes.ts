@@ -11,6 +11,7 @@ export const routes: Routes = [
     { path: 'fetch-data', component: FetchDataComponent },
     { path: 'products', loadChildren: './product/product.module#ProductModule' },
     { path: 'forum', loadChildren: './forum/forum.module#ForumModule' },
+    { path: 'account', loadChildren: './account/account.module#AccountModule' },
     { path: 'checkout', component: CheckoutComponent },
     { path: '**', redirectTo: 'home' }
 ];
