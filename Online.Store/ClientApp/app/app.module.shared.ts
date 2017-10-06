@@ -21,6 +21,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from "./reducers";
 import { CheckoutPresentationComponent } from "./checkout/checkout";
 
+import { NgxGalleryModule } from 'ngx-gallery';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -37,6 +39,7 @@ import { CheckoutPresentationComponent } from "./checkout/checkout";
         FormsModule,
         AppRoutes,
         CoreModule.forRoot(),
+        NgxGalleryModule,
         StoreModule.forRoot(reducers),
         StoreDevtoolsModule.instrument({
             maxAge: 5 //  Retains last 25 states

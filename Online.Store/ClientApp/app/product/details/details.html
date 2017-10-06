@@ -8,15 +8,9 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
-            <p class="lead">Product media</p>
-            <div class="media-item" *ngFor="let media of _medias; let i = index">
-                <img class="img-responsive"  [src]="media.url" />
-            </div>
-        </div>
-        <div class="col-sm-9">
+        <div class="col-sm-12">
             <div class="thumbnail product-info">
-                <img class="img-responsive" [src]="product.image" alt="">
+                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" *ngIf="galleryImages"></ngx-gallery>
                 <div class="caption-full">
                     <h4>
                         <a href="#">{{product.title}}</a>

@@ -21,6 +21,8 @@ const nonTreeShakableModules = [
     'es6-shim',
     'event-source-polyfill',
     'font-awesome/css/font-awesome.css',
+    'hammerjs',
+    'ngx-gallery',
     'jquery',
 ];
 const allModules = treeShakableModules.concat(nonTreeShakableModules);

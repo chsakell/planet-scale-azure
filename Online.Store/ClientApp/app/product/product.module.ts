@@ -12,6 +12,8 @@ import { ProductComponent } from "./product.component";
 import { ProductListPresentationComponent } from './list/list';
 import { ProductDetailsPresentationComponent } from "./details/details";
 
+import { NgxGalleryModule } from 'ngx-gallery';
+
 const PRODUCT_DIRECTIVES = [
     ProductListComponent,
     ProductListPresentationComponent,
@@ -25,6 +27,7 @@ const PRODUCT_DIRECTIVES = [
         CommonModule,
         FormsModule,
         PRODUCT_ROUTES,
+        NgxGalleryModule,
         StoreModule.forFeature('catalog', {
             productState: productReducer,
         }),
