@@ -11,6 +11,7 @@ import * as accountActions from './account.actions';
 import { AccountService } from '../../core/services/account.service';
 import { Cart } from "../../models/cart";
 import { RegisterVM } from '../../models/register-vm';
+import { LoginVM } from '../../models/login-vm';
 
 @Injectable()
 export class AccountEffects {
@@ -23,6 +24,18 @@ export class AccountEffects {
                 })
                 .catch((error: any) => {
                     return of({ type: 'registerUser_FAILED' })
+                })
+        }
+        );
+
+        @Effect() loginUser: Observable<Action> = this.actions$.ofType(accountActions.LOGIN_USER)
+        .switchMap((action: accountActions.LoginUserAction) => {
+            return this.accountService.loginUser(action.user)
+                .map((data: LoginVM) => {
+                    return new accountActions.LoginUserCompleteAction(data);
+                })
+                .catch((error: any) => {
+                    return of({ type: 'loginUser_FAILED' })
                 })
         }
         );

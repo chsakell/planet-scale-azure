@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-// import { ForumState } from '../store/forum.state';
 import { Observable } from 'rxjs/Observable';
 import * as accountActions from '../store/account.actions';
 import { Topic } from "../../models/topic";

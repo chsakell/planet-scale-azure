@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-// import { ForumState } from '../store/forum.state';
 import { Observable } from 'rxjs/Observable';
-// import * as forumActions from '../store/forum.actions';
-import { Topic } from "../../models/topic";
+import * as accountActions from '../store/account.actions';
+import { LoginVM } from '../../models/login-vm';
+import { ISubscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'account-login',
@@ -13,14 +13,26 @@ import { Topic } from "../../models/topic";
 
 export class AccountLoginComponent implements OnInit {
 
-    // topics$: Observable<Topic[]>;
-
+    loginUser$: Observable<LoginVM>;
+    private subscription: ISubscription;
 
     constructor(private store: Store<any>) {
-        // this.topics$ = this.store.select<Topic[]>(state => state.community.forumState.topics);
+        this.loginUser$ = this.store.select<LoginVM>(state => state.account.accountState.loginUser);
     }
 
     ngOnInit() {
-        // this.store.dispatch(new forumActions.SelectAllAction());
+        this.subscription = this.loginUser$
+        .skip(1)
+        .filter(u => u.username != '' && u.password != '')
+        .distinctUntilChanged()
+        .subscribe(user => this.store.dispatch(new accountActions.LoginUserAction(user)));
+    }
+
+    loginUser(user: LoginVM) {
+        this.store.dispatch(new accountActions.SetLoginUserAction(user));
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

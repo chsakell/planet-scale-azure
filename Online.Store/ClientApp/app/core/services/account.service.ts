@@ -10,6 +10,7 @@ import { Configuration } from './../../app.constants';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { RegisterVM } from '../../models/register-vm';
+import { LoginVM } from '../../models/login-vm';
 
 @Injectable()
 export class AccountService {
@@ -30,9 +31,15 @@ export class AccountService {
     }
 
     registerUser(user: RegisterVM): Observable<RegisterVM> {
-        debugger;
 
         return this.http.post(this.accountURI + 'register', JSON.stringify(user), this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    loginUser(user: LoginVM): Observable<LoginVM> {
+
+        return this.http.post(this.accountURI + 'login', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

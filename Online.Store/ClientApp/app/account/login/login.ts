@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-//import { Topic } from "../../models/topic";
+import { LoginVM } from '../../models/login-vm';
 
 @Component({
     selector: 'account-login-presentation',
@@ -10,8 +10,23 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 
 export class AccountLoginPresentationComponent {
 
-    //@Input() topics: Topic[];
+    _user: LoginVM;
+    @Input() 
+    set user(val : LoginVM)
+    {
+        this._user = Object.assign({}, val);
+    }
+
+    get user() {
+        return this._user;
+    }
+
+    @Output() onLogin: EventEmitter<LoginVM> = new EventEmitter();
 
     constructor() { }
+
+    login() {
+        this.onLogin.emit(this.user);
+    }
 
 }
