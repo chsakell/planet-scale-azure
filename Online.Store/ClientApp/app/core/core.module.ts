@@ -4,6 +4,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Configuration } from '../app.constants';
 import { ProductService } from './services/product.service';
 import { CartModule } from "../cart/cart.module";
+import { AccountService } from './services/account.service';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ export class CoreModule {
             ngModule: CoreModule,
             providers: [
                 ProductService,
+                AccountService,
                 Configuration
             ]
         };

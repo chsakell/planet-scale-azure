@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 // import { ForumState } from '../store/forum.state';
 import { Observable } from 'rxjs/Observable';
-// import * as forumActions from '../store/forum.actions';
+import * as accountActions from '../store/account.actions';
 import { Topic } from "../../models/topic";
+import { RegisterVM } from '../../models/register-vm';
+import { ISubscription } from "rxjs/Subscription";
 
 @Component({
     selector: 'account-register',
@@ -13,14 +15,26 @@ import { Topic } from "../../models/topic";
 
 export class AccountRegisterComponent implements OnInit {
 
-    // topics$: Observable<Topic[]>;
-
+    newUser$: Observable<RegisterVM>;
+    private subscription: ISubscription;
 
     constructor(private store: Store<any>) {
-        // this.topics$ = this.store.select<Topic[]>(state => state.community.forumState.topics);
+        this.newUser$ = this.store.select<RegisterVM>(state => state.account.accountState.newUser);
     }
 
     ngOnInit() {
-        // this.store.dispatch(new forumActions.SelectAllAction());
+        this.subscription = this.newUser$
+        .skip(1)
+        .filter(u => u.email != '' && u.username != '' && u.password != '' && u.confirmPassword != '')
+        .distinctUntilChanged()
+        .subscribe(user => this.store.dispatch(new accountActions.RegisterUserAction(user)));
+    }
+
+    registerUser(user: RegisterVM) {
+        this.store.dispatch(new accountActions.SetRegisterUserAction(user));
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

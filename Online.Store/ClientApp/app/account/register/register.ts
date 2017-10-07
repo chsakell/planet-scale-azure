@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { RegisterVM } from '../../models/register-vm';
 //import { Topic } from "../../models/topic";
 
 @Component({
@@ -10,8 +11,22 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 
 export class AccountRegisterPresentationComponent {
 
-    //@Input() topics: Topic[];
+    _user: RegisterVM;
+    @Input() 
+    set user(val : RegisterVM)
+    {
+        this._user = Object.assign({}, val);
+    }
+
+    get user() {
+        return this._user;
+    }
+
+    @Output() onRegister: EventEmitter<RegisterVM> = new EventEmitter();
 
     constructor() { }
 
+    register() {
+        this.onRegister.emit(this.user);
+    }
 }

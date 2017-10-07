@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ACCOUNT_ROUTES } from './account.routes';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-//import { forumReducer } from './store/forum.reducer';
-//import { ForumEffects } from './store/forum.effects';
 import { FormsModule } from '@angular/forms';
 import { AccountRegisterComponent } from './register/register.component';
 import { AccountRegisterPresentationComponent } from './register/register';
 import { AccountLoginComponent } from './login/login.component';
 import { AccountLoginPresentationComponent } from './login/login';
 import { AccountComponent } from './account.component';
-
+import { accountReducer } from './store/account.reducer';
+import { AccountEffects } from './store/account.effects';
 
 const ACCOUNT_DIRECTIVES = [
     AccountRegisterComponent,
@@ -26,12 +25,10 @@ const ACCOUNT_DIRECTIVES = [
         CommonModule,
         FormsModule,
         ACCOUNT_ROUTES,
-        /*
-        StoreModule.forFeature('community', {
-            forumState: forumReducer,
+        StoreModule.forFeature('account', {
+            accountState: accountReducer,
         }),
-        EffectsModule.forFeature([ForumEffects])
-        */
+        EffectsModule.forFeature([AccountEffects])
     ],
     exports: [
         ...ACCOUNT_DIRECTIVES

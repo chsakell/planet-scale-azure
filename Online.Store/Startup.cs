@@ -16,6 +16,8 @@ using Online.Store.Data;
 using Online.Store.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Online.Store.Services;
+using Online.Store.Extensions;
 
 namespace Online_Store
 {
@@ -33,11 +35,12 @@ namespace Online_Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             // Make Configuration injectable
             services.AddSingleton<IConfiguration>(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Online.Store")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -56,6 +59,7 @@ namespace Online_Store
             services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
             services.AddScoped<IStoreService, StoreService>();
+            services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
         }
@@ -81,6 +85,8 @@ namespace Online_Store
             app.UseAuthentication();
 
             AutoMapperConfiguration.Configure();
+
+            app.UseAntiforgeryToken();
 
             app.UseMvc(routes =>
             {
