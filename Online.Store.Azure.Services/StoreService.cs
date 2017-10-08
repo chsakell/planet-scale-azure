@@ -2,6 +2,7 @@
 using Online.Store.Core.DTOs;
 using Online.Store.DocumentDB;
 using Online.Store.RedisCache;
+using Online.Store.SqlServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,15 @@ namespace Online.Store.Azure.Services
 
         private IRedisCacheRepository _cacheRepository;
 
+        IShardingRepository _dataRepository;
+
         public StoreService(IDocumentDBRepository<DocumentDBStoreRepository> _repository,
-                            IRedisCacheRepository cacheRepository)
+                            IRedisCacheRepository cacheRepository,
+                            IShardingRepository dataRepository)
         {
             this._repository = _repository;
             this._cacheRepository = cacheRepository;
+            this._dataRepository = dataRepository;
         }
 
         #region DocumentDB
@@ -84,15 +89,6 @@ namespace Online.Store.Azure.Services
         }
 
         /// <summary>
-        /// Get cart item by cartid.
-        /// </summary>
-        /// <returns></returns>
-        public async Task<CartDTO> GetCart(string cartId)
-        {
-            return await _cacheRepository.GetItemAsync<CartDTO>(cartId);
-        }
-
-        /// <summary>
         /// Add to Cart.
         /// </summary>
         /// <returns></returns>
@@ -100,73 +96,6 @@ namespace Online.Store.Azure.Services
         {
             await _repository.InitAsync(_CART_COLLECTION_ID);
             await _repository.CreateItemAsync<CartDTO>(item);
-        }
-
-        public async Task<CartDTO> AddProductToCart(string cardId, string productId)
-        {
-            CartDTO cart = null;
-            var product = await GetProductDetails(productId);
-
-            if (string.IsNullOrEmpty(cardId))
-            {
-                cardId = Guid.NewGuid().ToString();
-
-                cart = new CartDTO()
-                {
-                    Id = cardId,
-                    CreatedDate = DateTime.Now
-                };
-
-                cart.Items.Add(new CartItemsDTO()
-                {
-                    Id = productId,
-                    Image = product.Image,
-                    Title = product.Title,
-                    Description = product.Description,
-                    Price = product.Price,
-                    Quantity = 1
-                });
-            }
-            else
-            {
-                cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
-
-                if(cart == null)
-                {
-                    cart = new CartDTO()
-                    {
-                        Id = cardId,
-                        CreatedDate = DateTime.Now
-                    };
-                }
-                else
-                {
-                    cart.UpdateDate = DateTime.Now;
-                }
-
-                var productCartItem = cart.Items.Where(i => i.Id == productId).FirstOrDefault();
-
-                if (productCartItem != null)
-                {
-                    productCartItem.Quantity++;
-                }
-                else
-                {
-                    cart.Items.Add(new CartItemsDTO()
-                    {
-                        Id = productId,
-                        Image = product.Image,
-                        Title = product.Title,
-                        Description = product.Description,
-                        Price = product.Price,
-                        Quantity = 1
-                    });
-                }
-            }
-
-            await _cacheRepository.SetItemAsync(cardId, cart);
-
-            return cart;
         }
 
         /// <summary>
@@ -402,6 +331,92 @@ namespace Online.Store.Azure.Services
         #endregion
 
         #region RedisCache
+        /// <summary>
+        /// Get cart item by cartid.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<CartDTO> GetCart(string cartId)
+        {
+            return await _cacheRepository.GetItemAsync<CartDTO>(cartId);
+        }
+
+        public async Task<CartDTO> AddProductToCart(string cardId, string productId)
+        {
+            CartDTO cart = null;
+            var product = await GetProductDetails(productId);
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                cardId = Guid.NewGuid().ToString();
+
+                cart = new CartDTO()
+                {
+                    Id = cardId,
+                    CreatedDate = DateTime.Now
+                };
+
+                cart.Items.Add(new CartItemsDTO()
+                {
+                    Id = productId,
+                    Image = product.Image,
+                    Title = product.Title,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Quantity = 1
+                });
+            }
+            else
+            {
+                cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
+
+                if (cart == null)
+                {
+                    cart = new CartDTO()
+                    {
+                        Id = cardId,
+                        CreatedDate = DateTime.Now
+                    };
+                }
+                else
+                {
+                    cart.UpdateDate = DateTime.Now;
+                }
+
+                var productCartItem = cart.Items.Where(i => i.Id == productId).FirstOrDefault();
+
+                if (productCartItem != null)
+                {
+                    productCartItem.Quantity++;
+                }
+                else
+                {
+                    cart.Items.Add(new CartItemsDTO()
+                    {
+                        Id = productId,
+                        Image = product.Image,
+                        Title = product.Title,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Quantity = 1
+                    });
+                }
+            }
+
+            await _cacheRepository.SetItemAsync(cardId, cart);
+
+            return cart;
+        }
+        #endregion
+
+        #region Sharding
+
+        public int? AddOrder(OrderDTO order)
+        {
+            int shardingKey = _dataRepository.TotalOrders() + 1;
+            int? orderId = _dataRepository.AddOrder(order, shardingKey);
+
+            return orderId;
+        }
 
         #endregion
     }
@@ -422,5 +437,6 @@ namespace Online.Store.Azure.Services
         Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
         Task<CommunityDTO> AddPost(PostDTO post);
         Task<CommunityDTO> AddPostResponse(PostDTO post);
+        int? AddOrder(OrderDTO order);
     }
 }

@@ -38,6 +38,18 @@ export class CartEffects {
         }
         );
 
+        @Effect() completeOrder: Observable<Action> = this.actions$.ofType(cartAction.COMPLETE_ORDER)
+        .switchMap((action: cartAction.CompleteOrderAction) => {
+            return this.productService.completeOrder(action.id)
+                .map((data: string) => {
+                    return new cartAction.CompleteOrderCompleteAction(data);
+                })
+                .catch((error: any) => {
+                    return of({ type: 'completeOrder_FAILED' })
+                })
+        }
+        );
+
     constructor(
         private productService: ProductService,
         private actions$: Actions

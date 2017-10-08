@@ -161,6 +161,8 @@ namespace Online.Store.Migrations
 
                     b.Property<string>("SecurityStamp");
 
+                    b.Property<int>("ShardingKey");
+
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")

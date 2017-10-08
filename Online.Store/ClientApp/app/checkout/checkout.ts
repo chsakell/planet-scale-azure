@@ -24,8 +24,9 @@ export class CheckoutPresentationComponent {
 
     constructor() { }
 
-    completeOrder(id: string) {
-        this.checkout.emit(id);
+    completeOrder() {
+        console.log(this.cart.id);
+        this.checkout.emit(this.cart.id);
     }
 
 }

@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Online.Store.Services;
 using Online.Store.Extensions;
+using Online.Store.SqlServer;
 
 namespace Online_Store
 {
@@ -62,6 +63,7 @@ namespace Online_Store
 
             services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
+            services.AddScoped<IShardingRepository, ShardingRepository>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddTransient<IEmailSender, EmailSender>();
 

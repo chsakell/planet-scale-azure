@@ -2,7 +2,7 @@
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Cart } from "../models/cart";
-//import * as ProductActions from '../store/product.action';
+import * as orderActions from '../cart/store/cart.action';
 
 @Component({
     selector: 'checkout-order',
@@ -23,6 +23,6 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(id: string) {
-        console.log(id);
+        this.store.dispatch(new orderActions.CompleteOrderAction(id));
     }
 }

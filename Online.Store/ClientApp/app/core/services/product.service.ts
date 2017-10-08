@@ -19,6 +19,7 @@ export class ProductService {
     private productsURI: string;
     private forumURI: string;
     private cartsURI: string;
+    private ordersURI: string;
     private headers: Headers;
     private requestOptions: RequestOptions;
 
@@ -27,6 +28,7 @@ export class ProductService {
         this.productsURI = configuration.Server + 'api/products/';
         this.forumURI = configuration.Server + 'api/forum/topics/';
         this.cartsURI = configuration.Server + 'api/carts/';
+        this.ordersURI = configuration.Server + 'api/orders/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
@@ -55,6 +57,12 @@ export class ProductService {
 
     addProductToCart(id: string): Observable<Cart> {
         return this.http.post(this.cartsURI, '"' + id + '"', this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    completeOrder(id: string): Observable<string> {
+        return this.http.post(this.ordersURI, '"' + id + '"', this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
