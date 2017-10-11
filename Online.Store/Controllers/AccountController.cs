@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Online.Store.Models;
 using Online.Store.Models.AccountViewModels;
 using Online.Store.Services;
+using Online.Store.ViewModels;
 
 namespace Online.Store.Controllers
 {
@@ -58,7 +59,7 @@ namespace Online.Store.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
-            
+
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -69,22 +70,36 @@ namespace Online.Store.Controllers
                     _logger.LogInformation("User logged in.");
                     var user = await _signInManager.UserManager.FindByNameAsync(model.Username);
 
-                    return Ok(user);
+                    return Ok(new ResultViewModel()
+                    {
+                        Result = Result.SUCCESS,
+                        Data = new { username = model.Username, id = user.Id }
+                    });
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToAction(nameof(Lockout));
+                    return Ok(new ResultViewModel()
+                    {
+                        Result = Result.ERROR,
+                        Message = "User account locked out."
+                    });
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    return Ok(new ResultViewModel()
+                    {
+                        Result = Result.ERROR,
+                        Message = "Invalid login attempt."
+                    });
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return BadRequest(new ResultViewModel()
+            {
+                Result = Result.ERROR,
+                Message = "Bad request"
+            });
         }
 
         [HttpGet]

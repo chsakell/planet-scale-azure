@@ -16,7 +16,6 @@ export function accountReducer(state = initialState, action: accountActions.Acti
                 newUser: action.user
             });
 
-        case accountActions.LOGIN_USER_COMPLETE:
         case accountActions.SET_LOGIN_USER:
             return Object.assign({}, state, {
                 loginUser: action.user

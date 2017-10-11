@@ -1,5 +1,7 @@
 ﻿import { Action } from '@ngrx/store';
 import { Cart } from "../../models/cart";
+import { LoginVM } from '../../models/login-vm';
+import { ResultVM } from '../../models/result-vm';
 
 export const GET_CART = '[Cart] Get';
 export const GET_CART_COMPLETE = '[Cart] Get Complete';
@@ -7,6 +9,7 @@ export const ADD_PRODUCT_TO_CART = '[Cart] Add Product To Cart';
 export const ADD_PRODUCT_TO_CART_COMPLETE = '[Cart] Add Product To Cart Complete';
 export const COMPLETE_ORDER = '[Order] Complete';
 export const COMPLETE_ORDER_COMPLETE = '[Order] Completed';
+export const LOGIN_USER_COMPLETE = '[Account] Login User Complete';
 
 export class GetCartAction implements Action {
     readonly type = GET_CART;
@@ -44,9 +47,16 @@ export class CompleteOrderCompleteAction implements Action {
     constructor(public id: string) { }
 }
 
+export class LoginUserCompleteAction implements Action {
+    readonly type = LOGIN_USER_COMPLETE;
+
+    constructor(public result: ResultVM) { }
+}
+
 export type Actions
     = GetCartAction
     | GetCartCompleteAction
     | AddProductToCartAction
-    | AddProductToCartCompleteAction;
+    | AddProductToCartCompleteAction
+    | LoginUserCompleteAction;
 

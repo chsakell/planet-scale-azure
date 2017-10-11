@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { RegisterVM } from '../../models/register-vm';
 import { LoginVM } from '../../models/login-vm';
+import { ResultVM } from '../../models/result-vm';
 
 @Injectable()
 export class AccountService {
@@ -37,7 +38,7 @@ export class AccountService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    loginUser(user: LoginVM): Observable<LoginVM> {
+    loginUser(user: LoginVM): Observable<ResultVM> {
 
         return this.http.post(this.accountURI + 'login', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())

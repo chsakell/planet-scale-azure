@@ -24,7 +24,6 @@ li.link-active a:focus {
 @media (min-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
-        top:0;
         height: 100%;
         width: calc(25% - 20px);
     }
@@ -58,5 +57,12 @@ li.link-active a:focus {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+}
+
+@media (max-width: 768px) {
+    /* On small screens, convert the nav menu to a vertical sidebar */
+    .main-nav {
+        top:0;
     }
 }

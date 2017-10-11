@@ -7,7 +7,6 @@ export const REGISTER_USER = '[Account] Register User';
 export const REGISTER_USER_COMPLETE = '[Account] Register User Complete';
 export const SET_LOGIN_USER = '[Account] Set Login User';
 export const LOGIN_USER = '[Account] Login User';
-export const LOGIN_USER_COMPLETE = '[Account] Login User Complete';
 
 export class RegisterUserAction implements Action {
     readonly type = REGISTER_USER;
@@ -33,12 +32,6 @@ export class LoginUserAction implements Action {
     constructor(public user: LoginVM) { }
 }
 
-export class LoginUserCompleteAction implements Action {
-    readonly type = LOGIN_USER_COMPLETE;
-
-    constructor(public user: LoginVM) { }
-}
-
 export class SetLoginUserAction implements Action {
     readonly type = SET_LOGIN_USER;
 
@@ -50,6 +43,5 @@ export type Actions
     | RegisterUserAction
     | RegisterUserCompleteAction
     | SetLoginUserAction
-    | LoginUserAction
-    | LoginUserCompleteAction;
+    | LoginUserAction;
 

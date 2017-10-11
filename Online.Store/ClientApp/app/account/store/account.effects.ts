@@ -8,10 +8,12 @@ import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
 import * as accountActions from './account.actions';
+import * as cartActions from '../../cart/store/cart.action';
 import { AccountService } from '../../core/services/account.service';
 import { Cart } from "../../models/cart";
 import { RegisterVM } from '../../models/register-vm';
 import { LoginVM } from '../../models/login-vm';
+import { ResultVM } from '../../models/result-vm';
 
 @Injectable()
 export class AccountEffects {
@@ -31,8 +33,8 @@ export class AccountEffects {
         @Effect() loginUser: Observable<Action> = this.actions$.ofType(accountActions.LOGIN_USER)
         .switchMap((action: accountActions.LoginUserAction) => {
             return this.accountService.loginUser(action.user)
-                .map((data: LoginVM) => {
-                    return new accountActions.LoginUserCompleteAction(data);
+                .map((data: ResultVM) => {
+                    return new cartActions.LoginUserCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'loginUser_FAILED' })

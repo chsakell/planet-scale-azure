@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { NavMenuComponent } from './navmenu/navmenu.component';
+import { NavBarComponent } from './navmenu/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetchdata/fetchdata.component';
 import { CounterComponent } from './counter/counter.component';
@@ -27,6 +28,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
     declarations: [
         AppComponent,
         NavMenuComponent,
+        NavBarComponent,
         CounterComponent,
         FetchDataComponent,
         CheckoutComponent,
