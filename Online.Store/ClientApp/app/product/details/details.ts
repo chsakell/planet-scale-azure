@@ -4,6 +4,7 @@ import { ProductMedia } from "../../models/product-media";
 import { ProductComponent } from "../../models/product-component";
 
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation } from 'ngx-gallery';
+import { NgxGalleryImageSize } from 'ngx-gallery';
 
 @Component({
     selector: 'product-details-presentation',
@@ -25,7 +26,8 @@ export class ProductDetailsPresentationComponent {
             width: '600px',
             height: '400px',
             thumbnailsColumns: 4,
-            imageAnimation: NgxGalleryAnimation.Slide
+            imageAnimation: NgxGalleryAnimation.Slide,
+            imageSize: NgxGalleryImageSize.Contain
         },
         // max-width 800
         {
