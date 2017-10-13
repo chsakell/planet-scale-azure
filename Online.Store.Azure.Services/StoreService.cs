@@ -410,7 +410,7 @@ namespace Online.Store.Azure.Services
 
         #region Sharding
 
-        public int? AddOrder(OrderDTO order)
+        public int? AddOrder(Order order)
         {
             int shardingKey = _dataRepository.TotalOrders() + 1;
             int? orderId = _dataRepository.AddOrder(order, shardingKey);
@@ -437,6 +437,6 @@ namespace Online.Store.Azure.Services
         Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
         Task<CommunityDTO> AddPost(PostDTO post);
         Task<CommunityDTO> AddPostResponse(PostDTO post);
-        int? AddOrder(OrderDTO order);
+        int? AddOrder(Order order);
     }
 }

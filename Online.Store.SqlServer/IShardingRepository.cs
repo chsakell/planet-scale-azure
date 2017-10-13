@@ -7,7 +7,7 @@ namespace Online.Store.SqlServer
 {
     public interface IShardingRepository
     {
-        int? AddOrder(OrderDTO order, int shardingKey);
+        int? AddOrder(Order order, int shardingKey);
         int TotalOrders();
     }
 }

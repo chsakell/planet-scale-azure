@@ -9,6 +9,7 @@ using Online.Store.Azure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Online.Store.Models;
+using Online.Store.Data;
 
 namespace Online.Store.Controllers
 {
@@ -18,12 +19,16 @@ namespace Online.Store.Controllers
     public class OrdersController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        IStoreService _storeService;
+        private IStoreService _storeService;
+        private ApplicationDbContext _context;
 
-        public OrdersController(IStoreService storeService, UserManager<ApplicationUser> userManager)
+        public OrdersController(IStoreService storeService, 
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context)
         {
             _storeService = storeService;
             _userManager = userManager;
+            _context = context;
         }
        
         // POST: api/Orders
@@ -37,7 +42,7 @@ namespace Online.Store.Controllers
             if(cart != null && cartId == Request.Cookies["cart"])
             {
                 var user = await _userManager.GetUserAsync(User);
-                OrderDTO order = new OrderDTO
+                Order order = new Order
                 {
                     UserId = new Guid(user.Id),
                     DateCreated = DateTime.Now
@@ -45,7 +50,7 @@ namespace Online.Store.Controllers
 
                 foreach(var item in cart.Items)
                 {
-                    order.Items.Add(new OrderDetailDTO()
+                    order.OrderDetails.Add(new OrderDetail()
                     {
                         ProductId = item.Id,
                         Price = item.Price,
@@ -53,7 +58,10 @@ namespace Online.Store.Controllers
                     });
                 }
 
-                orderId = _storeService.AddOrder(order);
+                _context.Orders.Add(order);
+
+                //orderId = _storeService.AddOrder(order);
+                await _context.SaveChangesAsync();
             }
 
             return orderId;

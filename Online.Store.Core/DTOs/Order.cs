@@ -4,23 +4,24 @@ using System.Text;
 
 namespace Online.Store.Core.DTOs
 {
-    public class OrderDTO
+    public class Order
     {
-        public OrderDTO()
+        public Order()
         {
-            Items = new List<OrderDetailDTO>();
+            OrderDetails = new List<OrderDetail>();
         }
         public int Id { get; set; }
         public Guid UserId { get; set; }
         public DateTime DateCreated { get; set; }
 
-        public ICollection<OrderDetailDTO> Items { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 
-    public class OrderDetailDTO
+    public class OrderDetail
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
+        public Order Order { get; set; }
         public string ProductId { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }

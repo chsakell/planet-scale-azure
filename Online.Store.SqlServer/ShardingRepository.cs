@@ -41,7 +41,7 @@ namespace Online.Store.SqlServer
                     s_shardmapmgrdb);
         }
 
-        public int? AddOrder(OrderDTO order, int shardingKey)
+        public int? AddOrder(Order order, int shardingKey)
         {
             int? orderId = null;
             RangeShardMap<int> shardMap = TryGetShardMap();
@@ -66,7 +66,7 @@ namespace Online.Store.SqlServer
                                 }).SingleOrDefault();
 
 
-                    foreach (var item in order.Items)
+                    foreach (var item in order.OrderDetails)
                     {
                         item.OrderId = orderId.Value;
 

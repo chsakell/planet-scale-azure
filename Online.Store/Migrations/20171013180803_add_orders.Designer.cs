@@ -11,9 +11,10 @@ using System;
 namespace Online.Store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171013180803_add_orders")]
+    partial class add_orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +42,7 @@ namespace Online.Store.Migrations
                         .HasName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("IdentityRole");
+                    b.ToTable("AspNetRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -60,7 +61,7 @@ namespace Online.Store.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("IdentityRoleClaim<string>");
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -79,7 +80,7 @@ namespace Online.Store.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IdentityUserClaim<string>");
+                    b.ToTable("AspNetUserClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -97,7 +98,7 @@ namespace Online.Store.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("IdentityUserLogin<string>");
+                    b.ToTable("AspNetUserLogins");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -110,7 +111,7 @@ namespace Online.Store.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("IdentityUserRole<string>");
+                    b.ToTable("AspNetUserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -125,7 +126,7 @@ namespace Online.Store.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("IdentityUserToken<string>");
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("Online.Store.Core.DTOs.Order", b =>
@@ -139,7 +140,7 @@ namespace Online.Store.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Online.Store.Core.DTOs.OrderDetail", b =>
@@ -210,7 +211,7 @@ namespace Online.Store.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("ApplicationUser");
+                    b.ToTable("AspNetUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
