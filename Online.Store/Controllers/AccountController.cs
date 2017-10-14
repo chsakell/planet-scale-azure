@@ -237,13 +237,28 @@ namespace Online.Store.Controllers
                     */
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
-                    return Ok(user);
+
+                    return Ok(new ResultViewModel()
+                    {
+                        Result = Result.SUCCESS,
+                        Data = new { username = model.Username, id = user.Id }
+                    });
                 }
-                AddErrors(result);
+                else
+                {
+                    return Ok(new ResultViewModel()
+                    {
+                        Result = Result.ERROR,
+                        Message = "Something went wrong"
+                    });
+                }
             }
 
-            // If we got this far, something failed, redisplay form
-            return BadRequest(ModelState);
+            return BadRequest(new ResultViewModel()
+            {
+                Result = Result.ERROR,
+                Message = "Bad request"
+            });
         }
 
         [HttpPost]

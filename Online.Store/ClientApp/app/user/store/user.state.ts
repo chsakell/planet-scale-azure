@@ -2,6 +2,7 @@
 import { User } from "../../models/user";
 
 export interface UserState {
-    cart?: Cart
-    user?: User
+    cart?: Cart,
+    user?: User,
+    selectedPanel: string
 };

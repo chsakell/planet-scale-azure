@@ -31,7 +31,7 @@ export class AccountService {
         this.requestOptions = new RequestOptions({ headers: this.headers })
     }
 
-    registerUser(user: RegisterVM): Observable<RegisterVM> {
+    registerUser(user: RegisterVM): Observable<ResultVM> {
 
         return this.http.post(this.accountURI + 'register', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())

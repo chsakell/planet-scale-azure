@@ -6,7 +6,7 @@ import { LoginVM } from '../../models/login-vm';
 import { ISubscription } from "rxjs/Subscription";
 
 @Component({
-    selector: 'account-login',
+    selector: 'user-login',
     templateUrl: './login.component.html',
 
 })
@@ -32,6 +32,10 @@ export class UserLoginComponent implements OnInit {
 
     loginUser(user: LoginVM) {
         this.store.dispatch(new userActions.LoginUserAction(user));
+    }
+
+    switchView(view: string) {
+        this.store.dispatch(new userActions.SwitchAccountAction(view));
     }
 
     ngOnDestroy() {

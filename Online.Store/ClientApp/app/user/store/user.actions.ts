@@ -2,16 +2,25 @@
 import { Cart } from "../../models/cart";
 import { LoginVM } from '../../models/login-vm';
 import { ResultVM } from '../../models/result-vm';
+import { RegisterVM } from '../../models/register-vm';
 
-export const LOGIN_USER = '[Account] Login User';
 export const GET_CART = '[Cart] Get';
 export const GET_CART_COMPLETE = '[Cart] Get Complete';
 export const ADD_PRODUCT_TO_CART = '[Cart] Add Product To Cart';
 export const ADD_PRODUCT_TO_CART_COMPLETE = '[Cart] Add Product To Cart Complete';
 export const COMPLETE_ORDER = '[Order] Complete';
 export const COMPLETE_ORDER_COMPLETE = '[Order] Completed';
+export const LOGIN_USER = '[Account] Login User';
 export const LOGIN_USER_COMPLETE = '[Account] Login User Complete';
+export const REGISTER_USER = '[Account] Register User';
+export const REGISTER_USER_COMPLETE = '[Account] Register User Complete';
+export const SWITCH_ACCOUNT_ACTION = '[Account] Switch Action';
 
+export class SwitchAccountAction implements Action {
+    readonly type = SWITCH_ACCOUNT_ACTION;
+
+    constructor(public view: string) { }
+}
 
 export class LoginUserAction implements Action {
     readonly type = LOGIN_USER;
@@ -55,6 +64,18 @@ export class CompleteOrderCompleteAction implements Action {
     constructor(public id: string) { }
 }
 
+export class RegisterUserAction implements Action {
+    readonly type = REGISTER_USER;
+
+    constructor(public user: RegisterVM) { }
+}
+
+export class RegisterUserCompleteAction implements Action {
+    readonly type = REGISTER_USER_COMPLETE;
+
+    constructor(public result: ResultVM) { }
+}
+
 export class LoginUserCompleteAction implements Action {
     readonly type = LOGIN_USER_COMPLETE;
 
@@ -67,5 +88,8 @@ export type Actions
     | AddProductToCartAction
     | AddProductToCartCompleteAction
     | LoginUserAction
-    | LoginUserCompleteAction;
+    | LoginUserCompleteAction
+    | RegisterUserAction
+    | RegisterUserCompleteAction
+    | SwitchAccountAction;
 

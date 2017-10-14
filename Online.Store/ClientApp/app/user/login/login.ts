@@ -13,11 +13,16 @@ export class UserLoginPresentationComponent {
     user: LoginVM = { username: '', password: '', rememberMe: false };
 
     @Output() onLogin: EventEmitter<LoginVM> = new EventEmitter();
+    @Output() onSwitchView: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
 
     login() {
         this.onLogin.emit(this.user);
+    }
+
+    viewRegister() {
+        this.onSwitchView.emit('Register');
     }
 
 }

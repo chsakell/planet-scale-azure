@@ -17,6 +17,18 @@ import { AccountService } from '../../core/services/account.service';
 @Injectable()
 export class UserEffects {
 
+    @Effect() registerUser: Observable<Action> = this.actions$.ofType(userActions.REGISTER_USER)
+    .switchMap((action: userActions.RegisterUserAction) => {
+        return this.accountService.registerUser(action.user)
+            .map((data: ResultVM) => {
+                return new userActions.RegisterUserCompleteAction(data);
+            })
+            .catch((error: any) => {
+                return of({ type: 'registerUser_FAILED' })
+            })
+    }
+    );
+
     @Effect() loginUser: Observable<Action> = this.actions$.ofType(userActions.LOGIN_USER)
     .switchMap((action: userActions.LoginUserAction) => {
         return this.accountService.loginUser(action.user)

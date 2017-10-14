@@ -17,7 +17,7 @@ import { ResultVM } from '../../models/result-vm';
 
 @Injectable()
 export class AccountEffects {
-
+    /*
     @Effect() registerUser: Observable<Action> = this.actions$.ofType(accountActions.REGISTER_USER)
         .switchMap((action: accountActions.RegisterUserAction) => {
             return this.accountService.registerUser(action.user)
@@ -29,7 +29,7 @@ export class AccountEffects {
                 })
         }
         );
-
+*/
         @Effect() loginUser: Observable<Action> = this.actions$.ofType(accountActions.LOGIN_USER)
         .switchMap((action: accountActions.LoginUserAction) => {
             return this.accountService.loginUser(action.user)
