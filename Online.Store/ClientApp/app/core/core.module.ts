@@ -10,6 +10,10 @@ import { AccountService } from './services/account.service';
     imports: [
         CommonModule,
         UserModule
+    ],
+    exports: [
+        CommonModule,
+        UserModule
     ]
 })
 

@@ -11,9 +11,23 @@ import * as userActions from './user.actions';
 import { Product } from './../../models/product';
 import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
+import { ResultVM } from '../../models/result-vm';
+import { AccountService } from '../../core/services/account.service';
 
 @Injectable()
 export class UserEffects {
+
+    @Effect() loginUser: Observable<Action> = this.actions$.ofType(userActions.LOGIN_USER)
+    .switchMap((action: userActions.LoginUserAction) => {
+        return this.accountService.loginUser(action.user)
+            .map((data: ResultVM) => {
+                return new userActions.LoginUserCompleteAction(data);
+            })
+            .catch((error: any) => {
+                return of({ type: 'loginUser_FAILED' })
+            })
+    }
+    );
 
     @Effect() getCart$: Observable<Action> = this.actions$.ofType(userActions.GET_CART)
         .switchMap(() =>
@@ -52,6 +66,7 @@ export class UserEffects {
 
     constructor(
         private productService: ProductService,
+        private accountService: AccountService,
         private actions$: Actions
     ) { }
 }
