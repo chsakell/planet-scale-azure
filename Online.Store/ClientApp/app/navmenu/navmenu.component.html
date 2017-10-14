@@ -22,13 +22,13 @@
                     </a>
                 </li>
                 <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/checkout']">
-                        <span class='glyphicon glyphicon-education'></span> Checkout
+                    <a [routerLink]="['/forum/topics']">
+                        <span class='glyphicon glyphicon-globe'></span> Forum
                     </a>
                 </li>
-                <li [routerLinkActive]="['link-active']">
-                    <a [routerLink]="['/forum/topics']">
-                        <span class='glyphicon glyphicon-th-list'></span> Forum
+                <li [routerLinkActive]="['link-active']" *ngIf="cart">
+                    <a [routerLink]="['/checkout']">
+                        <span class='glyphicon glyphicon-shopping-cart'></span> Cart
                     </a>
                 </li>
             </ul>

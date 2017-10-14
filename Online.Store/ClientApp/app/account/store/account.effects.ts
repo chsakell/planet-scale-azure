@@ -8,7 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
 import * as accountActions from './account.actions';
-import * as cartActions from '../../cart/store/cart.action';
+import * as userActions from '../../user/store/user.actions';
 import { AccountService } from '../../core/services/account.service';
 import { Cart } from "../../models/cart";
 import { RegisterVM } from '../../models/register-vm';
@@ -34,7 +34,7 @@ export class AccountEffects {
         .switchMap((action: accountActions.LoginUserAction) => {
             return this.accountService.loginUser(action.user)
                 .map((data: ResultVM) => {
-                    return new cartActions.LoginUserCompleteAction(data);
+                    return new userActions.LoginUserCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'loginUser_FAILED' })

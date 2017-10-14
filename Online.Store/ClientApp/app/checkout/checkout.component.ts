@@ -2,7 +2,7 @@
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Cart } from "../models/cart";
-import * as orderActions from '../cart/store/cart.action';
+import * as userActions from '../user/store/user.actions';
 
 @Component({
     selector: 'checkout-order',
@@ -15,7 +15,7 @@ export class CheckoutComponent implements OnInit {
     cart$: Observable<Cart>;
 
     constructor(private store: Store<any>) {
-        this.cart$ = this.store.select<Cart>(state => state.basket.cartState.cart);
+        this.cart$ = this.store.select<Cart>(state => state.user.userState.cart);
     }
 
     ngOnInit() {
@@ -23,6 +23,6 @@ export class CheckoutComponent implements OnInit {
     }
 
     completeOrder(id: string) {
-        this.store.dispatch(new orderActions.CompleteOrderAction(id));
+        this.store.dispatch(new userActions.CompleteOrderAction(id));
     }
 }

@@ -3,20 +3,20 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { cartReducer } from './store/cart.reducer';
-import { CartEffects } from './store/cart.effects';
+import { userReducer } from './store/user.reducer';
+import { UserEffects } from './store/user.effects';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        StoreModule.forFeature('basket', {
-            cartState: cartReducer,
+        StoreModule.forFeature('user', {
+            userState: userReducer,
         }),
-        EffectsModule.forFeature([CartEffects])
+        EffectsModule.forFeature([UserEffects])
     ],
     exports: [],
     declarations: [],
     providers: [],
 })
-export class CartModule { }
+export class UserModule { }

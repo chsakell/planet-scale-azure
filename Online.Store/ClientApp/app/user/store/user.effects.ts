@@ -7,30 +7,30 @@ import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
-import * as cartAction from './cart.action';
+import * as userActions from './user.actions';
 import { Product } from './../../models/product';
 import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
 
 @Injectable()
-export class CartEffects {
+export class UserEffects {
 
-    @Effect() getCart$: Observable<Action> = this.actions$.ofType(cartAction.GET_CART)
+    @Effect() getCart$: Observable<Action> = this.actions$.ofType(userActions.GET_CART)
         .switchMap(() =>
             this.productService.getCart()
                 .map((data: Cart) => {
-                    return new cartAction.GetCartCompleteAction(data);
+                    return new userActions.GetCartCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'getCart_FAILED' })
                 })
         );
 
-    @Effect() addProductToCart: Observable<Action> = this.actions$.ofType(cartAction.ADD_PRODUCT_TO_CART)
-        .switchMap((action: cartAction.AddProductToCartAction) => {
+    @Effect() addProductToCart: Observable<Action> = this.actions$.ofType(userActions.ADD_PRODUCT_TO_CART)
+        .switchMap((action: userActions.AddProductToCartAction) => {
             return this.productService.addProductToCart(action.id)
                 .map((data: Cart) => {
-                    return new cartAction.AddProductToCartCompleteAction(data);
+                    return new userActions.AddProductToCartCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'addProductToCart_FAILED' })
@@ -38,11 +38,11 @@ export class CartEffects {
         }
         );
 
-        @Effect() completeOrder: Observable<Action> = this.actions$.ofType(cartAction.COMPLETE_ORDER)
-        .switchMap((action: cartAction.CompleteOrderAction) => {
+        @Effect() completeOrder: Observable<Action> = this.actions$.ofType(userActions.COMPLETE_ORDER)
+        .switchMap((action: userActions.CompleteOrderAction) => {
             return this.productService.completeOrder(action.id)
                 .map((data: string) => {
-                    return new cartAction.CompleteOrderCompleteAction(data);
+                    return new userActions.CompleteOrderCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'completeOrder_FAILED' })

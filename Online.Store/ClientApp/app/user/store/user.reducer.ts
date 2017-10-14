@@ -1,26 +1,26 @@
-﻿import { CartState } from './cart.state';
+﻿import { UserState } from './user.state';
 import { Action } from '@ngrx/store';
-import * as cartAction from './cart.action';
+import * as userActions from './user.actions';
 
-export const initialState: CartState = {
+export const initialState: UserState = {
     cart: undefined,
     user: undefined,
 };
 
-export function cartReducer(state = initialState, action: cartAction.Actions): CartState {
+export function userReducer(state = initialState, action: userActions.Actions): UserState {
     switch (action.type) {
 
-        case cartAction.GET_CART_COMPLETE:
+        case userActions.GET_CART_COMPLETE:
             return Object.assign({}, state, {
                 cart: action.cart
             });
 
-        case cartAction.ADD_PRODUCT_TO_CART_COMPLETE:
+        case userActions.ADD_PRODUCT_TO_CART_COMPLETE:
             return Object.assign({}, state, {
                 cart: action.cart
             });
 
-        case cartAction.LOGIN_USER_COMPLETE:
+        case userActions.LOGIN_USER_COMPLETE:
             return Object.assign({}, state, {
                 user: action.result.data
             });

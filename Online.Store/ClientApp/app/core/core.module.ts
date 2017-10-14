@@ -3,13 +3,13 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { Configuration } from '../app.constants';
 import { ProductService } from './services/product.service';
-import { CartModule } from "../cart/cart.module";
+import { UserModule } from "../user/user.module";
 import { AccountService } from './services/account.service';
 
 @NgModule({
     imports: [
         CommonModule,
-        CartModule
+        UserModule
     ]
 })
 
