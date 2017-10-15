@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const AotPlugin = require('@ngtools/webpack').AotPlugin;
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = (env) => {
     // Configuration in common to both client-side and server-side bundles
@@ -55,7 +56,8 @@ module.exports = (env) => {
 
     // Configuration for server-side (prerendering) bundle suitable for running in Node
     const serverBundleConfig = merge(sharedConfig, {
-        resolve: { mainFields: ['main'] },
+        //https://github.com/MarkPieszak/aspnetcore-angular2-universal/issues/422
+        //resolve: { mainFields: ['main'] },
         entry: { 'main-server': './ClientApp/boot.server.ts' },
         plugins: [
             new webpack.DllReferencePlugin({
@@ -77,7 +79,10 @@ module.exports = (env) => {
             path: path.join(__dirname, './ClientApp/dist')
         },
         target: 'node',
-        devtool: 'inline-source-map'
+        devtool: 'inline-source-map',
+        externals: [nodeExternals({
+            whitelist: ['/^ngx-gallery/']
+        })]
     });
 
     return [clientBundleConfig, serverBundleConfig];
