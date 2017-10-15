@@ -3,6 +3,7 @@ import { Cart } from "../../models/cart";
 import { LoginVM } from '../../models/login-vm';
 import { ResultVM } from '../../models/result-vm';
 import { RegisterVM } from '../../models/register-vm';
+import { UserCart } from '../../models/user-cart';
 
 export const GET_CART = '[Cart] Get';
 export const GET_CART_COMPLETE = '[Cart] Get Complete';
@@ -37,7 +38,7 @@ export class GetCartAction implements Action {
 export class GetCartCompleteAction implements Action {
     readonly type = GET_CART_COMPLETE;
 
-    constructor(public cart: Cart) { }
+    constructor(public userCart: UserCart) { }
 }
 
 export class AddProductToCartAction implements Action {

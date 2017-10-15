@@ -13,7 +13,8 @@ export function userReducer(state = initialState, action: userActions.Actions): 
 
         case userActions.GET_CART_COMPLETE:
             return Object.assign({}, state, {
-                cart: action.cart
+                cart: action.userCart !== null ? action.userCart.cart : undefined,
+                user: action.userCart !== null ? action.userCart.user : undefined
             });
 
         case userActions.ADD_PRODUCT_TO_CART_COMPLETE:

@@ -13,6 +13,7 @@ import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
 import { ResultVM } from '../../models/result-vm';
 import { AccountService } from '../../core/services/account.service';
+import { UserCart } from '../../models/user-cart';
 
 @Injectable()
 export class UserEffects {
@@ -44,7 +45,7 @@ export class UserEffects {
     @Effect() getCart$: Observable<Action> = this.actions$.ofType(userActions.GET_CART)
         .switchMap(() =>
             this.productService.getCart()
-                .map((data: Cart) => {
+                .map((data: UserCart) => {
                     return new userActions.GetCartCompleteAction(data);
                 })
                 .catch((error: any) => {

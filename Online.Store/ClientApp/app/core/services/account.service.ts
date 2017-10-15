@@ -39,7 +39,6 @@ export class AccountService {
     }
 
     loginUser(user: LoginVM): Observable<ResultVM> {
-        debugger;
         return this.http.post(this.accountURI + 'login', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));

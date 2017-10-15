@@ -45,7 +45,6 @@ namespace Online.Store.Controllers
         [HttpPost]
         [Route("login")]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
 

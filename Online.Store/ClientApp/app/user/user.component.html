@@ -1,2 +1,7 @@
-<user-login *ngIf="(selectedPanel$ | async) === 'Login'" ></user-login>
-<user-register *ngIf="(selectedPanel$ | async) === 'Register'" ></user-register>
+<user-login *ngIf="(selectedPanel$ | async) === 'Login' && (user$ | async) === undefined"></user-login>
+<user-register *ngIf="(selectedPanel$ | async) === 'Register' && (user$ | async) === undefined"></user-register>
+<ul class="nav navbar-nav navbar-right" *ngIf="(user$ | async)">
+    <li>
+        <p class="navbar-text">{{(user$ | async).username}}</p>
+    </li>
+</ul>

@@ -12,6 +12,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Cart } from "../../models/cart";
 import { Topic } from '../../models/topic';
+import { UserCart } from '../../models/user-cart';
 
 @Injectable()
 export class ProductService {
@@ -49,7 +50,7 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getCart(): Observable<Cart> {
+    getCart(): Observable<UserCart> {
         return this.http.get(this.cartsURI, this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;

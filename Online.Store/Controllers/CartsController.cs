@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Online.Store.Azure.Services;
 using Online.Store.Core.DTOs;
+using Online.Store.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Online.Store.Models;
 
 namespace Online.Store.Controllers
 {
@@ -14,21 +17,43 @@ namespace Online.Store.Controllers
     public class CartsController : Controller
     {
         IStoreService _storeService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartsController(IStoreService storeService)
+        public CartsController(IStoreService storeService, UserManager<ApplicationUser> userManager)
         {
             _storeService = storeService;
+            _userManager = userManager;
         }
 
         // GET: api/Carts
         [HttpGet(Name = "GetCart")]
-        public async Task<CartDTO> GetAsync()
+        public async Task<UserCartViewModel> GetAsync()
         {
+            UserCartViewModel userCart = null;
+
             string cartId = Request.Cookies["cart"];
 
             var cart = string.IsNullOrEmpty(cartId) ? null : await _storeService.GetCart(cartId);
 
-            return cart;
+            if(cart != null)
+            {
+                userCart = new UserCartViewModel()
+                {
+                    Cart = cart
+                };
+
+                if(User.Identity.IsAuthenticated)
+                {
+                    var user = await _userManager.GetUserAsync(User);
+                    userCart.User = new UserViewModel()
+                    {
+                        Id = user.Id,
+                        Username = user.UserName
+                    };
+                }
+            }
+
+            return userCart;
         }
         
         // POST: api/Carts
