@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Configuration } from './../../app.constants';
@@ -20,9 +20,9 @@ export class AccountService {
     private headers: Headers;
     private requestOptions: RequestOptions;
 
-    constructor(private http: Http, private configuration: Configuration) {
+    constructor(private http: Http, @Inject('BASE_URL') baseUrl: string) {
 
-        this.accountURI = configuration.Server + 'api/account/';
+        this.accountURI = baseUrl + 'api/account/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');

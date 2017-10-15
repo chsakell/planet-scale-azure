@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/map';
 
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Configuration } from './../../app.constants';
@@ -24,12 +24,12 @@ export class ProductService {
     private headers: Headers;
     private requestOptions: RequestOptions;
 
-    constructor(private http: Http, private configuration: Configuration) {
+    constructor(private http: Http, @Inject('BASE_URL') baseUrl: string) {
 
-        this.productsURI = configuration.Server + 'api/products/';
-        this.forumURI = configuration.Server + 'api/forum/topics/';
-        this.cartsURI = configuration.Server + 'api/carts/';
-        this.ordersURI = configuration.Server + 'api/orders/';
+        this.productsURI = baseUrl + 'api/products/';
+        this.forumURI = baseUrl + 'api/forum/topics/';
+        this.cartsURI = baseUrl + 'api/carts/';
+        this.ordersURI = baseUrl + 'api/orders/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
