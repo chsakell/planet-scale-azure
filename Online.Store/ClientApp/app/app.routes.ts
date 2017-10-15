@@ -5,13 +5,16 @@ import { FetchDataComponent } from "./fetchdata/fetchdata.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { UserComponent } from './user/user.component';
 
+import { ProductModule } from './product/product.module';
+import { ForumModule } from './forum/forum.module';
+
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'counter', component: CounterComponent },
     { path: 'fetch-data', component: FetchDataComponent },
-    { path: 'products', loadChildren: './product/product.module#ProductModule' },
-    { path: 'forum', loadChildren: './forum/forum.module#ForumModule' },
+    { path: 'products', loadChildren: () => ProductModule },
+    { path: 'forum', loadChildren: () => ForumModule },
     { path: 'checkout', component: CheckoutComponent },
     { path: '**', redirectTo: 'home' }
 ];
