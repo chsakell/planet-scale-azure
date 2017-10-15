@@ -57,7 +57,7 @@ module.exports = (env) => {
     // Configuration for server-side (prerendering) bundle suitable for running in Node
     const serverBundleConfig = merge(sharedConfig, {
         //https://github.com/MarkPieszak/aspnetcore-angular2-universal/issues/422
-        //resolve: { mainFields: ['main'] },
+        resolve: { mainFields: ['main'] },
         entry: { 'main-server': './ClientApp/boot.server.ts' },
         plugins: [
             new webpack.DllReferencePlugin({
