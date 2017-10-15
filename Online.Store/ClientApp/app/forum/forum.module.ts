@@ -10,7 +10,7 @@ import { ForumEffects } from './store/forum.effects';
 import { FormsModule } from '@angular/forms';
 import { ForumComponent } from "./forum.component";
 import { TopicListPresentationComponent } from './list/list';
-import { TopicDetailsPresentationComponent } from "./details/details";
+import { TopicDetailsPresentationComponent } from './details/details';
 
 const FORUM_DIRECTIVES = [
     TopicListComponent,
