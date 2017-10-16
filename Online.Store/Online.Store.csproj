@@ -47,6 +47,7 @@
     <None Remove="ClientApp\app\models\topic.ts" />
     <None Remove="ClientApp\app\product\product.component.ts" />
     <None Remove="ClientApp\app\reducers\index.ts" />
+    <None Remove="Properties\PublishProfiles\planetscalestore-eu - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -77,10 +78,44 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App_Data\images\DSC-HX80\" />
-    <Folder Include="App_Data\images\DC-ZS70K\" />
     <Folder Include="ClientApp\app\forum\store\" />
     <Folder Include="Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\26507\1.jpg" />
+    <None Include="wwwroot\images\26507\2.jpg" />
+    <None Include="wwwroot\images\26507\3.jpg" />
+    <None Include="wwwroot\images\26507\4.jpg" />
+    <None Include="wwwroot\images\26507\5.jpg" />
+    <None Include="wwwroot\images\26507\6.jpg" />
+    <None Include="wwwroot\images\26507\7.jpg" />
+    <None Include="wwwroot\images\26507\8.jpg" />
+    <None Include="wwwroot\images\9779B001\1.jpg" />
+    <None Include="wwwroot\images\9779B001\2.jpg" />
+    <None Include="wwwroot\images\9779B001\3.jpg" />
+    <None Include="wwwroot\images\9779B001\4.jpg" />
+    <None Include="wwwroot\images\9779B001\5.jpg" />
+    <None Include="wwwroot\images\9779B001\6.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\1.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\2.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\3.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\4.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\5.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\6.jpg" />
+    <None Include="wwwroot\images\DC-ZS70K\7.jpg" />
+    <None Include="wwwroot\images\DSC-HX80\1.jpg" />
+    <None Include="wwwroot\images\DSC-HX80\2.jpg" />
+    <None Include="wwwroot\images\DSC-HX80\3.jpg" />
+    <None Include="wwwroot\images\DSC-HX80\4.jpg" />
+    <None Include="wwwroot\images\DSCW830\1.jpg" />
+    <None Include="wwwroot\images\DSCW830\2.jpg" />
+    <None Include="wwwroot\images\DSCW830\3.jpg" />
+    <None Include="wwwroot\images\DSCW830\4.jpg" />
+    <None Include="wwwroot\images\POLSP01W\1.jpg" />
+    <None Include="wwwroot\images\POLSP01W\2.jpg" />
+    <None Include="wwwroot\images\POLSP01W\3.jpg" />
+    <None Include="wwwroot\images\POLSP01W\4.jpg" />
   </ItemGroup>
 
   <ItemGroup>

@@ -186,7 +186,7 @@ namespace Online.Store.DocumentDB
             {
                 List<ProductDTO> products = null;
 
-                using (StreamReader r = new StreamReader(Path.Combine(Config.ContentRootPath, @"App_Data\products.json")))
+                using (StreamReader r = new StreamReader(Path.Combine(Config.WebRootPath, @"wwwroot/products.json")))
                 {
                     string json = r.ReadToEnd();
                     products = JsonConvert.DeserializeObject<List<ProductDTO>>(json);
@@ -212,7 +212,7 @@ namespace Online.Store.DocumentDB
 
         private static async Task UploadProductImagesAsync(ProductDTO product)
         {
-            string[] images = Directory.GetFiles(Path.Combine(Config.ContentRootPath, @"App_Data\images\" + product.Model));
+            string[] images = Directory.GetFiles(@"wwwroot/images/" + product.Model);
 
             await StorageInitializer._repository.UploadToContainerAsync("product-images", images[0], product.Model + "/" + Path.GetFileName(images[0]));
             product.Image = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[0]));

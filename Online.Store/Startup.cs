@@ -19,6 +19,9 @@ using Microsoft.AspNetCore.Identity;
 using Online.Store.Services;
 using Online.Store.Extensions;
 using Online.Store.SqlServer;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Http;
 
 namespace Online_Store
 {
@@ -36,6 +39,8 @@ namespace Online_Store
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
+
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
             // Make Configuration injectable
             services.AddSingleton<IConfiguration>(Configuration);
@@ -87,6 +92,13 @@ namespace Online_Store
             }
 
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "images")),
+                RequestPath = new PathString("/images")
+            });
 
             app.UseAuthentication();
 
