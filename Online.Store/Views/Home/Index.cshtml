@@ -4,6 +4,18 @@
 
 <app asp-prerender-module="ClientApp/dist/main-server">Loading...</app>
 
+<div style="position: fixed;
+    bottom: 0;
+    right: 0;
+    font-weight: bold;
+    margin: 2px 20px;
+    font-size: 20px;
+    background: #222222;
+    color: #4189c7;
+    padding: 10px;">
+    Served by @ViewData["Region"]
+</div>
+
 <script src="~/dist/vendor.js" asp-append-version="true"></script>
 @section scripts {
     <script src="~/dist/main-client.js" asp-append-version="true"></script>
