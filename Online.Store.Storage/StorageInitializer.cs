@@ -27,11 +27,5 @@ namespace Online.Store.Storage
         {
             await _repository.CreateBlobContainerAsync(container);
         }
-
-        private static async Task UploadProductImagesAsync()
-        {
-            string filePath = @"C:\Users\developer\Desktop\cameras\Sony - DSC-W830 20.1-Megapixel Digital Camera - Silver\1.jpg";
-            await _repository.UploadToContainerAsync("product-images", filePath, "myfile.jpg");
-        }
     }
 }
