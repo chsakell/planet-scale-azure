@@ -102,7 +102,7 @@ namespace Online_Store
 
             app.UseAuthentication();
 
-            AutoMapperConfiguration.Configure();
+            AutoMapperConfiguration.Configure(Configuration);
 
             app.UseAntiforgeryToken();
 
