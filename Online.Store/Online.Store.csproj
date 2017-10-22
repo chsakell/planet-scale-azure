@@ -47,6 +47,10 @@
     <None Remove="ClientApp\app\models\topic.ts" />
     <None Remove="ClientApp\app\product\product.component.ts" />
     <None Remove="ClientApp\app\reducers\index.ts" />
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Remove="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Remove="Properties\PublishProfiles\planetscalestore-cus - FTP.pubxml" />
+    <None Remove="Properties\PublishProfiles\planetscalestore-eu - FTP.pubxml" />
     <None Remove="Properties\PublishProfiles\planetscalestore-eu - Web Deploy.pubxml" />
   </ItemGroup>
 
