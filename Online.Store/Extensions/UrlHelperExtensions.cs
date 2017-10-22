@@ -11,7 +11,7 @@ namespace Microsoft.AspNetCore.Mvc
         public static string EmailConfirmationLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
             return urlHelper.Action(
-                action: nameof(AccountController.ConfirmEmail),
+                action: nameof(IdentityController.ConfirmEmail),
                 controller: "Account",
                 values: new { userId, code },
                 protocol: scheme);
@@ -20,7 +20,7 @@ namespace Microsoft.AspNetCore.Mvc
         public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, string userId, string code, string scheme)
         {
             return urlHelper.Action(
-                action: nameof(AccountController.ResetPassword),
+                action: nameof(IdentityController.ResetPassword),
                 controller: "Account",
                 values: new { userId, code },
                 protocol: scheme);

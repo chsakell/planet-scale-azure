@@ -17,12 +17,10 @@ namespace Online.Store.Controllers
     public class CartsController : Controller
     {
         IStoreService _storeService;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartsController(IStoreService storeService, UserManager<ApplicationUser> userManager)
+        public CartsController(IStoreService storeService)
         {
             _storeService = storeService;
-            _userManager = userManager;
         }
 
         // GET: api/Carts
@@ -35,27 +33,23 @@ namespace Online.Store.Controllers
 
             var cart = string.IsNullOrEmpty(cartId) ? null : await _storeService.GetCart(cartId);
 
-            if(cart != null)
+            userCart = new UserCartViewModel()
             {
-                userCart = new UserCartViewModel()
-                {
-                    Cart = cart
-                };
+                Cart = cart
+            };
 
-                if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
+            {
+                userCart.User = new UserViewModel()
                 {
-                    var user = await _userManager.GetUserAsync(User);
-                    userCart.User = new UserViewModel()
-                    {
-                        Id = user.Id,
-                        Username = user.UserName
-                    };
-                }
+                    Id = User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier").First().Value,
+                    Username = User.Claims.Where(c => c.Type == "name").First().Value
+                };
             }
 
             return userCart;
         }
-        
+
         // POST: api/Carts
         [HttpPost]
         public async Task<CartDTO> PostAsync([FromBody]string productId)
@@ -68,13 +62,13 @@ namespace Online.Store.Controllers
 
             return cart;
         }
-        
+
         // PUT: api/Carts/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

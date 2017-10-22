@@ -22,7 +22,7 @@ export class AccountService {
 
     constructor(private http: Http, @Inject('BASE_URL') baseUrl: string) {
 
-        this.accountURI = baseUrl + 'api/account/';
+        this.accountURI = baseUrl + 'account/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');

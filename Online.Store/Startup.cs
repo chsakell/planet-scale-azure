@@ -22,6 +22,9 @@ using Online.Store.SqlServer;
 using System.IO;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Online_Store
 {
@@ -42,6 +45,7 @@ namespace Online_Store
             services.AddDirectoryBrowser();
 
             services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+            
             // Make Configuration injectable
             services.AddSingleton<IConfiguration>(Configuration);
 
@@ -49,6 +53,7 @@ namespace Online_Store
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Online.Store")));
 
+            /*
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
                 {
                     // This should be true in production
@@ -56,6 +61,14 @@ namespace Online_Store
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+            */
+            services.AddAuthentication(sharedOptions =>
+            {
+                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddAzureAd(options => Configuration.Bind("AzureAd", options))
+            .AddCookie();
 
             // Configure Cache
             services.AddDistributedRedisCache(option =>

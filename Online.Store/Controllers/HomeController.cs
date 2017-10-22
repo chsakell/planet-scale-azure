@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
-namespace Online_Store.Controllers
+namespace Online.Store.Controllers
 {
     public class HomeController : Controller
     {
