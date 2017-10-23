@@ -53,15 +53,6 @@ namespace Online_Store
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Online.Store")));
 
-            /*
-            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
-                {
-                    // This should be true in production
-                    config.SignIn.RequireConfirmedEmail = false;
-                })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-            */
             services.AddAuthentication(sharedOptions =>
             {
                 sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -101,6 +92,19 @@ namespace Online_Store
             }
             else
             {
+                app.Use(async (context, next) =>
+                {
+                    if (context.Request.IsHttps)
+                    {
+                        await next();
+                    }
+                    else
+                    {
+                        var toHttps = "https://" + context.Request.Host + context.Request.Path;
+                        context.Response.Redirect(toHttps);
+                    }
+                });
+
                 app.UseExceptionHandler("/Home/Error");
             }
 

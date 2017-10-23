@@ -552,3 +552,81 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityRoleClaim<string>];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityUserClaim<string>];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityUserLogin<string>];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityUserRole<string>];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityUserToken<string>];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [IdentityRole];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    DROP TABLE [ApplicationUser];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023171955_remove_identity_context')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20171023171955_remove_identity_context', N'2.0.0-rtm-26452');
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023182642_change_user_type')
+BEGIN
+    DECLARE @var1 sysname;
+    SELECT @var1 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'Order') AND [c].[name] = N'UserId');
+    IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [Order] DROP CONSTRAINT [' + @var1 + '];');
+    ALTER TABLE [Order] ALTER COLUMN [UserId] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171023182642_change_user_type')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20171023182642_change_user_type', N'2.0.0-rtm-26452');
+END;
+
+GO
+

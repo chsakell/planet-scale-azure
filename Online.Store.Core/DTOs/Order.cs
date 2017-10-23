@@ -11,7 +11,7 @@ namespace Online.Store.Core.DTOs
             OrderDetails = new List<OrderDetail>();
         }
         public int Id { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public DateTime DateCreated { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }

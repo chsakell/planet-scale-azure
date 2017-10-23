@@ -18,21 +18,18 @@ namespace Online.Store.Controllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private IStoreService _storeService;
         private ApplicationDbContext _context;
 
-        public OrdersController(IStoreService storeService, 
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext context)
+        public OrdersController(IStoreService storeService, ApplicationDbContext context)
         {
             _storeService = storeService;
-            _userManager = userManager;
             _context = context;
         }
        
         // POST: api/Orders
         [HttpPost]
+        [Authorize]
         public async Task<int?> Post([FromBody]string cartId)
         {
             int? orderId = null;
@@ -41,10 +38,12 @@ namespace Online.Store.Controllers
 
             if(cart != null && cartId == Request.Cookies["cart"])
             {
-                var user = await _userManager.GetUserAsync(User);
+                string userId = User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
+                                   .Select(c => c.Value).SingleOrDefault();
+
                 Order order = new Order
                 {
-                    UserId = new Guid(user.Id),
+                    UserId = userId,
                     DateCreated = DateTime.Now
                 };
 

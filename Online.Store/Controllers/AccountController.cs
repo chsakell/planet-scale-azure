@@ -13,12 +13,24 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using Newtonsoft.Json.Linq;
 using Online.Store.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Online.Store.Controllers
 {
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
+        string ClientId = string.Empty; // "3437ef01-f3e1-49f9-8114-afcc5d884cfb";
+        string ClientSecret = string.Empty; // "+wPsOTMiT+/fPKL6X1H++hZWTDV5S1jbdGC4r2R3otk=";
+        string TenantId = string.Empty; // "PlanetScaleStoreTenant.onmicrosoft.com";
+
+        public AccountController(IConfiguration configuration)
+        {
+            ClientId = configuration["AzureAd:ClientId"];
+            ClientSecret = configuration["AzureAd:ClientSecret"];
+            TenantId = configuration["AzureAd:TenantId"];
+        }
+
         [HttpGet]
         public IActionResult SignIn()
         {
@@ -34,11 +46,12 @@ namespace Online.Store.Controllers
             await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var callbackUrl = Url.Action(nameof(HomeController.Index), "Home", values: null, protocol: Request.Scheme);
-            return SignOut(
-                new AuthenticationProperties { RedirectUri = callbackUrl },
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                OpenIdConnectDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+            //var callbackUrl = Url.Action(nameof(HomeController.Index), "Home", values: null, protocol: Request.Scheme);
+            //return SignOut(
+            //    new AuthenticationProperties { RedirectUri = callbackUrl },
+            //    CookieAuthenticationDefaults.AuthenticationScheme,
+            //    OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         [HttpPost(Name = "RegisterAD")]
@@ -81,9 +94,7 @@ namespace Online.Store.Controllers
 
                 try
                 {
-                    string ClientId = "3437ef01-f3e1-49f9-8114-afcc5d884cfb";
-                    string ClientSecret = "+wPsOTMiT+/fPKL6X1H++hZWTDV5S1jbdGC4r2R3otk=";
-                    string TenantId = "PlanetScaleStoreTenant.onmicrosoft.com";
+                    
 
                     var b2cClient = new B2CGraphClient(ClientId, ClientSecret, TenantId);
                     var response = await b2cClient.CreateUser(jsonObject.ToString());
