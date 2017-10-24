@@ -48,6 +48,11 @@ namespace Online.Store.RedisCache
             await SetStringAsync(key, json, expirationMinutes);
         }
 
+        public async Task RemoveAsync(string key)
+        {
+            await _distributedCache.RemoveAsync(key);
+        }
+
         public async Task<T> GetItemAsync<T>(string key)
         {
             string json = await _distributedCache.GetStringAsync(key);

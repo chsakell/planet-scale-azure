@@ -4,8 +4,7 @@ import * as userActions from './user.actions';
 
 export const initialState: UserState = {
     cart: undefined,
-    user: undefined,
-    selectedPanel: 'Login'
+    user: undefined
 };
 
 export function userReducer(state = initialState, action: userActions.Actions): UserState {
@@ -32,9 +31,9 @@ export function userReducer(state = initialState, action: userActions.Actions): 
                 user: action.result.data
             });
 
-        case userActions.SWITCH_ACCOUNT_ACTION:
+        case userActions.COMPLETE_ORDER_COMPLETE:
             return Object.assign({}, state, {
-                selectedPanel: action.view
+                cart: undefined
             });
 
         default:

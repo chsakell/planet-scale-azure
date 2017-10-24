@@ -68,7 +68,7 @@ export class UserEffects {
         @Effect() completeOrder: Observable<Action> = this.actions$.ofType(userActions.COMPLETE_ORDER)
         .switchMap((action: userActions.CompleteOrderAction) => {
             return this.productService.completeOrder(action.id)
-                .map((data: string) => {
+                .map((data: ResultVM) => {
                     return new userActions.CompleteOrderCompleteAction(data);
                 })
                 .catch((error: any) => {

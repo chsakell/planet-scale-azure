@@ -13,6 +13,7 @@ import 'rxjs/add/operator/catch';
 import { Cart } from "../../models/cart";
 import { Topic } from '../../models/topic';
 import { UserCart } from '../../models/user-cart';
+import { ResultVM } from '../../models/result-vm';
 
 @Injectable()
 export class ProductService {
@@ -62,7 +63,7 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    completeOrder(id: string): Observable<string> {
+    completeOrder(id: string): Observable<ResultVM> {
         return this.http.post(this.ordersURI, '"' + id + '"', this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));

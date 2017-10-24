@@ -15,5 +15,6 @@ namespace Online.Store.RedisCache
         Task SetItemAsync(string key, object item, int expirationMinutes);
 
         Task<T> GetItemAsync<T>(string key);
+        Task RemoveAsync(string key);
     }
 }

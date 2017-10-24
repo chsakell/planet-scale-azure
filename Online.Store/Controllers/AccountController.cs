@@ -20,9 +20,9 @@ namespace Online.Store.Controllers
     [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
-        string ClientId = string.Empty; // "3437ef01-f3e1-49f9-8114-afcc5d884cfb";
-        string ClientSecret = string.Empty; // "+wPsOTMiT+/fPKL6X1H++hZWTDV5S1jbdGC4r2R3otk=";
-        string TenantId = string.Empty; // "PlanetScaleStoreTenant.onmicrosoft.com";
+        string ClientId = string.Empty;
+        string ClientSecret = string.Empty;
+        string TenantId = string.Empty;
 
         public AccountController(IConfiguration configuration)
         {

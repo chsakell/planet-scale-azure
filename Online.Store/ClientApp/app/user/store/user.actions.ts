@@ -62,7 +62,7 @@ export class CompleteOrderAction implements Action {
 export class CompleteOrderCompleteAction implements Action {
     readonly type = COMPLETE_ORDER_COMPLETE;
 
-    constructor(public id: string) { }
+    constructor(public id: ResultVM) { }
 }
 
 export class RegisterUserAction implements Action {
@@ -92,5 +92,6 @@ export type Actions
     | LoginUserCompleteAction
     | RegisterUserAction
     | RegisterUserCompleteAction
-    | SwitchAccountAction;
+    | SwitchAccountAction
+    | CompleteOrderCompleteAction;
 

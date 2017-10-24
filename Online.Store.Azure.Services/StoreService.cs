@@ -340,6 +340,11 @@ namespace Online.Store.Azure.Services
             return await _cacheRepository.GetItemAsync<CartDTO>(cartId);
         }
 
+        public async Task RemoveCart(string key)
+        {
+            await _cacheRepository.RemoveAsync(key);
+        }
+
         public async Task<CartDTO> AddProductToCart(string cardId, string productId)
         {
             CartDTO cart = null;
@@ -433,6 +438,7 @@ namespace Online.Store.Azure.Services
         Task<CartDTO> AddProductToCart(string cardId, string productId);
         Task UpdateToCart(CartDTO item);
         Task RemoveFromCart(CartDTO Item);
+        Task RemoveCart(string key);
         Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId);
         Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
         Task<CommunityDTO> AddPost(PostDTO post);

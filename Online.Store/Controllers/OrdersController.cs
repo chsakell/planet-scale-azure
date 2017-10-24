@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Online.Store.Models;
 using Online.Store.Data;
+using Online.Store.ViewModels;
 
 namespace Online.Store.Controllers
 {
@@ -30,7 +31,7 @@ namespace Online.Store.Controllers
         // POST: api/Orders
         [HttpPost]
         [Authorize]
-        public async Task<int?> Post([FromBody]string cartId)
+        public async Task<IActionResult> Post([FromBody]string cartId)
         {
             int? orderId = null;
             
@@ -61,10 +62,21 @@ namespace Online.Store.Controllers
 
                 //orderId = _storeService.AddOrder(order);
                 await _context.SaveChangesAsync();
+
+                await _storeService.RemoveCart(cartId);
+                Response.Cookies.Delete("cart");
+
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.SUCCESS
+                });
             }
 
-            return orderId;
-            
+            return Ok(new ResultViewModel()
+            {
+                Result = Result.ERROR
+            });
+
         }
         
         // PUT: api/Orders/5
