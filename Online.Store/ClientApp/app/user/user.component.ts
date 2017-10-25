@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
+import { ISubscription } from 'rxjs/Subscription';
 
 @Component({
     selector: 'user-view',
@@ -10,13 +11,23 @@ import { User } from '../models/user';
 
 export class UserComponent implements OnInit {
 
-    selectedPanel$: Observable<string>;
+    redirectToLogin$: Observable<boolean>;
     user$: Observable<User>;
 
-    constructor(private store: Store<any>) { 
-        this.selectedPanel$ = this.store.select<string>(state => state.user.userState.selectedPanel);
+    private subscription: ISubscription;
+
+    constructor(private store: Store<any>) {
+        this.redirectToLogin$ = this.store.select<boolean>(state => state.user.userState.redirectToLogin);
         this.user$ = this.store.select<User>(state => state.user.userState.user);
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.subscription = this.redirectToLogin$
+            .filter(val => val === true)
+            .subscribe(() => window.location.href = '/account/signin');
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 }

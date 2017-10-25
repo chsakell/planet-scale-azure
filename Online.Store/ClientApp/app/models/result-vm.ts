@@ -4,7 +4,7 @@ export class ResultVM {
     public data: any;
 }
 
-enum Result {
+export enum Result {
     SUCCESS = 1,
     Error = 2
 }

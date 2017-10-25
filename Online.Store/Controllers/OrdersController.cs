@@ -33,8 +33,6 @@ namespace Online.Store.Controllers
         [Authorize]
         public async Task<IActionResult> Post([FromBody]string cartId)
         {
-            int? orderId = null;
-            
             var cart = string.IsNullOrEmpty(cartId) ? null : await _storeService.GetCart(cartId);
 
             if(cart != null && cartId == Request.Cookies["cart"])

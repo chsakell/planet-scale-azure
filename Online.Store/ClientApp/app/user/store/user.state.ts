@@ -3,5 +3,6 @@ import { User } from "../../models/user";
 
 export interface UserState {
     cart?: Cart,
-    user?: User 
+    user?: User,
+    redirectToLogin: boolean 
 };
