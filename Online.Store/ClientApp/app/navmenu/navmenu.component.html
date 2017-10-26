@@ -28,7 +28,7 @@
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="cart">
                     <a [routerLink]="['/checkout']">
-                        <span class='glyphicon glyphicon-shopping-cart'></span> Cart
+                        <span class='glyphicon glyphicon-shopping-cart'></span> Cart <i>({{cart.items.length}} items)</i>
                     </a>
                 </li>
             </ul>
