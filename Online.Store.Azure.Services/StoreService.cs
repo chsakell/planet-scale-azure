@@ -16,7 +16,7 @@ namespace Online.Store.Azure.Services
 
         private const string _PRODUCT_COLLECTION_ID = "Items";
         private const string _CART_COLLECTION_ID = "Cart";
-        private const string _COMMUNITY_COLLECTION_ID = "Community";
+        private const string _FORUM_COLLECTION_ID = "Forum";
         private int PAGE_SIZE = 5;
         #endregion
 
@@ -42,7 +42,7 @@ namespace Online.Store.Azure.Services
         public async Task<List<CommunityDTO>> GetTopCommunityPost()
         {
             var data = new List<CommunityDTO>();
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             var communities = await this._repository.GetItemsAsync<CommunityDTO>();
 
@@ -56,7 +56,7 @@ namespace Online.Store.Azure.Services
 
         public async Task<List<TopicDTO>> GetTopics()
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             string query = "select c.id, c.title, c.content, c.mediaDescription, c.mediaUrl, c.mediaType, c.userId, c.createdDate from c";
 
@@ -69,7 +69,7 @@ namespace Online.Store.Azure.Services
 
         public async Task<TopicDTO> GetTopic(string id)
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             var topic = await _repository.GetItemAsync<TopicDTO>(id);
 
@@ -122,7 +122,7 @@ namespace Online.Store.Azure.Services
 
         public async Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId)
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             int _pageSize = PAGE_SIZE; // todo : configuration
             int pageSize = _pageSize;
@@ -161,7 +161,7 @@ namespace Online.Store.Azure.Services
         /// <returns></returns>
         public async Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId)
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
             int pageSize = PAGE_SIZE;
             var communityResult = new CommunityResponseDto();
 
@@ -204,7 +204,7 @@ namespace Online.Store.Azure.Services
         /// <returns></returns>
         public async Task<CommunityDTO> AddPost(PostDTO post)
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             var datatoAdd = new CommunityDTO()
             {
@@ -230,7 +230,7 @@ namespace Online.Store.Azure.Services
         /// <returns></returns>
         public async Task<CommunityDTO> AddPostResponse(PostDTO post)
         {
-            await _repository.InitAsync(_COMMUNITY_COLLECTION_ID);
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
 
             var datatoAdd = new CommunityDTO()
             {

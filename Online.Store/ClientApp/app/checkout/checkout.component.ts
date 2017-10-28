@@ -13,13 +13,14 @@ import * as userActions from '../user/store/user.actions';
 export class CheckoutComponent implements OnInit {
 
     cart$: Observable<Cart>;
+    total$: Observable<number>;
 
     constructor(private store: Store<any>) {
         this.cart$ = this.store.select<Cart>(state => state.user.userState.cart);
     }
 
     ngOnInit() {
-        //this.store.dispatch(new ProductActions.SelectAllAction());
+
     }
 
     completeOrder(id: string) {

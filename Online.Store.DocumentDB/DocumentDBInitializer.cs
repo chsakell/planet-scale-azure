@@ -34,6 +34,8 @@ namespace Online.Store.DocumentDB
             CreateDatabaseIfNotExistsAsync(DatabaseId).Wait();
             // Products Collection
             CreateCollectionIfNotExistsAsync(DatabaseId, "Items").Wait();
+            // Forum Collection
+            CreateCollectionIfNotExistsAsync(DatabaseId, "Forum").Wait();
 
             StorageInitializer.Initialize(configuration);
             StorageInitializer.InitContainerAsync("product-images").Wait();
@@ -205,6 +207,33 @@ namespace Online.Store.DocumentDB
                         }
                         Document document = await storeRepository.CreateItemAsync(product);
                         string contentType = string.Empty;
+                    }
+                }
+            }
+
+            // Init Forum
+            await storeRepository.InitAsync("Forum");
+
+            var topicsDB = await storeRepository.GetItemsAsync<TopicDTO>();
+            if (topicsDB.Count() == 0)
+            {
+                List<TopicDTO> topics = null;
+
+                using (StreamReader r = new StreamReader(Path.Combine(Config.WebRootPath, @"wwwroot/topics.json")))
+                {
+                    string json = r.ReadToEnd();
+                    topics = JsonConvert.DeserializeObject<List<TopicDTO>>(json);
+
+                    foreach (var topic in topics)
+                    {
+                        // await UploadProductImagesAsync(product);
+
+                        foreach (var post in topic.Posts)
+                        {
+                            post.Id = Guid.NewGuid().ToString();
+                        }
+
+                        Document document = await storeRepository.CreateItemAsync(topic);
                     }
                 }
             }

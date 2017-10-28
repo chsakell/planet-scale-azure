@@ -1,0 +1,51 @@
+[
+    {
+        "id": "",
+        "title": "How do I contact sales?",
+        "content": "I would really like to purchase several products from your service. How do I contact your sales department?",
+        "mediaDescription": null,
+        "mediaUrl": null,
+        "mediaType": null,
+        "createdDate": "2016-12-15T20:14:11.6343279+02:00",
+        "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
+        "userName": "Christos Sakel",
+        "posts": [
+            {
+                "id": "",
+                "title": "This is a response",
+                "content": "hello world!!",
+                "mediaDescription": "this is my kitchen dude",
+                "mediaUrl": "",
+                "mediaType": "image/jpeg",
+                "createdDate": "2017-09-25T20:08:12.9136216+03:00",
+                "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+                "userName": "Christos Sakel",
+                "posts": []
+            }
+        ]
+    },
+    {
+        "id": "",
+        "title": "The products on this site are AMAZING!",
+        "content": "I have searched other e-commerce sites before, but Contoso is the best!",
+        "mediaDescription": null,
+        "mediaUrl": null,
+        "mediaType": null,
+        "createdDate": "2016-12-14T09:40:36.3965383-06:00",
+        "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
+        "userName": "Christos Sakel",
+        "posts": []
+    },
+    {
+        "id": "",
+        "title": "This is a new discussion",
+        "content": "During tha last years, there has been an significant change regarding the amount of data being produced and consumed by applications while data-models and scemas are evolving more frequently than used to",
+        "mediaDescription": "This is cosmos db",
+        "mediaUrl": "",
+        "mediaType": "image/png",
+        "createdDate": "2017-09-25T20:11:29.4198573+03:00",
+        "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+        "userName": "Christos Sakel",
+        "posts": []
+    }
+]

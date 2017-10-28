@@ -26,6 +26,9 @@ namespace Online.Store.Core.DTOs
         [JsonProperty(PropertyName = "userId")]
         public string UserId { get; set; }
 
+        [JsonProperty(PropertyName = "userName")]
+        public string UserName { get; set; }
+
         [JsonProperty(PropertyName = "createdDate")]
         public DateTime CreatedDate { get; set; }
     }
