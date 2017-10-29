@@ -14,15 +14,10 @@ export class UserRegisterPresentationComponent {
     user: RegisterVM = { username : '', email: '', password: '', confirmPassword: '' };
 
     @Output() onRegister: EventEmitter<RegisterVM> = new EventEmitter();
-    @Output() onSwitchView: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
 
     register() {
         this.onRegister.emit(this.user);
-    }
-
-    viewLogin() {
-        this.onSwitchView.emit('Login');
     }
 }

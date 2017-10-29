@@ -22,7 +22,7 @@
         <div class="product-price">{{product.price}}</div>
         <div class="product-quantity">{{product.quantity}}</div>
         <div class="product-removal">
-            <button class="remove-product">
+            <button class="remove-product" (click)="remove(product.id)">
                 Remove
             </button>
         </div>

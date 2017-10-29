@@ -19,6 +19,7 @@ export function userReducer(state = initialState, action: userActions.Actions): 
             });
 
         case userActions.ADD_PRODUCT_TO_CART_COMPLETE:
+        case userActions.REMOVE_PRODUCT_FROM_CART_COMPLETE:
             return Object.assign({}, state, {
                 cart: action.cart
             });

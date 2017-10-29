@@ -411,6 +411,32 @@ namespace Online.Store.Azure.Services
 
             return cart;
         }
+
+        public async Task<CartDTO> RemoveProductFromCart(string cardId, string productId)
+        {
+            CartDTO cart = null;
+
+            cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
+
+            if (cart == null)
+            {
+                cart = new CartDTO()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    CreatedDate = DateTime.Now
+                };
+            }
+            else
+            {
+                cart.Items.RemoveAll(item => item.Id == productId);
+                await _cacheRepository.SetItemAsync(cardId, cart);
+
+                cart.UpdateDate = DateTime.Now;
+            }
+
+            return cart;
+        }
+
         #endregion
 
         #region Sharding
@@ -436,6 +462,7 @@ namespace Online.Store.Azure.Services
         Task<CartDTO> GetCart(string cartId);
         Task AddToCart(CartDTO Item);
         Task<CartDTO> AddProductToCart(string cardId, string productId);
+        Task<CartDTO> RemoveProductFromCart(string cardId, string productId);
         Task UpdateToCart(CartDTO item);
         Task RemoveFromCart(CartDTO Item);
         Task RemoveCart(string key);

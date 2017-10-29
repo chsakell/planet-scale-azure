@@ -9,19 +9,14 @@ export const GET_CART = '[Cart] Get';
 export const GET_CART_COMPLETE = '[Cart] Get Complete';
 export const ADD_PRODUCT_TO_CART = '[Cart] Add Product To Cart';
 export const ADD_PRODUCT_TO_CART_COMPLETE = '[Cart] Add Product To Cart Complete';
+export const REMOVE_PRODUCT_FROM_CART = '[Cart] Remove Product From Cart';
+export const REMOVE_PRODUCT_FROM_CART_COMPLETE = '[Cart] Remove Product From Cart Complete';
 export const COMPLETE_ORDER = '[Order] Complete';
 export const COMPLETE_ORDER_COMPLETE = '[Order] Completed';
 export const LOGIN_USER = '[Account] Login User';
 export const LOGIN_USER_COMPLETE = '[Account] Login User Complete';
 export const REGISTER_USER = '[Account] Register User';
 export const REGISTER_USER_COMPLETE = '[Account] Register User Complete';
-export const SWITCH_ACCOUNT_ACTION = '[Account] Switch Action';
-
-export class SwitchAccountAction implements Action {
-    readonly type = SWITCH_ACCOUNT_ACTION;
-
-    constructor(public view: string) { }
-}
 
 export class LoginUserAction implements Action {
     readonly type = LOGIN_USER;
@@ -49,6 +44,18 @@ export class AddProductToCartAction implements Action {
 
 export class AddProductToCartCompleteAction implements Action {
     readonly type = ADD_PRODUCT_TO_CART_COMPLETE;
+
+    constructor(public cart: Cart) { }
+}
+
+export class RemoveProductFromCartAction implements Action {
+    readonly type = REMOVE_PRODUCT_FROM_CART;
+
+    constructor(public id: string) { }
+}
+
+export class RemoveProductFromCartCompleteAction implements Action {
+    readonly type = REMOVE_PRODUCT_FROM_CART_COMPLETE;
 
     constructor(public cart: Cart) { }
 }
@@ -88,10 +95,11 @@ export type Actions
     | GetCartCompleteAction
     | AddProductToCartAction
     | AddProductToCartCompleteAction
+    | RemoveProductFromCartAction
+    | RemoveProductFromCartCompleteAction
     | LoginUserAction
     | LoginUserCompleteAction
     | RegisterUserAction
     | RegisterUserCompleteAction
-    | SwitchAccountAction
     | CompleteOrderCompleteAction;
 

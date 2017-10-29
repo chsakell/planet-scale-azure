@@ -26,4 +26,8 @@ export class CheckoutComponent implements OnInit {
     completeOrder(id: string) {
         this.store.dispatch(new userActions.CompleteOrderAction(id));
     }
+
+    removeProduct(productId: string) {
+        this.store.dispatch(new userActions.RemoveProductFromCartAction(productId));
+    }
 }

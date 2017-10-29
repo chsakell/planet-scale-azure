@@ -64,6 +64,18 @@ export class UserEffects {
                 })
         }
         );
+    
+    @Effect() removeProductFromCart: Observable<Action> = this.actions$.ofType(userActions.REMOVE_PRODUCT_FROM_CART)
+        .switchMap((action: userActions.RemoveProductFromCartAction) => {
+            return this.productService.removeProductFromCart(action.id)
+                .map((data: Cart) => {
+                    return new userActions.RemoveProductFromCartCompleteAction(data);
+                })
+                .catch((error: any) => {
+                    return of({ type: 'removeProductFromCart_FAILED' })
+                })
+        }
+        );
 
         @Effect() completeOrder: Observable<Action> = this.actions$.ofType(userActions.COMPLETE_ORDER)
         .switchMap((action: userActions.CompleteOrderAction) => {

@@ -71,8 +71,13 @@ namespace Online.Store.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<CartDTO> DeleteAsync(string id)
         {
+            string cartId = Request.Cookies["cart"];
+
+            var cart = await _storeService.RemoveProductFromCart(cartId, id);
+
+            return cart;
         }
 
     }

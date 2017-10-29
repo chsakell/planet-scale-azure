@@ -63,6 +63,12 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
+    removeProductFromCart(id: string): Observable<Cart> {
+        return this.http.delete(this.cartsURI  + id, this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
     completeOrder(id: string): Observable<ResultVM> {
         return this.http.post(this.ordersURI, '"' + id + '"', this.requestOptions)
             .map((res: Response) => res.json())

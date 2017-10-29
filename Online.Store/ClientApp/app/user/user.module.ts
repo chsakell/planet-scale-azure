@@ -6,16 +6,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { userReducer } from './store/user.reducer';
 import { UserEffects } from './store/user.effects';
-import { UserLoginPresentationComponent } from './login/login';
-import { UserLoginComponent } from './login/login.component';
 import { UserRegisterPresentationComponent } from './register/register';
 import { UserRegisterComponent } from './register/register.component';
 import { UserComponent } from './user.component';
 
 const USER_DIRECTIVES = [
     UserComponent,
-    UserLoginComponent,
-    UserLoginPresentationComponent,
     UserRegisterComponent,
     UserRegisterPresentationComponent
 ];

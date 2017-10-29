@@ -18,23 +18,13 @@ export class UserRegisterComponent implements OnInit {
     private subscription: ISubscription;
 
     constructor(private store: Store<any>) {
-        //this.newUser$ = this.store.select<RegisterVM>(state => state.account.accountState.newUser);
     }
 
-    ngOnInit() { /*
-        this.subscription = this.newUser$
-        .skip(1)
-        .filter(u => u.email != '' && u.username != '' && u.password != '' && u.confirmPassword != '')
-        .distinctUntilChanged()
-        .subscribe(user => this.store.dispatch(new accountActions.RegisterUserAction(user)));*/
+    ngOnInit() { 
     }
 
     registerUser(user: RegisterVM) {
         this.store.dispatch(new userActions.RegisterUserAction(user));
-    }
-
-    switchView(view: string) {
-        this.store.dispatch(new userActions.SwitchAccountAction(view));
     }
 
     ngOnDestroy() {

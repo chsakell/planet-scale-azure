@@ -1,1 +1,3 @@
-﻿<checkout-presentation [cart]="cart$ | async" (checkout)="completeOrder($event)"></checkout-presentation>
+﻿<checkout-presentation [cart]="cart$ | async" 
+(checkout)="completeOrder($event)" (onRemoveProduct)="removeProduct($event)">
+</checkout-presentation>

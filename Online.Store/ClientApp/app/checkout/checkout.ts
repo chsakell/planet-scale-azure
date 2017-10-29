@@ -21,12 +21,17 @@ export class CheckoutPresentationComponent {
     }
 
     @Output() checkout: EventEmitter<string> = new EventEmitter();
+    @Output() onRemoveProduct: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
 
     completeOrder() {
         console.log(this.cart.id);
         this.checkout.emit(this.cart.id);
+    }
+
+    remove(id: string) {
+        this.onRemoveProduct.emit(id);
     }
 
 }
