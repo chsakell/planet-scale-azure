@@ -47,6 +47,7 @@ export class ProductDetailsPresentationComponent {
     ];
     galleryImages: NgxGalleryImage[] = [];
 
+    @Input() loading: boolean;
     @Input()
     set product(value: Product) {
         this._product = Object.assign({}, value);

@@ -16,6 +16,13 @@ export class AppComponent implements OnInit {
     cart$: Observable<Cart>;
     user$: Observable<User>;
 
+    public options = {
+        position: ["bottom", "right"],
+        timeOut: 5000,
+        lastOnBottom: true,
+        showProgressBar: true
+    }
+
     constructor(private store: Store<any>) {
         this.cart$ = this.store.select<Cart>(state => state.user.userState.cart);
         this.user$ = this.store.select<User>(state => state.user.userState.user);

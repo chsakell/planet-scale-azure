@@ -1,1 +1,2 @@
-<product-list-presentation [products]="products$ | async"></product-list-presentation>
+<product-list-presentation [products]="products$ | async" [loading]="notifyService.loading$ | async">
+</product-list-presentation>

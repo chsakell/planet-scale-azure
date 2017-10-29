@@ -23,6 +23,7 @@ const nonTreeShakableModules = [
     'font-awesome/css/font-awesome.css',
     'hammerjs',
     'ngx-gallery',
+    'angular2-notifications',
     'jquery',
 ];
 const allModules = treeShakableModules.concat(nonTreeShakableModules);

@@ -5,6 +5,7 @@ import { Configuration } from '../app.constants';
 import { ProductService } from './services/product.service';
 import { UserModule } from "../user/user.module";
 import { AccountService } from './services/account.service';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { AccountService } from './services/account.service';
     ],
     exports: [
         CommonModule,
-        UserModule
+        UserModule,
+        NotificationsModule
     ]
 })
 

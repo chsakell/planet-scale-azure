@@ -11,6 +11,7 @@ import { Product } from "../../models/product";
 export class ProductListPresentationComponent {
 
     @Input() products: Product[];
+    @Input() loading: boolean;
 
     constructor() { }
 

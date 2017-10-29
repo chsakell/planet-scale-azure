@@ -69,10 +69,20 @@
       "from": "@angular/tsc-wrapped@4.2.5",
       "resolved": "https://registry.npmjs.org/@angular/tsc-wrapped/-/tsc-wrapped-4.2.5.tgz"
     },
+    "@ngrx/effects": {
+      "version": "4.1.0",
+      "from": "@ngrx/effects@>=4.0.5 <5.0.0",
+      "resolved": "https://registry.npmjs.org/@ngrx/effects/-/effects-4.1.0.tgz"
+    },
     "@ngrx/store": {
       "version": "4.0.3",
       "from": "@ngrx/store@latest",
       "resolved": "https://registry.npmjs.org/@ngrx/store/-/store-4.0.3.tgz"
+    },
+    "@ngrx/store-devtools": {
+      "version": "4.0.0",
+      "from": "@ngrx/store-devtools@>=4.0.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/@ngrx/store-devtools/-/store-devtools-4.0.0.tgz"
     },
     "@ngtools/webpack": {
       "version": "1.5.0",
@@ -163,6 +173,16 @@
       "version": "1.0.1",
       "from": "amdefine@>=0.0.4",
       "resolved": "https://registry.npmjs.org/amdefine/-/amdefine-1.0.1.tgz"
+    },
+    "angular2-notifications": {
+      "version": "0.7.8",
+      "from": "angular2-notifications@latest",
+      "resolved": "https://registry.npmjs.org/angular2-notifications/-/angular2-notifications-0.7.8.tgz"
+    },
+    "angular2-router-loader": {
+      "version": "0.3.5",
+      "from": "angular2-router-loader@0.3.5",
+      "resolved": "https://registry.npmjs.org/angular2-router-loader/-/angular2-router-loader-0.3.5.tgz"
     },
     "angular2-template-loader": {
       "version": "0.6.2",
@@ -1297,6 +1317,11 @@
       "from": "flatten@>=1.0.2 <2.0.0",
       "resolved": "https://registry.npmjs.org/flatten/-/flatten-1.0.2.tgz"
     },
+    "font-awesome": {
+      "version": "4.7.0",
+      "from": "font-awesome@4.7.0",
+      "resolved": "https://registry.npmjs.org/font-awesome/-/font-awesome-4.7.0.tgz"
+    },
     "for-in": {
       "version": "1.0.2",
       "from": "for-in@>=1.0.2 <2.0.0",
@@ -1370,6 +1395,11 @@
       "version": "1.0.1",
       "from": "graceful-readlink@>=1.0.0",
       "resolved": "https://registry.npmjs.org/graceful-readlink/-/graceful-readlink-1.0.1.tgz"
+    },
+    "hammerjs": {
+      "version": "2.0.8",
+      "from": "hammerjs@2.0.8",
+      "resolved": "https://registry.npmjs.org/hammerjs/-/hammerjs-2.0.8.tgz"
     },
     "has": {
       "version": "1.0.1",
@@ -2084,6 +2114,11 @@
       "from": "negotiator@0.6.1",
       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz",
       "dev": true
+    },
+    "ngx-gallery": {
+      "version": "2.4.1",
+      "from": "ngx-gallery@>=2.4.1 <3.0.0",
+      "resolved": "https://registry.npmjs.org/ngx-gallery/-/ngx-gallery-2.4.1.tgz"
     },
     "no-case": {
       "version": "2.3.1",

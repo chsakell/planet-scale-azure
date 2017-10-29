@@ -8,7 +8,7 @@
             </h1>
         </div>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="!loading">
         <div class="col-xs-6 col-sm-6 col-md-4 camera-item" *ngFor="let product of products; let i = index">
             <a href="#">
                 <img class="img-responsive" [src]="product.image" alt="">

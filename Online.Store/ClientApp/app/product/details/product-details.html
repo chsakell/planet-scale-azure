@@ -1,3 +1,3 @@
-<product-details-presentation [product]="product$ | async" 
+<product-details-presentation [product]="product$ | async" [loading]="notifyService.loading$ | async"
                               (addToCart)="addProductToCart($event)">
 </product-details-presentation>

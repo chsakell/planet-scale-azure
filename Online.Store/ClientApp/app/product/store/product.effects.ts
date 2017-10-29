@@ -8,6 +8,7 @@ import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
 import * as productsAction from './product.action';
+import * as notifyActions from '../../notifications/store/notifications.actions';
 import { Product } from './../../models/product';
 import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
@@ -18,8 +19,11 @@ export class ProductEffects {
     @Effect() getAll$: Observable<Action> = this.actions$.ofType(productsAction.SELECTALL)
         .switchMap(() =>
             this.productService.getAll()
-                .map((data: Product[]) => {
-                    return new productsAction.SelectAllCompleteAction(data);
+                .mergeMap((data: Product[]) => {
+                    return [
+                        new notifyActions.SetLoadingAction(false),
+                        new productsAction.SelectAllCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
                     return of({ type: 'getAll_FAILED' })
@@ -29,8 +33,11 @@ export class ProductEffects {
     @Effect() getProduct$: Observable<Action> = this.actions$.ofType(productsAction.SELECT_PRODUCT)
         .switchMap((action: productsAction.SelectProductAction) => {
             return this.productService.getSingle(action.id)
-                .map((data: Product) => {
-                    return new productsAction.SelectProductCompleteAction(data);
+                .mergeMap((data: Product) => {
+                    return [
+                        new notifyActions.SetLoadingAction(false),
+                        new productsAction.SelectProductCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
                     return of({ type: 'getProduct_FAILED' })
