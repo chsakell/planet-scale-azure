@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Message } from '../../models/message';
 
 export const SET_LOADING = '[Notify] Set Loading';
 export const SET_MESSAGE = '[Notify] Set Message';
@@ -12,7 +13,7 @@ export class SetLoadingAction implements Action {
 export class SetMessageAction implements Action {
     readonly type = SET_MESSAGE;
 
-    constructor(public message: string) { }
+    constructor(public message: Message) { }
 }
 
 export type Actions

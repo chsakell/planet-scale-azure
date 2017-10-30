@@ -8,12 +8,14 @@ import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
 import * as userActions from './user.actions';
+import * as notifyActions from '../../notifications/store/notifications.actions';
 import { Product } from './../../models/product';
 import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
 import { ResultVM } from '../../models/result-vm';
 import { AccountService } from '../../core/services/account.service';
 import { UserCart } from '../../models/user-cart';
+import { MessageType } from '../../models/message';
 
 @Injectable()
 export class UserEffects {
@@ -56,8 +58,11 @@ export class UserEffects {
     @Effect() addProductToCart: Observable<Action> = this.actions$.ofType(userActions.ADD_PRODUCT_TO_CART)
         .switchMap((action: userActions.AddProductToCartAction) => {
             return this.productService.addProductToCart(action.id)
-                .map((data: Cart) => {
-                    return new userActions.AddProductToCartCompleteAction(data);
+                .mergeMap((data: Cart) => {
+                    return [
+                        new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Item added to cart' }),
+                        new userActions.AddProductToCartCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
                     return of({ type: 'addProductToCart_FAILED' })
@@ -68,8 +73,11 @@ export class UserEffects {
     @Effect() removeProductFromCart: Observable<Action> = this.actions$.ofType(userActions.REMOVE_PRODUCT_FROM_CART)
         .switchMap((action: userActions.RemoveProductFromCartAction) => {
             return this.productService.removeProductFromCart(action.id)
-                .map((data: Cart) => {
-                    return new userActions.RemoveProductFromCartCompleteAction(data);
+                .mergeMap((data: Cart) => {
+                    return [
+                        new notifyActions.SetMessageAction( { type: MessageType.Info, message: 'Item removed from cart' }),
+                        new userActions.RemoveProductFromCartCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
                     return of({ type: 'removeProductFromCart_FAILED' })
