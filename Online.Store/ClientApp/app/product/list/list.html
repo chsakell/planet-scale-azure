@@ -10,13 +10,16 @@
     </div>
     <div class="row" *ngIf="!loading">
         <div class="col-xs-6 col-sm-6 col-md-4 camera-item" *ngFor="let product of products; let i = index">
-            <a href="#">
+            <a [routerLink]="['/products/details', product.id]">
                 <img class="img-responsive" [src]="product.image" alt="">
             </a>
             <h4>
                 <a [routerLink]="['/products/details', product.id]">{{product.title}}</a>
             </h4>
-            <p>{{product.price}}</p>
+            <p>
+                <strong>{{product.price | currency:'USD':true:'2.2-4'}}</strong>
+                <button class="btn btn-primary btn-xs" (click)="addProduct(product.id)">Add to Cart</button>
+            </p>
         </div>
     </div>
 </div>

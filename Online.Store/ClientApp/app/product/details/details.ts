@@ -98,6 +98,7 @@ export class ProductDetailsPresentationComponent {
         this._compatibilies = [];
         this._imaging = [];
     }
+    
     addProduct(productId: string) {
         this.addToCart.emit(productId);
     }

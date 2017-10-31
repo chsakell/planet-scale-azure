@@ -16,6 +16,7 @@ import { ResultVM } from '../../models/result-vm';
 import { AccountService } from '../../core/services/account.service';
 import { UserCart } from '../../models/user-cart';
 import { MessageType } from '../../models/message';
+import { SET_MESSAGE } from '../../notifications/store/notifications.actions';
 
 @Injectable()
 export class UserEffects {
@@ -23,11 +24,14 @@ export class UserEffects {
     @Effect() registerUser: Observable<Action> = this.actions$.ofType(userActions.REGISTER_USER)
     .switchMap((action: userActions.RegisterUserAction) => {
         return this.accountService.registerUser(action.user)
-            .map((data: ResultVM) => {
-                return new userActions.RegisterUserCompleteAction(data);
+            .mergeMap((data: ResultVM) => {
+                return [
+                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Registration completed successfully' }),
+                    new userActions.RegisterUserCompleteAction(data)
+                ];
             })
             .catch((error: any) => {
-                return of({ type: 'registerUser_FAILED' })
+                return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to register user' }))
             })
     }
     );
@@ -39,7 +43,7 @@ export class UserEffects {
                 return new userActions.LoginUserCompleteAction(data);
             })
             .catch((error: any) => {
-                return of({ type: 'loginUser_FAILED' })
+                return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to signin user' }))
             })
     }
     );
@@ -51,7 +55,7 @@ export class UserEffects {
                     return new userActions.GetCartCompleteAction(data);
                 })
                 .catch((error: any) => {
-                    return of({ type: 'getCart_FAILED' })
+                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to load cart' }))
                 })
         );
 
@@ -65,7 +69,7 @@ export class UserEffects {
                     ];
                 })
                 .catch((error: any) => {
-                    return of({ type: 'addProductToCart_FAILED' })
+                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to add item to cart' }))
                 })
         }
         );
@@ -80,7 +84,7 @@ export class UserEffects {
                     ];
                 })
                 .catch((error: any) => {
-                    return of({ type: 'removeProductFromCart_FAILED' })
+                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to remove item from cart' }))
                 })
         }
         );
@@ -88,11 +92,14 @@ export class UserEffects {
         @Effect() completeOrder: Observable<Action> = this.actions$.ofType(userActions.COMPLETE_ORDER)
         .switchMap((action: userActions.CompleteOrderAction) => {
             return this.productService.completeOrder(action.id)
-                .map((data: ResultVM) => {
-                    return new userActions.CompleteOrderCompleteAction(data);
+                .mergeMap((data: ResultVM) => {
+                    return [
+                        new notifyActions.SetMessageAction( { type: MessageType.Info, message: 'Your order has been submitted!' }),
+                        new userActions.CompleteOrderCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
-                    return of({ type: 'completeOrder_FAILED' })
+                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to process request' }))
                 })
         }
         );

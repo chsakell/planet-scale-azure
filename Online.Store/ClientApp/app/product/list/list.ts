@@ -12,7 +12,12 @@ export class ProductListPresentationComponent {
 
     @Input() products: Product[];
     @Input() loading: boolean;
+    @Output() addToCart: EventEmitter<string> = new EventEmitter();
 
     constructor() { }
+
+    addProduct(productId: string) {
+        this.addToCart.emit(productId);
+    }
 
 }

@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <button class="btn btn-primary" (click)="addProduct(product.id)">Add to Cart</button>
-                    <span class="pull-right">${{product.price}}</span>
+                    <span class="pull-right">{{product.price | currency:'USD':true:'2.2-4'}}</span>
                 </div>
                 <div class="ratings">
                     <p class="pull-right">{{product.rates}} reviews</p>

@@ -1,2 +1,4 @@
-<product-list-presentation [products]="products$ | async" [loading]="notifyService.loading$ | async">
+<product-list-presentation [products]="products$ | async" 
+                            [loading]="notifyService.loading$ | async" 
+                            (addToCart)="addProductToCart($event)">
 </product-list-presentation>

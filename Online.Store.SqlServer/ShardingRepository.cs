@@ -25,6 +25,7 @@ namespace Online.Store.SqlServer
 
         public ShardingRepository(IConfiguration configuration)
         {
+            /* TODO
             s_server = configuration["SQL:ServerName"];
             s_shardmapmgrdb = configuration["SQL:ElasticScaleDb"];
 
@@ -39,6 +40,7 @@ namespace Online.Store.SqlServer
                 s_shardMapManager = TryGetShardMapManager(
                     s_server,
                     s_shardmapmgrdb);
+            */
         }
 
         public int? AddOrder(Order order, int shardingKey)
