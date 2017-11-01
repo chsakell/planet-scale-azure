@@ -28,10 +28,17 @@
                 </li>
                 <li [routerLinkActive]="['link-active']" *ngIf="cart">
                     <a [routerLink]="['/checkout']">
-                        <span class='glyphicon glyphicon-shopping-cart'></span> Cart <i>({{cart.items.length}} items)</i>
+                        <span class='glyphicon glyphicon-shopping-cart'></span> Cart
+                        <i>({{cart.items.length}} items)</i>
                     </a>
                 </li>
+                <li>
+                </li>
             </ul>
+            <div class="user-view-nav">
+                <user-view></user-view>
+            </div>
+            
         </div>
     </div>
 </div>

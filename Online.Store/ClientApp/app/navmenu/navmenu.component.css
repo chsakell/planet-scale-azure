@@ -1,4 +1,6 @@
-
+.user-view-nav {
+    display: none;
+}
 
 li .glyphicon {
     margin-right: 10px;
@@ -58,11 +60,18 @@ li.link-active a:focus {
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
+    
 }
 
 @media (max-width: 768px) {
     /* On small screens, convert the nav menu to a vertical sidebar */
     .main-nav {
         top:0;
+    }
+
+    .user-view-nav {
+        display: block;
+        height:277px;
     }
 }
