@@ -26,7 +26,7 @@ export class UserEffects {
         return this.accountService.registerUser(action.user)
             .mergeMap((data: ResultVM) => {
                 return [
-                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Registration completed successfully' }),
+                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Registration completed successfully. Redirecting to login..' }),
                     new userActions.RegisterUserCompleteAction(data)
                 ];
             })

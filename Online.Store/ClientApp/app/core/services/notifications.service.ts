@@ -20,6 +20,7 @@ export class NotifyService {
     private subscription: ISubscription;
 
     constructor(private store: Store<any>, private _service: NotificationsService) {
+
         this.loading$ = this.store.select<boolean>(state => state.notifications.notificationsState.loading);
         this.message$ = this.store.select<Message>(state => state.notifications.notificationsState.message);
 

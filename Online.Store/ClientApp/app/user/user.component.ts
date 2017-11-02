@@ -24,7 +24,10 @@ export class UserComponent implements OnInit {
     ngOnInit() {
         this.subscription = this.redirectToLogin$
             .filter(val => val === true)
-            .subscribe(() => window.location.href = '/account/signin');
+            .subscribe(() =>
+                setTimeout(function () {
+                    window.location.href = '/account/signin';
+                }, 1500));
     }
 
     ngOnDestroy() {
