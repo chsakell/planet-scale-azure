@@ -10,10 +10,17 @@ import { Cart } from "../models/cart";
 
 export class CheckoutPresentationComponent {
     _cart: Cart;
+    total: number = 0;
 
     @Input()
     set cart(value: Cart) {
         this._cart = Object.assign({}, value);
+        this.total = 0;
+        if (this._cart && this._cart.items) {
+            this._cart.items.forEach(item => {
+                this.total += item.price * item.quantity;
+            });
+        }
     }
 
     get cart() {
