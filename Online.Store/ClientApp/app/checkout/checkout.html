@@ -19,20 +19,20 @@
             <div class="product-title"><a [routerLink]="['/products/details', product.id]">{{product.title}}</a></div>
             <p class="product-description">{{product.description}}</p>
         </div>
-        <div class="product-price">{{product.price}}</div>
+        <div class="product-price">{{product.price | currency:'USD':true:'2.2-4'}}</div>
         <div class="product-quantity">{{product.quantity}}</div>
         <div class="product-removal">
             <button class="remove-product" (click)="remove(product.id)">
                 Remove
             </button>
         </div>
-        <div class="product-line-price">{{product.price * product.quantity}}</div>
+        <div class="product-line-price">{{product.price * product.quantity | currency:'USD':true:'2.2-4'}}</div>
     </div>
 
     <div class="totals">
         <div class="totals-item totals-item-total">
             <label>Grand Total</label>
-            <div class="totals-value" id="cart-total">{{total}}</div>
+            <div class="totals-value" id="cart-total">{{total | currency:'USD':true:'2.2-4'}}</div>
         </div>
     </div>
 
