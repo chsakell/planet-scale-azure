@@ -1,5 +1,6 @@
 .row-content {
     margin-top: 51px;
+    background-color: whitesmoke;
 }
 
 @media (max-width: 767px) {

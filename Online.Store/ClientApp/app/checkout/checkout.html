@@ -36,6 +36,7 @@
         </div>
     </div>
 
-    <button class="checkout" (click)="completeOrder()">Checkout</button>
+    <button class="btn btn-success checkout" (click)="completeOrder()" *ngIf="user" [disabled]="total === 0">Checkout</button>
+    <a href="/account/signin?redirect=checkout" class="btn btn-primary pull-right" *ngIf="!user">Sign In to Checkout</a>
 
 </div>

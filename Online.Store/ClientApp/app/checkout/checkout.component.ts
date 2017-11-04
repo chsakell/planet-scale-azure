@@ -7,6 +7,7 @@ import { NotifyService } from '../core/services/notifications.service';
 import { Message, MessageType } from '../models/message';
 import { ISubscription } from 'rxjs/Subscription';
 import { Subject, BehaviorSubject } from 'rxjs';
+import { User } from '../models/user';
 
 @Component({
     selector: 'checkout-order',
@@ -19,10 +20,12 @@ export class CheckoutComponent implements OnInit {
     private subscription: ISubscription;
     cart$: Observable<Cart>;
     cartTotal$: Observable<number>;
+    user$: Observable<User>;
 
     constructor(private store: Store<any>, private notifyService: NotifyService) {
         this.cart$ = this.store.select<Cart>(state => state.user.userState.cart);
         this.cartTotal$ = this.store.select<number>(state => state.user.userState.cartTotal);
+        this.user$ = this.store.select<User>(state => state.user.userState.user);
     }
 
     ngOnInit() {

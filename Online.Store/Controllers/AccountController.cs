@@ -32,9 +32,9 @@ namespace Online.Store.Controllers
         }
 
         [HttpGet]
-        public IActionResult SignIn()
+        public IActionResult SignIn(string redirect = null)
         {
-            var redirectUrl = Url.Action(nameof(HomeController.Index), "Home");
+            var redirectUrl = redirect ?? Url.Action(nameof(HomeController.Index), "Home");
             return Challenge(
                 new AuthenticationProperties { RedirectUri = redirectUrl },
                 OpenIdConnectDefaults.AuthenticationScheme);

@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Cart } from "../models/cart";
+import { User } from '../models/user';
 
 @Component({
     selector: 'checkout-presentation',
@@ -12,6 +13,7 @@ export class CheckoutPresentationComponent {
     _cart: Cart;
     
     @Input() total: number;
+    @Input() user: User;
 
     @Input()
     set cart(value: Cart) {

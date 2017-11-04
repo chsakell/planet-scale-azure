@@ -41,7 +41,7 @@ export function userReducer(state = initialState, action: userActions.Actions): 
         case userActions.COMPLETE_ORDER_COMPLETE:
             return Object.assign({}, state, {
                 cart: undefined,
-                calculateTotal: 0
+                cartTotal: 0
             });
 
         default:
