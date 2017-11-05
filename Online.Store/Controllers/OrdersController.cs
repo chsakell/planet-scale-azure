@@ -51,7 +51,9 @@ namespace Online.Store.Controllers
                     order.OrderDetails.Add(new OrderDetail()
                     {
                         ProductId = item.Id,
-                        Price = item.Price,
+                        ProductTitle = item.Title,
+                        ProductModel = item.Model,
+                        ProductPrice = item.Price,
                         Quantity = item.Quantity
                     });
                 }

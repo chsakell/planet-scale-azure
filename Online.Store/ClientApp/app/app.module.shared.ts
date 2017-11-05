@@ -23,6 +23,8 @@ import { CheckoutPresentationComponent } from "./checkout/checkout";
 import { NgxGalleryModule } from 'ngx-gallery';
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { SimpleNotificationsModule } from 'angular2-notifications';
+import { OrdersComponent } from './orders/orders.component';
+import { OrdersPresentationComponent } from './orders/orders';
 
 @NgModule({
     declarations: [
@@ -31,6 +33,8 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
         NavBarComponent,
         CheckoutComponent,
         CheckoutPresentationComponent,
+        OrdersComponent,
+        OrdersPresentationComponent,
         HomeComponent
     ],
     imports: [

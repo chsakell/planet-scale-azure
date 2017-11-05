@@ -11,9 +11,10 @@ using System;
 namespace Online.Store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171105144648_order_add_product_title_model")]
+    partial class order_add_product_title_model
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,11 +42,11 @@ namespace Online.Store.Migrations
 
                     b.Property<int>("OrderId");
 
+                    b.Property<double>("Price");
+
                     b.Property<string>("ProductId");
 
                     b.Property<string>("ProductModel");
-
-                    b.Property<double>("ProductPrice");
 
                     b.Property<string>("ProductTitle");
 

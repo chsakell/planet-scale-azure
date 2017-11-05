@@ -32,6 +32,11 @@
                         <i>({{cart.items.length}} items)</i>
                     </a>
                 </li>
+                <li [routerLinkActive]="['link-active']" *ngIf="user">
+                    <a [routerLink]="['/orders']">
+                        <span class='glyphicon glyphicon-credit-card'></span> My Orders
+                    </a>
+                </li>
                 <li>
                 </li>
             </ul>

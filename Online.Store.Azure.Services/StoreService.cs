@@ -365,6 +365,7 @@ namespace Online.Store.Azure.Services
                     Id = productId,
                     Image = product.Image,
                     Title = product.Title,
+                    Model = product.Model,
                     Description = product.Description,
                     Price = product.Price,
                     Quantity = 1
@@ -400,6 +401,7 @@ namespace Online.Store.Azure.Services
                         Id = productId,
                         Image = product.Image,
                         Title = product.Title,
+                        Model = product.Model,
                         Description = product.Description,
                         Price = product.Price,
                         Quantity = 1

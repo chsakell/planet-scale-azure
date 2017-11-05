@@ -17,7 +17,6 @@ import { User } from '../models/user';
 
 export class CheckoutComponent implements OnInit {
 
-    private subscription: ISubscription;
     cart$: Observable<Cart>;
     cartTotal$: Observable<number>;
     user$: Observable<User>;

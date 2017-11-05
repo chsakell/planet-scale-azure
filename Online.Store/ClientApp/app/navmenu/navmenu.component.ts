@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { User } from '../models/user';
 
 @Component({
     selector: 'nav-menu',
@@ -7,4 +8,5 @@ import { Component, Input } from '@angular/core';
 })
 export class NavMenuComponent {
     @Input() cart: any;
+    @Input() user: User;
 }

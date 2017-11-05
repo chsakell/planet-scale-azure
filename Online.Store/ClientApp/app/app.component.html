@@ -4,11 +4,11 @@
     </div>
     <div class='row row-content'>
         <div class='col-sm-3'>
-            <nav-menu [cart]="cart$ | async"></nav-menu>
+            <nav-menu [cart]="cart$ | async" [user]="user$ | async"></nav-menu>
         </div>
         <div class='col-sm-9 body-content'>
             <router-outlet></router-outlet>
-            <ngx-loading [show]="notifyService.loading$ | async" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
         </div>
     </div>
 </div>

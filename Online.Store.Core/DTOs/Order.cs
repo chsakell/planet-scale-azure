@@ -23,7 +23,9 @@ namespace Online.Store.Core.DTOs
         public int OrderId { get; set; }
         public Order Order { get; set; }
         public string ProductId { get; set; }
-        public double Price { get; set; }
+        public string ProductTitle { get; set; }
+        public string ProductModel { get; set; }
+        public double ProductPrice { get; set; }
         public int Quantity { get; set; }
     }
 }

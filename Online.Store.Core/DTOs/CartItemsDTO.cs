@@ -18,6 +18,9 @@ namespace Online.Store.Core.DTOs
         [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
 
+        [JsonProperty(PropertyName = "model")]
+        public string Model { get; set; }
+
         [JsonProperty(PropertyName = "price")]
         public double Price { get; set; }
 

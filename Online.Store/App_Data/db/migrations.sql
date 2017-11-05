@@ -630,3 +630,53 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105144648_order_add_product_title_model')
+BEGIN
+    ALTER TABLE [OrderDetail] ADD [ProductModel] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105144648_order_add_product_title_model')
+BEGIN
+    ALTER TABLE [OrderDetail] ADD [ProductTitle] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105144648_order_add_product_title_model')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20171105144648_order_add_product_title_model', N'2.0.0-rtm-26452');
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105145108_order_change_productprice')
+BEGIN
+    DECLARE @var2 sysname;
+    SELECT @var2 = [d].[name]
+    FROM [sys].[default_constraints] [d]
+    INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
+    WHERE ([d].[parent_object_id] = OBJECT_ID(N'OrderDetail') AND [c].[name] = N'Price');
+    IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [OrderDetail] DROP CONSTRAINT [' + @var2 + '];');
+    ALTER TABLE [OrderDetail] DROP COLUMN [Price];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105145108_order_change_productprice')
+BEGIN
+    ALTER TABLE [OrderDetail] ADD [ProductPrice] float NOT NULL DEFAULT 0E0;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171105145108_order_change_productprice')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20171105145108_order_change_productprice', N'2.0.0-rtm-26452');
+END;
+
+GO
+
