@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Online.Store.Models;
 using Online.Store.Data;
 using Online.Store.ViewModels;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Online.Store.Controllers
 {
@@ -27,7 +29,22 @@ namespace Online.Store.Controllers
             _storeService = storeService;
             _context = context;
         }
-       
+
+        // GET: api/orders/id
+        [HttpGet("{id}", Name = "GetOrders")]
+        [Authorize]
+        public async Task<List<OrderViewModel>> Get(string id)
+        {
+            List<OrderViewModel> orders = new List<OrderViewModel>();
+
+            var ordersDB = _context.Orders
+                    .Include(order => order.OrderDetails).Where(o => o.UserId == id).ToList();
+
+            orders = Mapper.Map<List<Order>, List<OrderViewModel>>(ordersDB);
+
+            return orders;
+        }
+
         // POST: api/Orders
         [HttpPost]
         [Authorize]
@@ -35,7 +52,7 @@ namespace Online.Store.Controllers
         {
             var cart = string.IsNullOrEmpty(cartId) ? null : await _storeService.GetCart(cartId);
 
-            if(cart != null && cartId == Request.Cookies["cart"])
+            if (cart != null && cartId == Request.Cookies["cart"])
             {
                 string userId = User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
                                    .Select(c => c.Value).SingleOrDefault();
@@ -46,7 +63,7 @@ namespace Online.Store.Controllers
                     DateCreated = DateTime.Now
                 };
 
-                foreach(var item in cart.Items)
+                foreach (var item in cart.Items)
                 {
                     order.OrderDetails.Add(new OrderDetail()
                     {
@@ -78,13 +95,13 @@ namespace Online.Store.Controllers
             });
 
         }
-        
+
         // PUT: api/Orders/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

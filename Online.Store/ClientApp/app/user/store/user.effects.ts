@@ -17,6 +17,7 @@ import { AccountService } from '../../core/services/account.service';
 import { UserCart } from '../../models/user-cart';
 import { MessageType } from '../../models/message';
 import { SET_MESSAGE } from '../../notifications/store/notifications.actions';
+import { Order } from '../../models/order';
 
 @Injectable()
 export class UserEffects {
@@ -87,6 +88,17 @@ export class UserEffects {
                     return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to remove item from cart' }))
                 })
         }
+        );
+
+        @Effect() getOrders$: Observable<Action> = this.actions$.ofType(userActions.GET_ORDERS)
+        .switchMap((action: userActions.GetOrdersAction) =>
+            this.productService.getOrders(action.userId)
+                .map((data: Order[]) => {
+                    return new userActions.GetOrdersCompleteAction(data);
+                })
+                .catch((error: any) => {
+                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to load orders' }))
+                })
         );
 
         @Effect() completeOrder: Observable<Action> = this.actions$.ofType(userActions.COMPLETE_ORDER)

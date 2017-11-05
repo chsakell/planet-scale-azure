@@ -14,6 +14,7 @@ import { Cart } from "../../models/cart";
 import { Topic } from '../../models/topic';
 import { UserCart } from '../../models/user-cart';
 import { ResultVM } from '../../models/result-vm';
+import { Order } from '../../models/order';
 
 @Injectable()
 export class ProductService {
@@ -85,5 +86,11 @@ export class ProductService {
         return this.http.get(this.forumURI + id, this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    getOrders(userId: string): Observable<Order[]> {
+        return this.http.get(this.ordersURI + userId, this.requestOptions)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
     }
 }

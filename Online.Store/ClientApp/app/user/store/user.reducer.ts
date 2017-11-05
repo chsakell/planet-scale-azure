@@ -8,7 +8,8 @@ export const initialState: UserState = {
     cart: undefined,
     cartTotal: 0,
     user: undefined,
-    redirectToLogin: false
+    redirectToLogin: false,
+    orders: []
 };
 
 export function userReducer(state = initialState, action: userActions.Actions): UserState {
@@ -35,7 +36,12 @@ export function userReducer(state = initialState, action: userActions.Actions): 
 
         case userActions.REGISTER_USER_COMPLETE:
             return Object.assign({}, state, {
-                redirectToLogin: action.result.result === Result.SUCCESS ? true: false
+                redirectToLogin: action.result.result === Result.SUCCESS ? true : false
+            });
+
+        case userActions.GET_ORDERS_COMPLETE:
+            return Object.assign({}, state, {
+                orders: action.orders
             });
 
         case userActions.COMPLETE_ORDER_COMPLETE:
@@ -53,10 +59,10 @@ export function userReducer(state = initialState, action: userActions.Actions): 
 function calculateTotal(cart: any) {
     let total = 0;
 
-    if(cart !== null && cart !== undefined) {
-        if(cart.items !== undefined && cart.items.length > 0) {
+    if (cart !== null && cart !== undefined) {
+        if (cart.items !== undefined && cart.items.length > 0) {
             cart.items.forEach((item: CartItem) => {
-                total+= item.price * item.quantity;
+                total += item.price * item.quantity;
             });
         }
     }

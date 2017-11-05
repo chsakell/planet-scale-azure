@@ -4,6 +4,7 @@ import { LoginVM } from '../../models/login-vm';
 import { ResultVM } from '../../models/result-vm';
 import { RegisterVM } from '../../models/register-vm';
 import { UserCart } from '../../models/user-cart';
+import { Order } from '../../models/order';
 
 export const GET_CART = '[Cart] Get';
 export const GET_CART_COMPLETE = '[Cart] Get Complete';
@@ -17,6 +18,8 @@ export const LOGIN_USER = '[Account] Login User';
 export const LOGIN_USER_COMPLETE = '[Account] Login User Complete';
 export const REGISTER_USER = '[Account] Register User';
 export const REGISTER_USER_COMPLETE = '[Account] Register User Complete';
+export const GET_ORDERS = '[Orders] Get';
+export const GET_ORDERS_COMPLETE = '[Orders] Get Complete';
 
 export class LoginUserAction implements Action {
     readonly type = LOGIN_USER;
@@ -60,6 +63,18 @@ export class RemoveProductFromCartCompleteAction implements Action {
     constructor(public cart: Cart) { }
 }
 
+export class GetOrdersAction implements Action {
+    readonly type = GET_ORDERS;
+
+    constructor(public userId: string) { }
+}
+
+export class GetOrdersCompleteAction implements Action {
+    readonly type = GET_ORDERS_COMPLETE;
+
+    constructor(public orders: Order[]) { }
+}
+
 export class CompleteOrderAction implements Action {
     readonly type = COMPLETE_ORDER;
 
@@ -101,5 +116,7 @@ export type Actions
     | LoginUserCompleteAction
     | RegisterUserAction
     | RegisterUserCompleteAction
+    | GetOrdersAction
+    | GetOrdersCompleteAction
     | CompleteOrderCompleteAction;
 

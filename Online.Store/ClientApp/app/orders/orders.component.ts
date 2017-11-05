@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 //import { ForumState } from '../store/forum.state';
 import { Observable } from 'rxjs/Observable';
-//import * as forumActions from '../store/forum.actions';
+import * as orderActions from '../user/store/user.actions';
+import { Order } from '../models/order';
+import { User } from '../models/user';
+import { ISubscription } from 'rxjs/Subscription';
 //import { Topic } from "../../models/topic";
 
 @Component({
@@ -12,13 +15,24 @@ import { Observable } from 'rxjs/Observable';
 
 export class OrdersComponent implements OnInit {
 
-    //topics$: Observable<Topic[]>;
+    private subscription: ISubscription;
+    orders$: Observable<Order[]>;
+    user$: Observable<User>;
 
     constructor(private store: Store<any>) {
-        //this.topics$ = this.store.select<Topic[]>(state => state.community.forumState.topics);
+        this.orders$ = this.store.select<Order[]>(state => state.user.userState.orders);
+        this.user$ = this.store.select<User>(state => state.user.userState.user);
     }
 
     ngOnInit() {
-        //this.store.dispatch(new forumActions.SelectAllAction());
+        const self = this;
+
+        self.subscription = self.user$
+            .filter(user => user !== null)
+            .subscribe(user => self.store.dispatch(new orderActions.GetOrdersAction(user.id)));
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

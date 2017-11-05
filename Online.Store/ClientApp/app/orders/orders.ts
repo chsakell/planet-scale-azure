@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
-//import { Topic } from "../../models/topic";
+import { Order } from '../models/order';
 
 @Component({
     selector: 'orders-list-presentation',
@@ -10,7 +10,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
 
 export class OrdersPresentationComponent {
 
-    //@Input() topics: Topic[];
+    @Input() orders: Order[];
 
     constructor() { }
 

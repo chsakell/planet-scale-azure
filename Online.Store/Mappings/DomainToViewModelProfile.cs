@@ -20,7 +20,10 @@ namespace Online.Store.Mappings
                 .ForMember(vm => vm.Medias, map => map.MapFrom(c => c.Medias));
 
             CreateMap<ProductMediaDTO, ProductMediaViewModel>();
-                //.ForMember(vm => vm.Url, map => map.MapFrom(i => i.Url.Replace(storageBlobEndpoint, cdnEndpoint)));
+            //.ForMember(vm => vm.Url, map => map.MapFrom(i => i.Url.Replace(storageBlobEndpoint, cdnEndpoint)));
+
+            CreateMap<Order, OrderViewModel>();
+            CreateMap<OrderDetail, OrderDetailViewModel>();
         }
     }
 }
