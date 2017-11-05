@@ -23,6 +23,7 @@ const nonTreeShakableModules = [
     'font-awesome/css/font-awesome.css',
     'hammerjs',
     'ngx-gallery',
+    'ngx-loading',
     'angular2-notifications',
     'jquery',
 ];

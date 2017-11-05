@@ -64,9 +64,12 @@ namespace Online_Store
             // Configure Cache
             services.AddDistributedRedisCache(option =>
             {
-                option.Configuration = string.Format(RedisCacheConnStringFormat,
-                            Configuration["RedisCache:Endpoint"],
-                            Configuration["RedisCache:Key"]);
+                // TODO
+                //option.Configuration = string.Format(RedisCacheConnStringFormat,
+                //            Configuration["RedisCache:Endpoint"],
+                //            Configuration["RedisCache:Key"]);
+
+                option.Configuration = "localhost";
                 option.InstanceName = "master";
             });
 

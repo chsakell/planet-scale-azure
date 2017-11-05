@@ -43,6 +43,7 @@
     "jquery": "3.2.1",
     "json-loader": "0.5.4",
     "ngx-gallery": "^2.4.1",
+    "ngx-loading": "^1.0.8",
     "preboot": "4.5.2",
     "raw-loader": "0.5.1",
     "reflect-metadata": "0.1.10",

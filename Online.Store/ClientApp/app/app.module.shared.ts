@@ -21,6 +21,7 @@ import { reducers } from "./reducers";
 import { CheckoutPresentationComponent } from "./checkout/checkout";
 
 import { NgxGalleryModule } from 'ngx-gallery';
+import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 
 @NgModule({
@@ -39,6 +40,15 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
         AppRoutes,
         CoreModule.forRoot(),
         NgxGalleryModule,
+        LoadingModule.forRoot({
+            animationType: ANIMATION_TYPES.threeBounce,
+            backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+            backdropBorderRadius: '4px',
+            primaryColour: 'rgb(65, 137, 199)', 
+            secondaryColour: 'rgb(65, 137, 199)', 
+            tertiaryColour: 'rgb(65, 137, 199)',
+            fullScreenBackdrop: true
+        }),
         SimpleNotificationsModule.forRoot(),
         StoreModule.forRoot(reducers),
         StoreDevtoolsModule.instrument({

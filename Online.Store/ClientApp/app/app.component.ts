@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
         showProgressBar: true
     }
 
-    constructor(private store: Store<any>, private notifyService: NotifyService) {
+    constructor(private store: Store<any>, public notifyService: NotifyService) {
         this.cart$ = this.store.select<Cart>(state => state.user.userState.cart);
         this.user$ = this.store.select<User>(state => state.user.userState.user);
      }
