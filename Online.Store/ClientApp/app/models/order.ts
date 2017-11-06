@@ -10,5 +10,6 @@ export class OrderDetail {
     public productId: string;
     public productTitle: string;
     public productPrice: number;
+    public productImage: string;
     public quantity: number;
 }

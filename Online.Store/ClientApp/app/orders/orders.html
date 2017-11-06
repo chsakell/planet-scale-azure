@@ -1,1 +1,49 @@
-<h1>These are my orders!!</h1>
+<h2>Order history</h2>
+<p>
+    <strong>Note:</strong> Here you can view your
+    <strong>order-history</strong> with all the items you have bought on this site.</p>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default" *ngFor="let order of orders; let i = index">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" [attr.data-parent]="'#accordion'" [attr.href]="'#collapse' + i">
+                    ID: {{order.id}} - {{order.dateCreated | date:'short'}}
+                </a>
+            </h4>
+        </div>
+        <div [attr.id]="'collapse' + i" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div class="shopping-cart">
+                    
+                        <div class="column-labels">
+                            <label class="product-image">Image</label>
+                            <label class="product-details">Product</label>
+                            <label class="product-price">Price</label>
+                            <label class="product-quantity">Quantity</label>
+                            <label class="product-line-price">Total</label>
+                        </div>
+                    
+                        <div class="product" *ngFor="let orderDetail of order.orderDetails; let i = index">
+                            <div class="product-image">
+                                <img [src]="orderDetail.productImage">
+                            </div>
+                            <div class="product-details">
+                                <div class="product-title"><a [routerLink]="['/products/details', orderDetail.productId]">{{orderDetail.productTitle}}</a></div>
+                            </div>
+                            <div class="product-price">{{orderDetail.productPrice | currency:'USD':true:'2.2-4'}}</div>
+                            <div class="product-quantity">{{orderDetail.quantity}}</div>
+                            <div class="product-line-price">{{orderDetail.productPrice * orderDetail.quantity | currency:'USD':true:'2.2-4'}}</div>
+                        </div>
+                    
+                        <div class="totals">
+                            <div class="totals-item totals-item-total">
+                                <label>Grand Total</label>
+                                <!--<div class="totals-value" id="cart-total">{{total | currency:'USD':true:'2.2-4'}}</div>-->
+                            </div>
+                        </div>
+                    
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
