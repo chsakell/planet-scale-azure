@@ -15,11 +15,11 @@ import { NgxGalleryImageSize } from 'ngx-gallery';
 
 export class ProductDetailsPresentationComponent {
     _product: Product;
-    _medias: ProductMedia[];
-    _features: ProductComponent[];
-    _specs: ProductComponent[];
-    _compatibilies: ProductComponent[];
-    _imaging: ProductComponent[];
+    _medias: ProductMedia[] = [];
+    _features: ProductComponent[] = [];
+    _specs: ProductComponent[] = [];
+    _compatibilites: ProductComponent[] = [];
+    _imaging: ProductComponent[] = [];
 
     galleryOptions: NgxGalleryOptions[] = [
         {
@@ -76,7 +76,7 @@ export class ProductDetailsPresentationComponent {
                     this._specs.push(component);
                 }
                 else if (component.componentType === 'Compatibility') {
-                    this._compatibilies.push(component);
+                    this._compatibilites.push(component);
                 }
                 else if (component.componentType === 'Imaging') {
                     this._imaging.push(component);
@@ -90,15 +90,7 @@ export class ProductDetailsPresentationComponent {
     }
 
     @Output() addToCart: EventEmitter<string> = new EventEmitter();
-
-    constructor() {
-        this._medias = [];
-        this._features = [];
-        this._specs = [];
-        this._compatibilies = [];
-        this._imaging = [];
-    }
-    
+   
     addProduct(productId: string) {
         this.addToCart.emit(productId);
     }
