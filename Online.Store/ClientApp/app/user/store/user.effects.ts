@@ -56,7 +56,7 @@ export class UserEffects {
                     return new userActions.GetCartCompleteAction(data);
                 })
                 .catch((error: any) => {
-                    return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to load cart' }))
+                    return of({ type: 'Error', message: 'Failed to load cart' })
                 })
         );
 
