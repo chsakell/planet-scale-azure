@@ -22,6 +22,7 @@ import { CheckoutPresentationComponent } from "./checkout/checkout";
 
 import { NgxGalleryModule } from 'ngx-gallery';
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
+import { Ng2CompleterModule } from "ng2-completer";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersPresentationComponent } from './orders/orders';
@@ -53,6 +54,7 @@ import { OrdersPresentationComponent } from './orders/orders';
             tertiaryColour: 'rgb(65, 137, 199)',
             fullScreenBackdrop: true
         }),
+        Ng2CompleterModule,
         SimpleNotificationsModule.forRoot(),
         StoreModule.forRoot(reducers),
         StoreDevtoolsModule.instrument({

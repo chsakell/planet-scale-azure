@@ -42,6 +42,7 @@
     "isomorphic-fetch": "2.2.1",
     "jquery": "3.2.1",
     "json-loader": "0.5.4",
+    "ng2-completer": "^1.6.3",
     "ngx-gallery": "^2.4.1",
     "ngx-loading": "^1.0.8",
     "preboot": "4.5.2",

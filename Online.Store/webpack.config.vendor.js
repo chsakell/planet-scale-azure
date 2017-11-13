@@ -24,6 +24,7 @@ const nonTreeShakableModules = [
     'hammerjs',
     'ngx-gallery',
     'ngx-loading',
+    'ng2-completer',
     'angular2-notifications',
     'jquery',
 ];
