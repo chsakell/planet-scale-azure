@@ -13,14 +13,14 @@ namespace Online.Store.Mappings
             string cdnEndpoint = configuration["CDN:Endpoint"];
 
             CreateMap<ProductDTO, ProductViewModel>()
-                .ForMember(vm => vm.Components, map => map.MapFrom(p => p.Components));
-                // TODO.ForMember(vm => vm.Image, map => map.MapFrom(i => i.Image.Replace(storageBlobEndpoint, cdnEndpoint)));
+                .ForMember(vm => vm.Components, map => map.MapFrom(p => p.Components))
+                .ForMember(vm => vm.Image, map => map.MapFrom(i => i.Image.Replace(storageBlobEndpoint, cdnEndpoint)));
 
             CreateMap<ProductComponentDTO, ProductComponentViewModel>()
                 .ForMember(vm => vm.Medias, map => map.MapFrom(c => c.Medias));
 
-            CreateMap<ProductMediaDTO, ProductMediaViewModel>();
-            //.ForMember(vm => vm.Url, map => map.MapFrom(i => i.Url.Replace(storageBlobEndpoint, cdnEndpoint)));
+            CreateMap<ProductMediaDTO, ProductMediaViewModel>()
+                .ForMember(vm => vm.Url, map => map.MapFrom(i => i.Url.Replace(storageBlobEndpoint, cdnEndpoint)));
 
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderDetail, OrderDetailViewModel>()

@@ -10,10 +10,10 @@ import { CompleterService, CompleterData } from 'ng2-completer';
 export class NavBarComponent implements OnInit {
     @Input() user: any;
 
-    protected searchStr: string;
-    protected captain: string;
-    protected dataService: CompleterData;
-    protected searchData = [
+    public searchStr: string;
+    public captain: string;
+    public dataService: CompleterData;
+    public searchData = [
         { color: 'red', value: '#f00' },
         { color: 'green', value: '#0f0' },
         { color: 'blue', value: '#00f' },
@@ -22,7 +22,7 @@ export class NavBarComponent implements OnInit {
         { color: 'yellow', value: '#ff0' },
         { color: 'black', value: '#000' }
     ];
-    protected captains = ['James T. Kirk', 'Benjamin Sisko', 'Jean-Luc Picard', 'Spock', 'Jonathan Archer', 'Hikaru Sulu', 'Christopher Pike', 'Rachel Garrett'];
+    public captains = ['James T. Kirk', 'Benjamin Sisko', 'Jean-Luc Picard', 'Spock', 'Jonathan Archer', 'Hikaru Sulu', 'Christopher Pike', 'Rachel Garrett'];
 
 
     constructor(private completerService: CompleterService) {
