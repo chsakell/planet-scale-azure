@@ -13,9 +13,9 @@ namespace Online.Store.Azure.Services
         private readonly Uri _serviceUri;
         private HttpClient _httpClient;
         public string errorMessage;
-        private const string productIndexName = "products";
+        private const string productIndexName = "product-index";
         private const string communityIndexName = "posts";
-        private const string suggesterName = "wheel";
+        private const string suggesterName = "product-suggester";
 
         public SearchAppServices(string searchServiceName, string searchServiceApiKey)
         {
@@ -36,7 +36,7 @@ namespace Online.Store.Azure.Services
             string search = "&search=" + Uri.EscapeDataString(searchText);
             //string facets = "&facet=title&facet=description";
             string paging = "&$top=100";
-            string select = "$select[id,title,description,url]";
+            string select = "$select[id,title,model,sku,description]";
             string filter = BuildFilter();
             string orderby = BuildSort(sort);
 
