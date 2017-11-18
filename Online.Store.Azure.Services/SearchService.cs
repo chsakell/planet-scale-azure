@@ -36,7 +36,7 @@ namespace Online.Store.Azure.Services
             string search = "&search=" + Uri.EscapeDataString(searchText);
             //string facets = "&facet=title&facet=description";
             string paging = "&$top=100";
-            string select = "$select[id,title,model,sku,description]";
+            string select = "$select[id,title,model,sku,description,image]";
             string filter = BuildFilter();
             string orderby = BuildSort(sort);
 
