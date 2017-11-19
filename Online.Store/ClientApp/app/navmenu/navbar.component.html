@@ -15,7 +15,7 @@
         <div class="collapse navbar-collapse text-center" id="bs-example-navbar-collapse-1">
             <div class="navbar-form navbar-search pull-left" role="search">
                 <ng2-completer [(ngModel)]="searchField" inputName="searchField" [inputClass]="'form-control'"
-                [minSearchLength]="3" [datasource]="suggestions" 
+                [minSearchLength]="3" [datasource]="suggestions" (selected)="viewProduct($event)" [clearSelected]="true"
                 [placeholder]="'Search for products'" [minSearchLength]="0"></ng2-completer>
             </div>
             <user-view></user-view>
