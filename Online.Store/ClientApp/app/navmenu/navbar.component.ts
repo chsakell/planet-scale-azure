@@ -21,7 +21,7 @@ export class NavBarComponent implements OnInit {
             .titleField('title');
     }
 
-    protected viewProduct(item: CompleterItem) {
+    public viewProduct(item: CompleterItem) {
         if(item.originalObject) {
             console.log(item.originalObject);
             this.router.navigate(['/products/details/' + item.originalObject.id]);
