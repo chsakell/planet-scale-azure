@@ -77,10 +77,9 @@ namespace Online.Store.Controllers
                     });
                 }
 
-                //await _serviceBusService.SubmitOrderAsync(order);
-                _context.Orders.Add(order);
-
-                await _context.SaveChangesAsync();
+                await _serviceBusService.SubmitOrderAsync(order);
+                //_context.Orders.Add(order);
+                //await _context.SaveChangesAsync();
 
                 await _storeService.RemoveCart(cartId);
 
