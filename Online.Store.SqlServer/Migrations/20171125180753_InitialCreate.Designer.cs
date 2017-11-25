@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Online.Store.Data;
+using Online.Store.SqlServer;
 using System;
 
-namespace Online.Store.Migrations
+namespace Online.Store.SqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171105144648_order_add_product_title_model")]
-    partial class order_add_product_title_model
+    [Migration("20171125180753_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,11 +42,11 @@ namespace Online.Store.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<double>("Price");
-
                     b.Property<string>("ProductId");
 
                     b.Property<string>("ProductModel");
+
+                    b.Property<double>("ProductPrice");
 
                     b.Property<string>("ProductTitle");
 

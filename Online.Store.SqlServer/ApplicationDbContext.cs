@@ -1,17 +1,11 @@
-﻿/*
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
 using Microsoft.EntityFrameworkCore;
-using Online.Store.Models;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Online.Store.Core.DTOs;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace Online.Store.Data
+namespace Online.Store.SqlServer
 {
     public class ApplicationDbContext : DbContext
     {
@@ -51,4 +45,3 @@ namespace Online.Store.Data
 
     }
 }
-*/

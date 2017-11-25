@@ -5,16 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
-using Online.Store.Data;
+using Online.Store.SqlServer;
 using System;
 
-namespace Online.Store.Migrations
+namespace Online.Store.SqlServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171023171955_remove_identity_context")]
-    partial class remove_identity_context
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +27,7 @@ namespace Online.Store.Migrations
 
                     b.Property<DateTime>("DateCreated");
 
-                    b.Property<Guid>("UserId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
@@ -42,9 +41,13 @@ namespace Online.Store.Migrations
 
                     b.Property<int>("OrderId");
 
-                    b.Property<double>("Price");
-
                     b.Property<string>("ProductId");
+
+                    b.Property<string>("ProductModel");
+
+                    b.Property<double>("ProductPrice");
+
+                    b.Property<string>("ProductTitle");
 
                     b.Property<int>("Quantity");
 

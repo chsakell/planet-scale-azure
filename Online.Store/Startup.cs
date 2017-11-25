@@ -12,7 +12,7 @@ using Online.Store.DocumentDB;
 using Online.Store.Mappings;
 using Online.Store.Storage;
 using Online.Store.RedisCache;
-using Online.Store.Data;
+//using Online.Store.Data;
 using Online.Store.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
@@ -52,7 +52,7 @@ namespace Online_Store
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly("Online.Store")));
+                b => b.MigrationsAssembly("Online.Store.SqlServer")));
 
             services.AddAuthentication(sharedOptions =>
             {

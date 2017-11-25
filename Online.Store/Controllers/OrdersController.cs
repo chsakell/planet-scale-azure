@@ -9,7 +9,7 @@ using Online.Store.Azure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Online.Store.Models;
-using Online.Store.Data;
+using Online.Store.SqlServer;
 using Online.Store.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -77,10 +77,10 @@ namespace Online.Store.Controllers
                     });
                 }
 
-                await _serviceBusService.SubmitOrderAsync(order);
-               // _context.Orders.Add(order);
+                //await _serviceBusService.SubmitOrderAsync(order);
+                _context.Orders.Add(order);
 
-               // await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
                 await _storeService.RemoveCart(cartId);
 
