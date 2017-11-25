@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{1B255F12-5F5D-43FC-BF7A-6FF7FA2AAA87}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +22,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.RedisCache", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.SqlDatabase.ElasticScale.Client", "ElasticScale.Client\Microsoft.Azure.SqlDatabase.ElasticScale.Client.csproj", "{B60AB951-691B-4B86-8B70-34808D29132E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.SqlServer", "Online.Store.SqlServer\Online.Store.SqlServer.csproj", "{088427DB-BF6F-4EE1-A33B-B76247FB949D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.SqlServer", "Online.Store.SqlServer\Online.Store.SqlServer.csproj", "{088427DB-BF6F-4EE1-A33B-B76247FB949D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.ServiceBus", "Online.Store.ServiceBus\Online.Store.ServiceBus.csproj", "{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,13 +64,17 @@ Global
 		{088427DB-BF6F-4EE1-A33B-B76247FB949D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{088427DB-BF6F-4EE1-A33B-B76247FB949D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{088427DB-BF6F-4EE1-A33B-B76247FB949D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
 		SolutionGuid = {C4EBA847-C3EF-4DCA-BB11-98CD97FDBC55}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

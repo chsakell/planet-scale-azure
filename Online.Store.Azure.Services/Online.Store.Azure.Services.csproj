@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
     <ProjectReference Include="..\Online.Store.DocumentDB\Online.Store.DocumentDB.csproj" />
     <ProjectReference Include="..\Online.Store.RedisCache\Online.Store.RedisCache.csproj" />
+    <ProjectReference Include="..\Online.Store.ServiceBus\Online.Store.ServiceBus.csproj" />
     <ProjectReference Include="..\Online.Store.SqlServer\Online.Store.SqlServer.csproj" />
     <ProjectReference Include="..\Online.Store.Storage\Online.Store.Storage.csproj" />
   </ItemGroup>

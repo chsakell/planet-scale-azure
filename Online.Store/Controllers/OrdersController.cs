@@ -22,11 +22,13 @@ namespace Online.Store.Controllers
     public class OrdersController : Controller
     {
         private IStoreService _storeService;
+        private IServiceBusService _serviceBusService;
         private ApplicationDbContext _context;
 
-        public OrdersController(IStoreService storeService, ApplicationDbContext context)
+        public OrdersController(IStoreService storeService, IServiceBusService serviceBusService, ApplicationDbContext context)
         {
             _storeService = storeService;
+            _serviceBusService = serviceBusService;
             _context = context;
         }
 
@@ -75,12 +77,13 @@ namespace Online.Store.Controllers
                     });
                 }
 
-                _context.Orders.Add(order);
+                await _serviceBusService.SubmitOrderAsync(order);
+               // _context.Orders.Add(order);
 
-                //orderId = _storeService.AddOrder(order);
-                await _context.SaveChangesAsync();
+               // await _context.SaveChangesAsync();
 
                 await _storeService.RemoveCart(cartId);
+
                 Response.Cookies.Delete("cart");
 
                 return Ok(new ResultViewModel()

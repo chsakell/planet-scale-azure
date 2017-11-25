@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
+using Online.Store.ServiceBus;
 
 namespace Online_Store
 {
@@ -76,7 +77,9 @@ namespace Online_Store
             services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
             services.AddScoped<IShardingRepository, ShardingRepository>();
+            services.AddScoped<IServiceBusRepository, ServiceBusRepository>();
             services.AddScoped<IStoreService, StoreService>();
+            services.AddScoped<IServiceBusService, ServiceBusService>();
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();
