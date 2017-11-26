@@ -25,7 +25,6 @@ namespace Online.Store.ServiceBus
 
         public void InitQueueClient(string serviceBusAccessKeyName, string serviceBusAccessKey, string queue)
         {
-            // Use the "Read" SharedAccessKey from the portal
             var connectionString =
                 $"Endpoint=sb://{_serviceBusNamespace}.servicebus.windows.net/;SharedAccessKeyName={serviceBusAccessKeyName};SharedAccessKey={serviceBusAccessKey}";
 

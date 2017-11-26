@@ -22,8 +22,8 @@ namespace Online.Store.Azure.Services
 
         public async Task SubmitOrderAsync(Order order)
         {
-            _serviceBusRepository.InitQueueClient(_configuration["ServiceBus:AccessKeyName"],
-                _configuration["ServiceBus:AccessKey"], "orders");
+            _serviceBusRepository.InitQueueClient(_configuration["ServiceBus:WriteAccessKeyName"],
+                _configuration["ServiceBus:WriteAccessKey"], _configuration["ServiceBus:Queue"]);
 
             await _serviceBusRepository.SendAsync(order);
         }

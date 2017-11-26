@@ -10,7 +10,7 @@ namespace Online.Store.WebJob
 {
     public class Startup
     {
-        IConfigurationRoot Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         public Startup()
         {

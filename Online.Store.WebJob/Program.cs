@@ -11,7 +11,7 @@ namespace Online.Store.WebJob
 {
     class Program
     {
-        const string ServiceBusConnectionString = "Endpoint=sb://onlinestore-eu.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/JFobx/Tta7hiFuxTXdXZEhh6QElguTzjMquyiQHSTg=";
+        static string _serviceBusConnString = string.Empty; // "Endpoint=sb://onlinestore-eu.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/JFobx/Tta7hiFuxTXdXZEhh6QElguTzjMquyiQHSTg=";
         const string QueueName = "orders";
         static IQueueClient queueClient;
         static IOrderService _orderService;
@@ -28,16 +28,19 @@ namespace Online.Store.WebJob
 
             Console.WriteLine("=============== START RECEIVING ORDERS ================");
 
-            StartReceivingOrders();
+            _serviceBusConnString =
+                $"Endpoint=sb://{startup.Configuration["ServiceBus:Namespace"]}.servicebus.windows.net/;SharedAccessKeyName={startup.Configuration["ServiceBus:ReadAccessKeyName"]};SharedAccessKey={startup.Configuration["ServiceBus:ReadAccessKey"]}";
+
+            StartReceivingOrders(startup.Configuration["ServiceBus:Queue"]);
 
             Console.ReadKey();
 
             queueClient.CloseAsync();
         }
 
-        static void StartReceivingOrders()
+        static void StartReceivingOrders(string queue)
         {
-            queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+            queueClient = new QueueClient(_serviceBusConnString, queue);
 
             // Configure the MessageHandler Options in terms of exception handling, number of concurrent messages to deliver etc.
             var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
@@ -64,9 +67,11 @@ namespace Online.Store.WebJob
 
             await _orderService.AddOrderAsync(order);
 
+            Console.WriteLine("ORDER: " + order.Id + " has been submitted successfully");
+
             // Complete the message so that it is not received again.
             // This can be done only if the queueClient is created in ReceiveMode.PeekLock mode (which is default).
-            //await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+            await queueClient.CompleteAsync(message.SystemProperties.LockToken);
 
             // Note: Use the cancellationToken passed as necessary to determine if the queueClient has already been closed.
             // If queueClient has already been Closed, you may chose to not call CompleteAsync() or AbandonAsync() etc. calls 
