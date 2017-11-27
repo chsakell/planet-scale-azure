@@ -11,7 +11,7 @@ namespace Online.Store.WebJob
 {
     class Program
     {
-        static string _serviceBusConnString = string.Empty; // "Endpoint=sb://onlinestore-eu.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/JFobx/Tta7hiFuxTXdXZEhh6QElguTzjMquyiQHSTg=";
+        static string _serviceBusConnString = string.Empty;
         const string QueueName = "orders";
         static IQueueClient queueClient;
         static IOrderService _orderService;
@@ -33,7 +33,7 @@ namespace Online.Store.WebJob
 
             StartReceivingOrders(startup.Configuration["ServiceBus:Queue"]);
 
-            Console.ReadKey();
+            Console.Read();
 
             queueClient.CloseAsync();
         }

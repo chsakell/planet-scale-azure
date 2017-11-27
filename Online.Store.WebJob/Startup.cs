@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Online.Store.SqlServer;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Online.Store.WebJob
@@ -15,7 +16,7 @@ namespace Online.Store.WebJob
         public Startup()
         {
             var builder = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json");
+                .AddJsonFile("appsettings.json");
 
             Configuration = builder.Build();
         }
