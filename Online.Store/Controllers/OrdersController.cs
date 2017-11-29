@@ -62,7 +62,8 @@ namespace Online.Store.Controllers
                 Order order = new Order
                 {
                     UserId = userId,
-                    DateCreated = DateTime.Now
+                    DateCreated = DateTime.Now,
+                    GrandTotal = 0
                 };
 
                 foreach (var item in cart.Items)
@@ -75,6 +76,8 @@ namespace Online.Store.Controllers
                         ProductPrice = item.Price,
                         Quantity = item.Quantity
                     });
+
+                    order.GrandTotal += item.Price * item.Quantity;
                 }
 
                 await _serviceBusService.SubmitOrderAsync(order);

@@ -1,0 +1,9 @@
+﻿{
+  "ConnectionStrings": {
+    "DefaultConnection": ""
+  },
+  "ServiceBus:Namespace": "",
+  "ServiceBus:Queue": "",
+  "ServiceBus:ReadAccessKeyName": "",
+  "ServiceBus:ReadAccessKey": ""
+}

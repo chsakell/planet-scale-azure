@@ -53,3 +53,18 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171129181600_add_order_grand_total')
+BEGIN
+    ALTER TABLE [Order] ADD [GrandTotal] float NOT NULL DEFAULT 0E0;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20171129181600_add_order_grand_total')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20171129181600_add_order_grand_total', N'2.0.0-rtm-26452');
+END;
+
+GO
+

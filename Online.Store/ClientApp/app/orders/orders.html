@@ -38,7 +38,9 @@
                         <div class="totals">
                             <div class="totals-item totals-item-total">
                                 <label>Grand Total</label>
-                                <!--<div class="totals-value" id="cart-total">{{total | currency:'USD':true:'2.2-4'}}</div>-->
+                                <div class="totals-value">
+                                    <strong>{{order.grandTotal | currency:'USD':true:'2.2-4'}}</strong>
+                                </div>
                             </div>
                         </div>
                     

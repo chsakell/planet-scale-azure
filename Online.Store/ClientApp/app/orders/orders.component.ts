@@ -28,11 +28,12 @@ export class OrdersComponent implements OnInit {
         const self = this;
 
         self.subscription = self.user$
-            .filter(user => user !== null)
+            .filter(user => user !== null && user !== undefined)
             .subscribe(user => self.store.dispatch(new orderActions.GetOrdersAction(user.id)));
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription)
+            this.subscription.unsubscribe();
     }
 }

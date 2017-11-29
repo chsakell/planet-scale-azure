@@ -337,7 +337,7 @@ namespace Online.Store.Azure.Services
         /// <returns></returns>
         public async Task<CartDTO> GetCart(string cartId)
         {
-            return await _cacheRepository.GetItemAsync<CartDTO>(cartId);
+            return await _cacheRepository.GetItemAsync<CartDTO>("cart-" + cartId);
         }
 
         public async Task RemoveCart(string key)
@@ -373,7 +373,7 @@ namespace Online.Store.Azure.Services
             }
             else
             {
-                cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
+                cart = await _cacheRepository.GetItemAsync<CartDTO>("cart-" + cardId);
 
                 if (cart == null)
                 {
@@ -409,7 +409,7 @@ namespace Online.Store.Azure.Services
                 }
             }
 
-            await _cacheRepository.SetItemAsync(cardId, cart);
+            await _cacheRepository.SetItemAsync("cart-" + cardId, cart);
 
             return cart;
         }
@@ -418,7 +418,7 @@ namespace Online.Store.Azure.Services
         {
             CartDTO cart = null;
 
-            cart = await _cacheRepository.GetItemAsync<CartDTO>(cardId);
+            cart = await _cacheRepository.GetItemAsync<CartDTO>("cart-" + cardId);
 
             if (cart == null)
             {
@@ -431,7 +431,7 @@ namespace Online.Store.Azure.Services
             else
             {
                 cart.Items.RemoveAll(item => item.Id == productId);
-                await _cacheRepository.SetItemAsync(cardId, cart);
+                await _cacheRepository.SetItemAsync("cart-" + cardId, cart);
 
                 cart.UpdateDate = DateTime.Now;
             }

@@ -14,6 +14,7 @@ namespace Online.Store.ViewModels
         public int Id { get; set; }
         public string UserId { get; set; }
         public DateTime DateCreated { get; set; }
+        public double GrandTotal { get; set; }
 
         public ICollection<OrderDetailViewModel> OrderDetails { get; set; }
     }

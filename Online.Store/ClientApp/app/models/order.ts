@@ -2,6 +2,7 @@ export class Order  {
     public id: number;
     public userId: string;
     public dateCreated: Date;
+    public grandTotal: number;
     public orderDetails: OrderDetail[];
 }
 

@@ -260,5 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Website
-Online.Store.Website/wwwroot/lib
+# Webjob
+Online.Store.WebJob/appsettings.json
