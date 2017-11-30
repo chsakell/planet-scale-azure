@@ -38,13 +38,54 @@ namespace Online.Store.Controllers
 
             return topic;
         }
-        
+
         // POST: api/Forum
         [HttpPost]
-        public void Post([FromBody]string value)
+        //[Authorize]
+        public async Task<ActionResult> AddPost(PostDTO post, IFormFile mediaFile)
         {
+            //var user = await _userManager.GetUserAsync(User);
+
+            //if (mediaFile != null)
+            //{
+            //    var azureServices = new AzureServices(
+            //            _configuration["MediaServices:AccountKey"],
+            //            _configuration["MediaServices:AccountName"],
+            //            _configuration["Storage:AccountName"],
+            //            _configuration["Storage:AccountKey"]);
+            //    var mediaResult = new MediaDetailsDTO();
+            //    using (var filestream = mediaFile.OpenReadStream())
+            //    {
+            //        mediaResult = azureServices.UploadMedia(filestream, mediaFile.FileName, mediaFile.ContentType);
+            //    }
+            //    if (!mediaResult.Status)
+            //    {
+            //        return Json(new MessageDTO { Status = false, Message = "Error. Please try later." });
+            //    }
+            //    post.MediaType = mediaResult.MediaType;
+            //    post.MediaUrl = mediaResult.MediaUrl;
+            //}
+
+            post.UserId = "chsakell";
+            var data = await _storeService.AddPostResponse(post);
+            //var result = new CommunityResponseViewModel();
+            //var model = new CommunityViewModel()
+            //{
+            //    id = data.PostId,
+            //    UserImageName = "https://avatars2.githubusercontent.com/u/7770797?s=460&v=4",
+            //    No_of_Posts = data.Responses != null ? data.Responses.Count : 0,
+            //    PostContent = data.Content,
+            //    PostDate = data.CreatedDate,
+            //    PostTitle = data.Title,
+            //    UserName = "christos_sakellarios",
+            //    ContentUrl = data.ContentUrl,
+            //    ContentType = data.ContentType
+            //};
+            //result.Community = model;
+            //return PartialView("_ResponseView", result);
+            return null;
         }
-        
+
         // PUT: api/Forum/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
