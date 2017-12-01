@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
                 <div class="panel panel-default">
-                    <div class="bs-callout bs-callout-danger">
+                    <div class="bs-callout topic">
                         <h4>{{topic.title}}</h4>
                         <p>
                             {{topic.content}}
@@ -19,8 +19,8 @@
                             </a>
                         </ul>
                     </div>
-                    <div class="bs-callout bs-callout-danger" *ngIf="topic.posts.length > 0">
-                        <h4>Responses</h4>
+                    <div class="bs-callout topic-reply" *ngIf="topic.posts.length > 0">
+                        <h4>Replies</h4>
                         <ul class="list-group">
                             <a class="list-group-item inactive-link" href="#" *ngFor="let post of topic.posts; let i = index">
                                 <h4 class="list-group-item-heading">

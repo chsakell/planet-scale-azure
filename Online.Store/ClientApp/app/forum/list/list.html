@@ -4,7 +4,7 @@
             <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
                 <div class="panel panel-default">
                     <div class="bs-callout bs-callout-danger" *ngFor="let topic of topics; let i = index">
-                        <h4><a  [routerLink]="['/forum/topics', topic.id]">{{topic.title}}</a></h4>
+                        <h4><a [routerLink]="['/forum/topics', topic.id]">{{topic.title}}</a></h4>
                         <p>
                             {{topic.content}}
                         </p>
@@ -18,6 +18,9 @@
                                 </p>
                             </a>
                         </ul>
+                        <div *ngIf="topic.posts.length > 0" class="replies-counter">
+                          <a [routerLink]="['/forum/topics', topic.id]">{{topic.posts.length}} replies</a>  
+                        </div>
                     </div>
                 </div>
             </div>
