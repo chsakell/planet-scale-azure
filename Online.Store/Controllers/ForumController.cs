@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Online.Store.Core.DTOs;
 using Online.Store.Azure.Services;
+using Online.Store.ViewModels;
 
 namespace Online.Store.Controllers
 {
@@ -40,9 +41,9 @@ namespace Online.Store.Controllers
         }
 
         // POST: api/Forum
-        [HttpPost]
+        [HttpPost("topics/{id}/addreply", Name = "AddReply")]
         //[Authorize]
-        public async Task<ActionResult> AddPost(PostDTO post, IFormFile mediaFile)
+        public async Task<ActionResult> Post(string id, IFormFile file, ReplyViewModel reply)
         {
             //var user = await _userManager.GetUserAsync(User);
 
@@ -66,8 +67,8 @@ namespace Online.Store.Controllers
             //    post.MediaUrl = mediaResult.MediaUrl;
             //}
 
-            post.UserId = "chsakell";
-            var data = await _storeService.AddPostResponse(post);
+            //post.UserId = "chsakell";
+            //var data = await _storeService.AddPostResponse(post);
             //var result = new CommunityResponseViewModel();
             //var model = new CommunityViewModel()
             //{
@@ -83,7 +84,11 @@ namespace Online.Store.Controllers
             //};
             //result.Community = model;
             //return PartialView("_ResponseView", result);
-            return null;
+
+            return Ok(new ResultViewModel()
+            {
+                Result = Result.ERROR
+            });
         }
 
         // PUT: api/Forum/5

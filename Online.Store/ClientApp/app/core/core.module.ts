@@ -6,6 +6,7 @@ import { ProductService } from './services/product.service';
 import { UserModule } from "../user/user.module";
 import { AccountService } from './services/account.service';
 import { NotificationsModule } from '../notifications/notifications.module';
+import { ForumService } from './services/forum.service';
 
 @NgModule({
     imports: [
@@ -26,6 +27,7 @@ export class CoreModule {
             providers: [
                 ProductService,
                 AccountService,
+                ForumService,
                 Configuration
             ]
         };

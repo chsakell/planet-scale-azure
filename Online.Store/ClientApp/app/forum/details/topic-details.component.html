@@ -1,1 +1,1 @@
-﻿<topic-details-presentation [topic]="topic$ | async"></topic-details-presentation>
+﻿<topic-details-presentation [topic]="topic$ | async" [user]="user$ | async" (onReply)="submitReply($event)"></topic-details-presentation>

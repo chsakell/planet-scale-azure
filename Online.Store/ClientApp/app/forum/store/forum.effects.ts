@@ -7,29 +7,33 @@ import { Action } from '@ngrx/store';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Rx';
 
-import * as forumAction from './forum.actions';
+import * as forumActions from './forum.actions';
+import * as notifyActions from '../../notifications/store/notifications.actions';
 import { Topic } from './../../models/topic';
 import { ProductService } from '../../core/services/product.service';
+import { ForumService } from '../../core/services/forum.service';
+import { ResultVM } from '../../models/result-vm';
+import { MessageType } from '../../models/message';
 
 @Injectable()
 export class ForumEffects {
 
-    @Effect() getTopics$: Observable<Action> = this.actions$.ofType(forumAction.SELECTALL)
+    @Effect() getTopics$: Observable<Action> = this.actions$.ofType(forumActions.SELECTALL)
         .switchMap(() =>
             this.productService.getTopics()
                 .map((data: Topic[]) => {
-                    return new forumAction.SelectAllCompleteAction(data);
+                    return new forumActions.SelectAllCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'getTopics_FAILED' })
                 })
         );
 
-    @Effect() getTopicDetails$: Observable<Action> = this.actions$.ofType(forumAction.SELECT_TOPIC)
-        .switchMap((action: forumAction.SelectTopicAction) => {
+    @Effect() getTopicDetails$: Observable<Action> = this.actions$.ofType(forumActions.SELECT_TOPIC)
+        .switchMap((action: forumActions.SelectTopicAction) => {
             return this.productService.getTopicDetails(action.id)
                 .map((data: Topic) => {
-                    return new forumAction.SelectTopicCompleteAction(data);
+                    return new forumActions.SelectTopicCompleteAction(data);
                 })
                 .catch((error: any) => {
                     return of({ type: 'getTopicDetails_FAILED' })
@@ -37,8 +41,24 @@ export class ForumEffects {
         }
     );
 
+    @Effect() addReply: Observable<Action> = this.actions$.ofType(forumActions.ADD_REPLY)
+    .switchMap((action: forumActions.AddReplyAction) => {
+        return this.forumService.addReply(action.reply)
+            .mergeMap((result: ResultVM) => {
+                return [
+                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Reply submitted successfully' }),
+                    //new userActions.AddProductToCartCompleteAction(data)
+                ];
+            })
+            .catch((error: any) => {
+                return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to submit reply' }))
+            })
+    }
+    );
+
     constructor(
         private productService: ProductService,
+        private forumService: ForumService,
         private actions$: Actions
     ) { }
 }
