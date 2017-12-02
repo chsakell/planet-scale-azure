@@ -76,6 +76,19 @@ namespace Online.Store.Azure.Services
             return topic;
         }
 
+        public async Task<TopicDTO> AddTopicReply(string id, PostDTO reply)
+        {
+            var topic = await GetTopic(id);
+
+            if(topic != null)
+            {
+                topic.Posts.Add(reply);
+                await _repository.UpdateItemAsync<TopicDTO>(id, topic);
+            }
+
+            return topic;
+        }
+
         public async Task<IEnumerable<ProductDTO>> GetProducts(string filter)
         {
             return await GetAllProducts();
@@ -152,50 +165,6 @@ namespace Online.Store.Azure.Services
             return community;
         }
 
-        /// <summary>
-        /// Gets the details of selected post.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <param name="filterId">The filter identifier.</param>
-        /// <param name="pageId">The page identifier.</param>
-        /// <returns></returns>
-        public async Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId)
-        {
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
-            int pageSize = PAGE_SIZE;
-            var communityResult = new CommunityResponseDto();
-
-            var entity = await _repository.GetItemAsync<CommunityDTO>(id);
-
-            if (entity != null)
-            {
-                var communityResponses = new List<CommunityDTO>();
-                if (entity.Responses != null && entity.Responses.Any())
-                {
-                    communityResponses = entity.Responses.OrderByDescending(x => x.CreatedDate).ToList();
-                    //Filter basesed on request.
-                    if (filterId != null && filterId != "all")
-                    {
-                        var result = communityResponses.FindAll(x => !string.IsNullOrEmpty(x.ContentType) && x.ContentType.Contains(filterId));
-                        communityResponses = result.ToList();
-                    }
-
-                    //Get total count and total page count.
-                    var totalCount = communityResponses.Count();
-                    var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
-
-                    //Implementing pagination.
-                    var pages = communityResponses.Skip((pageId ?? 0) * pageSize).Take(pageSize).ToList();
-                    entity.Responses = pages.ToList();
-
-                    communityResult.Community = entity;
-                    communityResult.TotalPages = totalPages;
-                    communityResult.SelectedPage = pageId != null ? pageId.Value : 0;
-                }
-                communityResult.Community = entity;
-            }
-            return communityResult;
-        }
 
         /// <summary>
         /// Add New Post.
@@ -459,6 +428,7 @@ namespace Online.Store.Azure.Services
         Task<List<CommunityDTO>> GetTopCommunityPost();
         Task<List<TopicDTO>> GetTopics();
         Task<TopicDTO> GetTopic(string id);
+        Task<TopicDTO> AddTopicReply(string id, PostDTO reply);
         Task<IEnumerable<ProductDTO>> GetProducts(string filter);
         Task<ProductDTO> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
@@ -469,7 +439,6 @@ namespace Online.Store.Azure.Services
         Task RemoveFromCart(CartDTO Item);
         Task RemoveCart(string key);
         Task<PagedCommunityDto> GetAllCommunity(string id, int? pageId);
-        Task<CommunityResponseDto> GetCommunityDetails(string id, string filterId, int? pageId);
         Task<CommunityDTO> AddPost(PostDTO post);
         Task<CommunityDTO> AddPostResponse(PostDTO post);
         int? AddOrder(Order order);

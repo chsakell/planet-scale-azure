@@ -47,7 +47,16 @@ export class TopicDetailsPresentationComponent {
             reply.mediaFile = fileToUpload;
         }
 
+        this.cleanReplyForm();
+
         this.onReply.emit(reply);
+    }
+
+    cleanReplyForm() {
+        this.viewReply = false;
+        this.title = '';
+        this.content = '';
+        this.mediaDescription = '';
     }
 
 }

@@ -15,16 +15,18 @@ namespace Online.Store.Controllers
     public class ForumController : Controller
     {
         private IStoreService _storeService;
+        private IMediaService _mediaService;
 
-        public ForumController(IStoreService storeService)
+        public ForumController(IStoreService storeService, IMediaService mediaService)
         {
-            this._storeService = storeService;
+            _storeService = storeService;
+            _mediaService = mediaService;
         }
 
         // GET: api/Forum
         [HttpGet]
         [Route("topics/", Name = "GetTopics")]
-        public async  Task<IEnumerable<TopicDTO>> GetTopics()
+        public async Task<IEnumerable<TopicDTO>> GetTopics()
         {
             var topics = await _storeService.GetTopics();
 
@@ -45,50 +47,43 @@ namespace Online.Store.Controllers
         //[Authorize]
         public async Task<ActionResult> Post(string id, IFormFile file, ReplyViewModel reply)
         {
-            //var user = await _userManager.GetUserAsync(User);
-
-            //if (mediaFile != null)
-            //{
-            //    var azureServices = new AzureServices(
-            //            _configuration["MediaServices:AccountKey"],
-            //            _configuration["MediaServices:AccountName"],
-            //            _configuration["Storage:AccountName"],
-            //            _configuration["Storage:AccountKey"]);
-            //    var mediaResult = new MediaDetailsDTO();
-            //    using (var filestream = mediaFile.OpenReadStream())
-            //    {
-            //        mediaResult = azureServices.UploadMedia(filestream, mediaFile.FileName, mediaFile.ContentType);
-            //    }
-            //    if (!mediaResult.Status)
-            //    {
-            //        return Json(new MessageDTO { Status = false, Message = "Error. Please try later." });
-            //    }
-            //    post.MediaType = mediaResult.MediaType;
-            //    post.MediaUrl = mediaResult.MediaUrl;
-            //}
-
-            //post.UserId = "chsakell";
-            //var data = await _storeService.AddPostResponse(post);
-            //var result = new CommunityResponseViewModel();
-            //var model = new CommunityViewModel()
-            //{
-            //    id = data.PostId,
-            //    UserImageName = "https://avatars2.githubusercontent.com/u/7770797?s=460&v=4",
-            //    No_of_Posts = data.Responses != null ? data.Responses.Count : 0,
-            //    PostContent = data.Content,
-            //    PostDate = data.CreatedDate,
-            //    PostTitle = data.Title,
-            //    UserName = "christos_sakellarios",
-            //    ContentUrl = data.ContentUrl,
-            //    ContentType = data.ContentType
-            //};
-            //result.Community = model;
-            //return PartialView("_ResponseView", result);
-
-            return Ok(new ResultViewModel()
+            PostDTO post = new PostDTO()
             {
-                Result = Result.ERROR
-            });
+                Title = reply.Title,
+                Content = reply.Content,
+                MediaDescription = reply.MediaDescription,
+                UserId = reply.UserId,
+                UserName = reply.UserName,
+                CreatedDate = DateTime.Now
+            };
+
+            try
+            {
+                if (file != null)
+                {
+                    using (var filestream = file.OpenReadStream())
+                    {
+                        post.MediaUrl = await _mediaService.UploadMediaAsync(filestream, file.FileName, file.ContentType);
+                        post.MediaType = file.ContentType;
+                    }
+                }
+
+                var topic = await _storeService.AddTopicReply(id, post);
+
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.SUCCESS,
+                    Data = topic
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.ERROR,
+                    Message = ex.Message
+                });
+            }
         }
 
         // PUT: api/Forum/5
@@ -96,7 +91,7 @@ namespace Online.Store.Controllers
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)

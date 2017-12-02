@@ -21,6 +21,11 @@ export function forumReducer(state = initialState, action: forumAction.Actions):
                 selectedTopic: action.topic
             });
 
+        case forumAction.ADD_REPLY_COMPLETE:
+            return Object.assign({}, state, {
+                selectedTopic: action.result.data
+            });
+
         default:
             return state;
 

@@ -38,7 +38,7 @@ namespace Online.Store.DocumentDB
             CreateCollectionIfNotExistsAsync(DatabaseId, "Forum").Wait();
 
             StorageInitializer.Initialize(configuration);
-            StorageInitializer.InitContainerAsync("product-images").Wait();
+            //StorageInitializer.InitContainerAsync("product-images").Wait();
             InitStoreAsync(configuration).Wait();
         }
 

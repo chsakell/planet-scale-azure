@@ -21,6 +21,8 @@ namespace Online.Store.Storage
             _repository.Connect(accountName, accountKey);
 
             InitContainerAsync("product-images").Wait();
+            InitContainerAsync("forum-images").Wait();
+            InitContainerAsync("forum-videos").Wait();
         }
 
         public static async Task InitContainerAsync(string container)

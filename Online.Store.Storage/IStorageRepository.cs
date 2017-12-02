@@ -1,7 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage.Blob;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Online.Store.Storage
@@ -12,5 +10,6 @@ namespace Online.Store.Storage
         CloudBlobContainer GetBlobContainer(string containerName);
         Task CreateBlobContainerAsync(string containerName);
         Task UploadToContainerAsync(string containerName, string filePath, string blobName);
+        Task<string> UploadToContainerAsync(string containerName, Stream fileStream, string blobName, string contentType);
     }
 }

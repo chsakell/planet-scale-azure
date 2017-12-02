@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -10,12 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Online.Store.Azure.Services;
 using Online.Store.DocumentDB;
 using Online.Store.Mappings;
-using Online.Store.Storage;
 using Online.Store.RedisCache;
-//using Online.Store.Data;
-using Online.Store.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Online.Store.Services;
 using Online.Store.Extensions;
 using Online.Store.SqlServer;
@@ -26,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Online.Store.ServiceBus;
+using Online.Store.Storage;
 
 namespace Online_Store
 {
@@ -78,8 +71,10 @@ namespace Online_Store
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
             services.AddScoped<IShardingRepository, ShardingRepository>();
             services.AddScoped<IServiceBusRepository, ServiceBusRepository>();
+            services.AddScoped<IStorageRepository, StorageRepository>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IServiceBusService, ServiceBusService>();
+            services.AddScoped<IMediaService, MediaService>();
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();

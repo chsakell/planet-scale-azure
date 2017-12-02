@@ -19,7 +19,7 @@ namespace Online.Store.Storage
               string.Format(@"DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
               accountName, accountKey);
 
-            cloudStorageAccount = CloudStorageAccount.Parse(connection);
+            cloudStorageAccount = accountName == "devstoreaccount1" ? CloudStorageAccount.DevelopmentStorageAccount : CloudStorageAccount.Parse(connection);
             cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
         }
 
@@ -51,6 +51,21 @@ namespace Online.Store.Storage
             CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
 
             await cloudBlockBlob.UploadFromFileAsync(filePath);
+        }
+
+        public async Task<string> UploadToContainerAsync(string containerName, Stream fileStream, string blobName, string contentType)
+        {
+            CloudBlobContainer cloudBlobContainer = GetBlobContainer(containerName);
+            CloudBlockBlob cloudBlob = cloudBlobContainer.GetBlockBlobReference(blobName);
+
+            cloudBlob.Properties.ContentType = contentType;
+
+            using (var stream = fileStream)
+            {
+                await cloudBlob.UploadFromStreamAsync(stream);
+            }
+
+            return cloudBlob.StorageUri.PrimaryUri.AbsoluteUri;
         }
     }
 }

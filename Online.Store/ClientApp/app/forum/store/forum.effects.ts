@@ -21,8 +21,11 @@ export class ForumEffects {
     @Effect() getTopics$: Observable<Action> = this.actions$.ofType(forumActions.SELECTALL)
         .switchMap(() =>
             this.productService.getTopics()
-                .map((data: Topic[]) => {
-                    return new forumActions.SelectAllCompleteAction(data);
+                .mergeMap((data: Topic[]) => {
+                    return [
+                        new notifyActions.SetLoadingAction(false),
+                        new forumActions.SelectAllCompleteAction(data)
+                    ];
                 })
                 .catch((error: any) => {
                     return of({ type: 'getTopics_FAILED' })
@@ -32,8 +35,11 @@ export class ForumEffects {
     @Effect() getTopicDetails$: Observable<Action> = this.actions$.ofType(forumActions.SELECT_TOPIC)
         .switchMap((action: forumActions.SelectTopicAction) => {
             return this.productService.getTopicDetails(action.id)
-                .map((data: Topic) => {
-                    return new forumActions.SelectTopicCompleteAction(data);
+                .mergeMap((data: Topic) => {
+                    return [
+                        new notifyActions.SetLoadingAction(false),
+                        new forumActions.SelectTopicCompleteAction(data)
+                    ]
                 })
                 .catch((error: any) => {
                     return of({ type: 'getTopicDetails_FAILED' })
@@ -46,8 +52,9 @@ export class ForumEffects {
         return this.forumService.addReply(action.reply)
             .mergeMap((result: ResultVM) => {
                 return [
+                    new notifyActions.SetLoadingAction(false),
                     new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Reply submitted successfully' }),
-                    //new userActions.AddProductToCartCompleteAction(data)
+                    new forumActions.SelectTopicCompleteAction(result.data)
                 ];
             })
             .catch((error: any) => {
