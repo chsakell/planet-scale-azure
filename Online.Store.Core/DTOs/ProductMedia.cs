@@ -3,7 +3,7 @@ using System;
 
 namespace Online.Store.Core.DTOs
 {
-    public class ProductMediaDTO
+    public class ProductMedia
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

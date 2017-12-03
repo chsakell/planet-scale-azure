@@ -183,15 +183,15 @@ namespace Online.Store.DocumentDB
 
             await storeRepository.InitAsync("Items");
 
-            var productsDB = await storeRepository.GetItemsAsync<ProductDTO>();
+            var productsDB = await storeRepository.GetItemsAsync<Product>();
             if (productsDB.Count() == 0)
             {
-                List<ProductDTO> products = null;
+                List<Product> products = null;
 
                 using (StreamReader r = new StreamReader(Path.Combine(Config.WebRootPath, @"wwwroot/products.json")))
                 {
                     string json = r.ReadToEnd();
-                    products = JsonConvert.DeserializeObject<List<ProductDTO>>(json);
+                    products = JsonConvert.DeserializeObject<List<Product>>(json);
 
                     foreach (var product in products)
                     {
@@ -214,15 +214,15 @@ namespace Online.Store.DocumentDB
             // Init Forum
             await storeRepository.InitAsync("Forum");
 
-            var topicsDB = await storeRepository.GetItemsAsync<TopicDTO>();
+            var topicsDB = await storeRepository.GetItemsAsync<Topic>();
             if (topicsDB.Count() == 0)
             {
-                List<TopicDTO> topics = null;
+                List<Topic> topics = null;
 
                 using (StreamReader r = new StreamReader(Path.Combine(Config.WebRootPath, @"wwwroot/topics.json")))
                 {
                     string json = r.ReadToEnd();
-                    topics = JsonConvert.DeserializeObject<List<TopicDTO>>(json);
+                    topics = JsonConvert.DeserializeObject<List<Topic>>(json);
 
                     foreach (var topic in topics)
                     {
@@ -239,19 +239,19 @@ namespace Online.Store.DocumentDB
             }
         }
 
-        private static async Task UploadProductImagesAsync(ProductDTO product)
+        private static async Task UploadProductImagesAsync(Product product)
         {
             string[] images = Directory.GetFiles(@"wwwroot/images/" + product.Model);
 
             await StorageInitializer._repository.UploadToContainerAsync("product-images", images[0], product.Model + "/" + Path.GetFileName(images[0]));
             product.Image = string.Format("https://{0}.blob.core.windows.net/{1}/{2}/{3}", storageAccount, "product-images", product.Model, Path.GetFileName(images[0]));
 
-            ProductComponentDTO mediaComponent = product.Components.Where(c => c.ComponentType == "Media").First();
+            ProductComponent mediaComponent = product.Components.Where(c => c.ComponentType == "Media").First();
 
             for(int i=1; i < images.Length; i++)
             {
                 await StorageInitializer._repository.UploadToContainerAsync("product-images", images[i], product.Model + "/" + Path.GetFileName(images[i]));
-                ProductMediaDTO media = new ProductMediaDTO();
+                ProductMedia media = new ProductMedia();
                 media.Id = Guid.NewGuid().ToString();
                 media.CreatedDate = DateTime.Now;
                 media.Name = Path.GetFileNameWithoutExtension(images[i]);

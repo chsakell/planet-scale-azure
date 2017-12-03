@@ -3,7 +3,7 @@ using System;
 
 namespace Online.Store.Core.DTOs
 {
-    public class PostDTO
+    public class Post
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

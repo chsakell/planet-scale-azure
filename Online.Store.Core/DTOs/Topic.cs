@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Online.Store.Core.DTOs
 {
-    public class TopicDTO : PostDTO
+    public class Topic : Post
     {
         [JsonProperty(PropertyName = "posts")]
-        public List<PostDTO> Posts { get; set; }
+        public List<Post> Posts { get; set; }
 
-        public TopicDTO()
+        public Topic()
         {
-            Posts = new List<PostDTO>();
+            Posts = new List<Post>();
         }
     }
 }

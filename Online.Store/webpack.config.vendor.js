@@ -25,6 +25,7 @@ const nonTreeShakableModules = [
     'ngx-gallery',
     'ngx-loading',
     'ng2-completer',
+    'ngx-img-fallback',
     'angular2-notifications',
     'jquery',
 ];

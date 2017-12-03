@@ -11,7 +11,7 @@
     <div class="row" *ngIf="!loading">
         <div class="col-xs-6 col-sm-6 col-md-4 camera-item" *ngFor="let product of products; let i = index">
             <a [routerLink]="['/products/details', product.id]">
-                <img class="img-responsive" [src]="product.image" alt="">
+                <img class="img-responsive" [src]="product.cdnImage" [src-fallback]="product.image" alt="">
             </a>
             <h4>
                 <a [routerLink]="['/products/details', product.id]">{{product.title}}</a>

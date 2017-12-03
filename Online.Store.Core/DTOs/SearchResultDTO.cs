@@ -10,12 +10,12 @@ namespace Online.Store.Core.DTOs
     {
         public List<CommunityDTO> Posts { get; set; }
 
-        public List<ProductDTO> Product { get; set; }
+        public List<Product> Product { get; set; }
 
         public SearchResultDTO()
         {
             this.Posts = new List<CommunityDTO>();
-            this.Product = new List<ProductDTO>();
+            this.Product = new List<Product>();
         }
     }
 }

@@ -11,12 +11,12 @@ import { ForumService } from './services/forum.service';
 @NgModule({
     imports: [
         CommonModule,
-        UserModule
+        UserModule,
     ],
     exports: [
         CommonModule,
         UserModule,
-        NotificationsModule
+        NotificationsModule,
     ]
 })
 

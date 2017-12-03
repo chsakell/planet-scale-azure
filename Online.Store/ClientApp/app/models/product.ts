@@ -9,6 +9,7 @@ export class Product {
     public title: string;
     public description: string;
     public image: string;
+    public cdnImage: string;
     public rating: number;
     public rates: number;
     public components: ProductComponent[];

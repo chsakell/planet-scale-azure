@@ -12,6 +12,7 @@ import { ProductComponent } from "./product.component";
 import { ProductListPresentationComponent } from './list/list';
 import { ProductDetailsPresentationComponent } from "./details/details";
 
+import { ImgFallbackModule } from 'ngx-img-fallback';
 import { NgxGalleryModule } from 'ngx-gallery';
 
 const PRODUCT_DIRECTIVES = [
@@ -28,6 +29,7 @@ const PRODUCT_DIRECTIVES = [
         FormsModule,
         PRODUCT_ROUTES,
         NgxGalleryModule,
+        ImgFallbackModule,
         StoreModule.forFeature('catalog', {
             productState: productReducer,
         }),

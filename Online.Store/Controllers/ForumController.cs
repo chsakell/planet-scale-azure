@@ -26,7 +26,7 @@ namespace Online.Store.Controllers
         // GET: api/Forum
         [HttpGet]
         [Route("topics/", Name = "GetTopics")]
-        public async Task<IEnumerable<TopicDTO>> GetTopics()
+        public async Task<IEnumerable<Topic>> GetTopics()
         {
             var topics = await _storeService.GetTopics();
 
@@ -35,7 +35,7 @@ namespace Online.Store.Controllers
 
         // GET: api/Forum/5
         [HttpGet("topics/{id}", Name = "GetTopic")]
-        public async Task<TopicDTO> GetTopic(string id)
+        public async Task<Topic> GetTopic(string id)
         {
             var topic = await _storeService.GetTopic(id);
 
@@ -47,7 +47,7 @@ namespace Online.Store.Controllers
         //[Authorize]
         public async Task<ActionResult> Post(string id, IFormFile file, ReplyViewModel reply)
         {
-            PostDTO post = new PostDTO()
+            Post post = new Post()
             {
                 Title = reply.Title,
                 Content = reply.Content,

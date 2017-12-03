@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Online.Store.Core.DTOs
 {
-    public class ProductComponentDTO
+    public class ProductComponent
     {
-        public ProductComponentDTO()
+        public ProductComponent()
         {
-            this.Medias = new List<ProductMediaDTO>();
+            this.Medias = new List<ProductMedia>();
         }
 
         [JsonProperty(PropertyName = "id")]
@@ -30,6 +30,6 @@ namespace Online.Store.Core.DTOs
         public DateTime? UpdatedDate { get; set; }
 
         [JsonProperty(PropertyName = "medias")]
-        public List<ProductMediaDTO> Medias { get; set; }
+        public List<ProductMedia> Medias { get; set; }
     }
 }

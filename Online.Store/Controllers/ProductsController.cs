@@ -30,7 +30,7 @@ namespace Online.Store.Controllers
 
             var productsViewData = new List<ProductViewModel>();
 
-            productsViewData = Mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(products);
+            productsViewData = Mapper.Map<IEnumerable<Product>, List<ProductViewModel>>(products);
 
             return productsViewData;
         }
@@ -41,7 +41,7 @@ namespace Online.Store.Controllers
         {
             var productDTO = await _storeService.GetProductDetails(id);
 
-            var product = Mapper.Map<ProductDTO, ProductViewModel>(productDTO);
+            var product = Mapper.Map<Product, ProductViewModel>(productDTO);
 
             return product;
         }
@@ -70,7 +70,7 @@ namespace Online.Store.Controllers
         /// </summary>
         /// <param name="product">The product.</param>
         /// <returns></returns>
-        private ProductViewModel ProductDTOToProductViewModel(ProductDTO product)
+        private ProductViewModel ProductDTOToProductViewModel(Product product)
         {
             var componentsList = new List<ProductComponentViewModel>();
             if (product.Components != null)

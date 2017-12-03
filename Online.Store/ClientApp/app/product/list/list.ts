@@ -5,7 +5,7 @@ import { Product } from "../../models/product";
     selector: 'product-list-presentation',
     templateUrl: './list.html',
     styleUrls: ['./list.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class ProductListPresentationComponent {
@@ -19,5 +19,5 @@ export class ProductListPresentationComponent {
     addProduct(productId: string) {
         this.addToCart.emit(productId);
     }
-
 }
+
