@@ -8,7 +8,7 @@ export const SELECTALL_COMPLETE = '[Forum] Select All Topics Complete';
 export const SELECT_TOPIC = '[Forum] Select Topic';
 export const SELECT_TOPIC_COMPLETE = '[Forum] Select Topic Complete';
 export const ADD_REPLY = '[Forum] Add Reply';
-export const ADD_REPLY_COMPLETE = '[Forum] Add Reply Complete';
+export const ADD_TOPIC = '[Forum] Add Topic';
 
 export class SelectAllAction implements Action {
     readonly type = SELECTALL;
@@ -40,10 +40,10 @@ export class AddReplyAction implements Action {
     constructor(public reply: Reply) {  }
 }
 
-export class AddReplyCompleteAction implements Action {
-    readonly type = ADD_REPLY_COMPLETE;
+export class AddTopicAction implements Action {
+    readonly type = ADD_TOPIC;
 
-    constructor(public result: ResultVM) {  }
+    constructor(public topic: Reply) {  }
 }
 
 export type Actions
@@ -52,5 +52,5 @@ export type Actions
     | SelectTopicAction
     | SelectTopicCompleteAction
     | AddReplyAction
-    | AddReplyCompleteAction;
+    | AddTopicAction;
 

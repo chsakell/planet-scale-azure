@@ -76,6 +76,13 @@ namespace Online.Store.Azure.Services
             return topic;
         }
 
+        public async Task AddTopicAsync(Topic topic)
+        {
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+
+            await _repository.CreateItemAsync<Topic>(topic);
+        }
+
         public async Task<Topic> AddTopicReply(string id, Post reply)
         {
             var topic = await GetTopic(id);
@@ -274,6 +281,7 @@ namespace Online.Store.Azure.Services
         Task<List<Topic>> GetTopics();
         Task<Topic> GetTopic(string id);
         Task<Topic> AddTopicReply(string id, Post reply);
+        Task AddTopicAsync(Topic topic);
         Task<IEnumerable<Product>> GetProducts(string filter);
         Task<Product> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);

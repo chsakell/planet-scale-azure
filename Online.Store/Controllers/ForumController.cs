@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Online.Store.Core.DTOs;
 using Online.Store.Azure.Services;
 using Online.Store.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Online.Store.Controllers
 {
@@ -23,17 +24,15 @@ namespace Online.Store.Controllers
             _mediaService = mediaService;
         }
 
-        // GET: api/Forum
         [HttpGet]
         [Route("topics/", Name = "GetTopics")]
         public async Task<IEnumerable<Topic>> GetTopics()
         {
             var topics = await _storeService.GetTopics();
 
-            return topics;
+            return topics.OrderByDescending(t => t.CreatedDate);
         }
 
-        // GET: api/Forum/5
         [HttpGet("topics/{id}", Name = "GetTopic")]
         public async Task<Topic> GetTopic(string id)
         {
@@ -42,10 +41,52 @@ namespace Online.Store.Controllers
             return topic;
         }
 
-        // POST: api/Forum
+        [HttpPost("topics/create", Name = "Create")]
+        [Authorize]
+        public async Task<ActionResult> Create(IFormFile file, ReplyViewModel reply)
+        {
+            Topic topic = new Topic()
+            {
+                Title = reply.Title,
+                Content = reply.Content,
+                MediaDescription = reply.MediaDescription,
+                UserId = reply.UserId,
+                UserName = reply.UserName,
+                CreatedDate = DateTime.Now
+            };
+
+            try
+            {
+                if (file != null)
+                {
+                    using (var filestream = file.OpenReadStream())
+                    {
+                        topic.MediaUrl = await _mediaService.UploadMediaAsync(filestream, file.FileName, file.ContentType);
+                        topic.MediaType = file.ContentType;
+                    }
+                }
+
+                await _storeService.AddTopicAsync(topic);
+
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.SUCCESS,
+                    Data = topic
+                });
+            }
+            catch (Exception ex)
+            {
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.ERROR,
+                    Message = ex.Message
+                });
+            }
+        }
+
         [HttpPost("topics/{id}/addreply", Name = "AddReply")]
-        //[Authorize]
-        public async Task<ActionResult> Post(string id, IFormFile file, ReplyViewModel reply)
+        [Authorize]
+        public async Task<ActionResult> AddReply(string id, IFormFile file, ReplyViewModel reply)
         {
             Post post = new Post()
             {

@@ -47,4 +47,17 @@ export class ForumService {
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
+
+    createTopic(reply: any): Observable<ResultVM> {
+        let input = new FormData();
+        input.append("file", reply.mediaFile);
+        input.append("title", reply.title);
+        input.append("content", reply.content);
+        input.append("mediaDescription", reply.mediaDescription);
+        input.append("userId", reply.userId);
+        input.append("username", reply.userName);
+        return this.http.post(this.forumURI + `topics/create`, input)
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
 }

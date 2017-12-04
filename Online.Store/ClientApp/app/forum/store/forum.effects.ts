@@ -63,6 +63,22 @@ export class ForumEffects {
     }
     );
 
+    @Effect() addTopic: Observable<Action> = this.actions$.ofType(forumActions.ADD_TOPIC)
+    .switchMap((action: forumActions.AddTopicAction) => {
+        return this.forumService.createTopic(action.topic)
+            .mergeMap((result: ResultVM) => {
+                return [
+                    new notifyActions.SetLoadingAction(false),
+                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Topic submitted successfully' }),
+                    new forumActions.SelectAllAction()
+                ];
+            })
+            .catch((error: any) => {
+                return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to submit reply' }))
+            })
+    }
+    );
+
     constructor(
         private productService: ProductService,
         private forumService: ForumService,

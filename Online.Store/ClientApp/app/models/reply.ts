@@ -1,7 +1,7 @@
 import { Post } from "./post";
 
 export class Reply {
-    public replyToPostId: string;
+    public replyToPostId?: string;
     public title: string;
     public content: string;
     public mediaDescription: string;    

@@ -2,9 +2,43 @@
     <div class="resume">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+                <div>
+                    <button type="button" class="btn btn-default" *ngIf="!viewCreateTopic && user" (click)="viewCreateTopic = true">Create Topic</button>
+                    <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics" class="btn btn-primary">Sign in to create Topic</a>
+                </div>
+                <div class="panel panel-default" *ngIf="viewCreateTopic">
+                    <div class="panel-heading">New Topic</div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" name="title" [(ngModel)]="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Comment:</label>
+                            <textarea class="form-control" rows="5" name="content" [(ngModel)]="content"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaDescription">Media Description:</label>
+                            <input type="text" class="form-control" name="mediaDescription" [(ngModel)]="mediaDescription">
+                        </div>
+                        <div class="form-group">
+                            <input #fileInput type="file" />
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-danger" (click)="viewCreateTopic = false;">Cancel</button>
+                        <button type="button" class="btn btn-primary" (click)="addPost()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
                 <div class="panel panel-default">
-                    <div class="bs-callout bs-callout-danger" *ngFor="let topic of topics; let i = index">
-                        <h4><a [routerLink]="['/forum/topics', topic.id]">{{topic.title}}</a></h4>
+                    <div class="topic topic-danger" *ngFor="let topic of topics; let i = index">
+                        <h4>
+                            <a [routerLink]="['/forum/topics', topic.id]">{{topic.title}}</a>
+                        </h4>
                         <p>
                             {{topic.content}}
                         </p>
@@ -14,12 +48,12 @@
                                     {{topic.mediaDescription}}
                                 </h4>
                                 <p class="list-group-item-text">
-                                    <img [src]="topic.mediaUrl" class="img-responsive"/>    
+                                    <img [src]="topic.mediaUrl" class="img-responsive" />
                                 </p>
                             </a>
                         </ul>
                         <div *ngIf="topic.posts.length > 0" class="replies-counter">
-                          <a [routerLink]="['/forum/topics', topic.id]">{{topic.posts.length}} replies</a>  
+                            <a [routerLink]="['/forum/topics', topic.id]">{{topic.posts.length}} replies</a>
                         </div>
                     </div>
                 </div>
