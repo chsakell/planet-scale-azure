@@ -28,8 +28,8 @@ namespace Online.Store.Controllers
         [Route("topics/", Name = "GetTopics")]
         public async Task<IEnumerable<Topic>> GetTopics()
         {
-            var topics = await _storeService.GetTopics();
-
+            var topics = await _storeService.GetTopics(2, string.Empty);
+            
             return topics.OrderByDescending(t => t.CreatedDate);
         }
 

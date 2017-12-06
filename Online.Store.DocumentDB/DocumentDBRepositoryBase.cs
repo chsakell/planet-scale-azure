@@ -158,6 +158,32 @@ namespace Online.Store.DocumentDB
             return _client.CreateDocumentQuery<T>(_collection.DocumentsLink).AsEnumerable();
         }
 
+        public async Task<Dictionary<List<T>, string>> CreateDocumentQueryAsync<T>(int size, string continuationToken) where T : class
+        {
+            Dictionary<List<T>, string> result = new Dictionary<List<T>, string>();
+
+            var options = new FeedOptions
+            {
+                MaxItemCount = size
+            };
+
+            if(!string.IsNullOrEmpty(continuationToken))
+            {
+                options.RequestContinuation = continuationToken;
+            }
+
+            var query = _client.CreateDocumentQuery<T>(_collection.DocumentsLink, options).AsDocumentQuery();
+
+            var response = await query.ExecuteNextAsync<T>();
+
+            var list = new List<T>();
+            list.AddRange(response);
+
+            result.Add(list, response.ResponseContinuation);
+
+            return result;
+        }
+
         public async Task<Document> CreateItemAsync<T>(T item) where T : class
         {
             return await _client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);

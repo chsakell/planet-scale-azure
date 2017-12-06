@@ -62,9 +62,24 @@ namespace Online.Store.Azure.Services
 
             var justTopics = await _repository.CreateDocumentQueryAsync<Topic>(query, new Microsoft.Azure.Documents.Client.FeedOptions() { EnableCrossPartitionQuery = true });
 
-            // var topics = await _repository.GetItemsAsync<TopicDTO>();
-
             return justTopics.ToList(); // topics.ToList();
+        }
+
+        public async Task<List<Topic>> GetTopics(int size, string continuationToken)
+        {
+            try
+            {
+                await _repository.InitAsync(_FORUM_COLLECTION_ID);
+
+                var dic = await _repository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
+
+                return dic.Keys.First().ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task<Topic> GetTopic(string id)
@@ -279,6 +294,7 @@ namespace Online.Store.Azure.Services
     public interface IStoreService
     {
         Task<List<Topic>> GetTopics();
+        Task<List<Topic>> GetTopics(int size, string continuationToken);
         Task<Topic> GetTopic(string id);
         Task<Topic> AddTopicReply(string id, Post reply);
         Task AddTopicAsync(Topic topic);
