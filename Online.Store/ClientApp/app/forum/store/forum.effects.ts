@@ -14,6 +14,7 @@ import { ProductService } from '../../core/services/product.service';
 import { ForumService } from '../../core/services/forum.service';
 import { ResultVM } from '../../models/result-vm';
 import { MessageType } from '../../models/message';
+import { PagedTopics } from '../../models/paged-topics';
 
 @Injectable()
 export class ForumEffects {
@@ -21,7 +22,7 @@ export class ForumEffects {
     @Effect() getTopics$: Observable<Action> = this.actions$.ofType(forumActions.SELECTALL)
         .switchMap(() =>
             this.productService.getTopics()
-                .mergeMap((data: Topic[]) => {
+                .mergeMap((data: PagedTopics) => {
                     return [
                         new notifyActions.SetLoadingAction(false),
                         new forumActions.SelectAllCompleteAction(data)

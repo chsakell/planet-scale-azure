@@ -65,7 +65,7 @@ namespace Online.Store.Azure.Services
             return justTopics.ToList(); // topics.ToList();
         }
 
-        public async Task<List<Topic>> GetTopics(int size, string continuationToken)
+        public async Task<PagedTopics> GetTopics(int size, string continuationToken)
         {
             try
             {
@@ -73,7 +73,11 @@ namespace Online.Store.Azure.Services
 
                 var dic = await _repository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
 
-                return dic.Keys.First().ToList();
+                return new PagedTopics
+                {
+                    Topics = dic.Keys.First().OrderByDescending(t => t.CreatedDate).ToList(),
+                    ContinuationToken = dic.Values.First()
+                };
             }
             catch (Exception ex)
             {
@@ -294,7 +298,7 @@ namespace Online.Store.Azure.Services
     public interface IStoreService
     {
         Task<List<Topic>> GetTopics();
-        Task<List<Topic>> GetTopics(int size, string continuationToken);
+        Task<PagedTopics> GetTopics(int size, string continuationToken);
         Task<Topic> GetTopic(string id);
         Task<Topic> AddTopicReply(string id, Post reply);
         Task AddTopicAsync(Topic topic);

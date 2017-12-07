@@ -26,11 +26,11 @@ namespace Online.Store.Controllers
 
         [HttpGet]
         [Route("topics/", Name = "GetTopics")]
-        public async Task<IEnumerable<Topic>> GetTopics()
+        public async Task<PagedTopics> GetTopics()
         {
             var topics = await _storeService.GetTopics(2, string.Empty);
             
-            return topics.OrderByDescending(t => t.CreatedDate);
+            return topics;
         }
 
         [HttpGet("topics/{id}", Name = "GetTopic")]

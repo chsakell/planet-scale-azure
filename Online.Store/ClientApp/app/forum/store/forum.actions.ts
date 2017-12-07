@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { Topic } from './../../models/topic';
 import { Reply } from '../../models/reply';
 import { ResultVM } from '../../models/result-vm';
+import { PagedTopics } from '../../models/paged-topics';
 
 export const SELECTALL = '[Forum] Select All Topics';
 export const SELECTALL_COMPLETE = '[Forum] Select All Topics Complete';
@@ -19,7 +20,7 @@ export class SelectAllAction implements Action {
 export class SelectAllCompleteAction implements Action {
     readonly type = SELECTALL_COMPLETE;
 
-    constructor(public topics: Topic[]) { }
+    constructor(public topics: PagedTopics) { }
 }
 
 export class SelectTopicAction implements Action {

@@ -13,7 +13,7 @@ export function forumReducer(state = initialState, action: forumAction.Actions):
 
         case forumAction.SELECTALL_COMPLETE:
             return Object.assign({}, state, {
-                topics: action.topics
+                topics: action.topics.topics
             });
 
         case forumAction.SELECT_TOPIC_COMPLETE:
