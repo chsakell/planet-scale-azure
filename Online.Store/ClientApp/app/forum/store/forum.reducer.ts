@@ -5,7 +5,9 @@ import * as forumAction from './forum.actions';
 
 export const initialState: ForumState = {
     topics: [],
-    selectedTopic: undefined
+    selectedTopic: undefined,
+    previousContinuationToken: undefined,
+    nextContinuationToken: undefined
 };
 
 export function forumReducer(state = initialState, action: forumAction.Actions): ForumState {
@@ -13,8 +15,14 @@ export function forumReducer(state = initialState, action: forumAction.Actions):
 
         case forumAction.SELECTALL_COMPLETE:
             return Object.assign({}, state, {
-                topics: action.topics.topics
+                topics: action.topics.topics,
+                nextContinuationToken: action.topics.continuationToken
             });
+
+        case forumAction.SET_PREVIOUS_TOKEN:
+        return Object.assign({}, state, {
+            previousContinuationToken: action.token,
+        }); 
 
         case forumAction.SELECT_TOPIC_COMPLETE:
             return Object.assign({}, state, {

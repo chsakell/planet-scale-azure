@@ -26,9 +26,9 @@ namespace Online.Store.Controllers
 
         [HttpGet]
         [Route("topics/", Name = "GetTopics")]
-        public async Task<PagedTopics> GetTopics()
+        public async Task<PagedTopics> GetTopics(string continuationToken)
         {
-            var topics = await _storeService.GetTopics(2, string.Empty);
+            var topics = await _storeService.GetTopics(2, continuationToken);
             
             return topics;
         }

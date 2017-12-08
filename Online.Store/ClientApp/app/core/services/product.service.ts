@@ -77,8 +77,9 @@ export class ProductService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getTopics(): Observable<PagedTopics> {
-        return this.http.get(this.forumURI, this.requestOptions)
+    getTopics(token?: string): Observable<PagedTopics> {
+        let uri = this.forumURI + (token != undefined ? '?continuationToken=' + token : '');
+        return this.http.get(uri, this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));;
     }

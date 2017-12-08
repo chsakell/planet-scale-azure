@@ -13,8 +13,12 @@ import { User } from '../../models/user';
 export class TopicListPresentationComponent {
 
     @Input() topics: Topic[];
+    @Input() nextToken: string;
+    @Input() previousToken: string;
     @Input() user: User;
     @Output() onCreateTopic: EventEmitter<Reply> = new EventEmitter();
+    @Output() onNext: EventEmitter<string> = new EventEmitter();
+    @Output() onPrevious: EventEmitter<string> = new EventEmitter();
 
     @ViewChild("fileInput") fileInput: any;
     viewCreateTopic: boolean = false;
@@ -55,5 +59,13 @@ export class TopicListPresentationComponent {
         this.title = '';
         this.content = '';
         this.mediaDescription = '';
+    }
+
+    getNext() {
+        this.onNext.emit(this.nextToken);
+    }
+
+    getPrevious() {
+        this.onPrevious.emit(this.previousToken);
     }
 }

@@ -20,8 +20,8 @@ import { PagedTopics } from '../../models/paged-topics';
 export class ForumEffects {
 
     @Effect() getTopics$: Observable<Action> = this.actions$.ofType(forumActions.SELECTALL)
-        .switchMap(() =>
-            this.productService.getTopics()
+        .switchMap((action: forumActions.SelectAllAction) => {
+            return this.productService.getTopics(action.token)
                 .mergeMap((data: PagedTopics) => {
                     return [
                         new notifyActions.SetLoadingAction(false),
@@ -31,6 +31,7 @@ export class ForumEffects {
                 .catch((error: any) => {
                     return of({ type: 'getTopics_FAILED' })
                 })
+            }
         );
 
     @Effect() getTopicDetails$: Observable<Action> = this.actions$.ofType(forumActions.SELECT_TOPIC)
