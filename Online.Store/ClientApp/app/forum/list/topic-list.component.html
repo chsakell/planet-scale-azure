@@ -1,5 +1,5 @@
-﻿<topic-list-presentation [topics]="currentPageTopics$ | async" 
-[currentPage]="selectedPage$ | async" [user]="user$ | async" 
+﻿<topic-list-presentation [topics]="currentPageTopics$ | async" [loading]="notifyService.loading$ | async"
+[currentPage]="selectedPage$ | async" [user]="user$ | async" [totalPages]="totalPages$ | async"
 [nextToken]="continuationToken$ | async" (onCreateTopic)="submitTopic($event)"
     (onPrevious)="getPreviousPage($event)" (onNext)="getNextPage($event)">
 

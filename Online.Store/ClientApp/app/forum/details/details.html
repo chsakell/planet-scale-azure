@@ -1,8 +1,39 @@
 ﻿<div class="container-fluid">
     <div class="resume" *ngIf="topic">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+            <div class="col-xs-12 col-sm-12">
                 <div class="panel panel-default">
+                    <div class="panel-heading text-right">
+                        <div>
+                            <button type="button" class="btn btn-default" *ngIf="!viewReply && user" (click)="viewReply = true">Add a reply</button>
+                            <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics/{{topic.id}}" class="btn btn-primary">Sign in to add a reply</a>
+                        </div>
+                        <div class="panel panel-default" *ngIf="viewReply">
+                            <div class="panel-heading">Reply</div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input type="text" class="form-control" name="title" [(ngModel)]="title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Comment:</label>
+                                    <textarea class="form-control" rows="5" name="content" [(ngModel)]="content"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaDescription">Media Description:</label>
+                                    <input type="text" class="form-control" name="mediaDescription" [(ngModel)]="mediaDescription">
+                                </div>
+                                <div class="form-group">
+                                    <input #fileInput type="file" />
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <button type="button" class="btn btn-danger" (click)="viewReply = false;">Cancel</button>
+                                <button type="button" class="btn btn-primary" (click)="addPost()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="bs-callout topic">
                         <h4>{{topic.title}}</h4>
                         <p>
@@ -18,33 +49,7 @@
                                 </p>
                             </a>
                         </ul>
-                        <div>
-                            <button type="button" class="btn btn-default" *ngIf="!viewReply" (click)="viewReply = true">Reply</button>
-                        </div>
-                        <div class="panel panel-default" *ngIf="viewReply">
-                            <div class="panel-heading">Reply</div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="title">Title:</label>
-                                    <input type="text" class="form-control" name="title" [(ngModel)]="title">
-                                </div>
-                                <div class="form-group">
-                                    <label for="content">Comment:</label>
-                                    <textarea class="form-control" rows="5" name="content" [(ngModel)]="content" ></textarea>
-                                </div>
-                                <div class="form-group">
-                                        <label for="mediaDescription">Media Description:</label>
-                                        <input type="text" class="form-control" name="mediaDescription" [(ngModel)]="mediaDescription">
-                                    </div>
-                                <div class="form-group">
-                                    <input #fileInput type="file"/>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <button type="button" class="btn btn-danger" (click)="viewReply = false;">Cancel</button>
-                                <button type="button" class="btn btn-primary" (click)="addPost()">Submit</button>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="bs-callout topic-reply" *ngIf="topic.posts.length > 0">
                         <h4>Replies</h4>

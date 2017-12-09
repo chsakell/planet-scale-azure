@@ -12,8 +12,7 @@ import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'topic-list',
-    templateUrl: './topic-list.component.html',
-
+    templateUrl: './topic-list.component.html'
 })
 
 export class TopicListComponent implements OnInit {
@@ -23,12 +22,14 @@ export class TopicListComponent implements OnInit {
     continuationToken$: Observable<string>;
     selectedPage$: Observable<number>;
     currentPageTopics$: Subject<Topic[]> = new BehaviorSubject(new Array<Topic>());
+    totalPages$: Observable<number>;
 
-    constructor(private store: Store<any>, private notifyService: NotifyService) {
+    constructor(private store: Store<any>, public notifyService: NotifyService) {
         this.topics$ = this.store.select<Map<number, Topic[]>>(state => state.community.forumState.topics);
         this.continuationToken$ = this.store.select<string>(state => state.community.forumState.continuationToken);
         this.user$ = this.store.select<User>(state => state.user.userState.user);
         this.selectedPage$ = this.store.select<number>(state => state.community.forumState.selectedPage);
+        this.totalPages$ = this.topics$.map(map => map.size);
     }
 
     ngOnInit() {
@@ -40,7 +41,7 @@ export class TopicListComponent implements OnInit {
             .withLatestFrom(this.topics$)
             .subscribe(([page, topics]) => {
                 self.currentPageTopics$.next(topics.get(page));
-            })
+            });
     }
 
     submitTopic(reply: Reply) {
@@ -56,7 +57,7 @@ export class TopicListComponent implements OnInit {
     getNextPage(data: any) {
         const page = data.page;
         const self = this;
-        
+
         this.topics$
             .take(1)
             .subscribe((topics) => {
@@ -70,5 +71,9 @@ export class TopicListComponent implements OnInit {
 
     getPreviousPage(page: number) {
         this.store.dispatch(new forumActions.SetSelectedPageAction(page));
+    }
+
+    ngOnDestroy() {
+        this.store.dispatch(new forumActions.SetSelectedPageAction(0));
     }
 }

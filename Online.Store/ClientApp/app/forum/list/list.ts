@@ -15,6 +15,8 @@ export class TopicListPresentationComponent {
     @Input() topics: Topic[];
     @Input() nextToken: string;
     @Input() currentPage: number;
+    @Input() totalPages: number;
+    @Input() loading: boolean;
     @Input() user: User;
     @Output() onCreateTopic: EventEmitter<Reply> = new EventEmitter();
     @Output() onNext: EventEmitter<any> = new EventEmitter();
@@ -25,7 +27,6 @@ export class TopicListPresentationComponent {
     title: string = '';
     content: string = '';
     mediaDescription: string = '';
-
 
     constructor() { }
 

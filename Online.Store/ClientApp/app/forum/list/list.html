@@ -1,8 +1,8 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid" *ngIf="!loading">
     <div class="resume">
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
-                <div>
+            <div class="col-xs-12 col-sm-12">
+                <div class="text-center padding10">
                     <button type="button" class="btn btn-default" *ngIf="!viewCreateTopic && user" (click)="viewCreateTopic = true">Create Topic</button>
                     <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics" class="btn btn-primary">Sign in to create Topic</a>
                 </div>
@@ -33,8 +33,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+            <div class="col-xs-12 col-sm-12">
                 <div class="panel panel-default">
+                    <div class="panel-heading text-right">
+                        <button type="button" class="btn btn-default" *ngIf="currentPage > 1" (click)="getPrevious()">Previous</button>
+                        <button type="button" class="btn btn-default" *ngIf="nextToken || (currentPage < totalPages)" (click)="getNext()">Next</button>
+                    </div>
                     <div class="topic topic-danger" *ngFor="let topic of topics; let i = index">
                         <h4>
                             <a [routerLink]="['/forum/topics', topic.id]">{{topic.title}}</a>
@@ -43,7 +47,7 @@
                             {{topic.content}}
                         </p>
                         <ul class="list-group" *ngIf="topic.mediaUrl">
-                            <a class="list-group-item inactive-link" href="#">
+                            <a class="list-group-item inactive-link" [routerLink]="['/forum/topics', topic.id]">
                                 <h4 class="list-group-item-heading">
                                     {{topic.mediaDescription}}
                                 </h4>
@@ -57,10 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-default" *ngIf="currentPage > 1" (click)="getPrevious()">Previous</button>
-                    <button type="button" class="btn btn-default" *ngIf="nextToken" (click)="getNext()">Next</button>
-                </div>
+
             </div>
         </div>
 
