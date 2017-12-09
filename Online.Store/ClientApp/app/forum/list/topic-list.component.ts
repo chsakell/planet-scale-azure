@@ -7,6 +7,8 @@ import { Topic } from "../../models/topic";
 import { NotifyService } from '../../core/services/notifications.service';
 import { User } from '../../models/user';
 import { Reply } from '../../models/reply';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'topic-list',
@@ -16,22 +18,29 @@ import { Reply } from '../../models/reply';
 
 export class TopicListComponent implements OnInit {
 
-    topics$: Observable<Topic[]>;
+    topics$: Observable<Map<number, Topic[]>>;
     user$: Observable<User>;
-    nextContinuationToken$: Observable<string>;
-    previousContinuationToken$: Observable<string>;
+    continuationToken$: Observable<string>;
+    selectedPage$: Observable<number>;
+    currentPageTopics$: Subject<Topic[]> = new BehaviorSubject(new Array<Topic>());
 
     constructor(private store: Store<any>, private notifyService: NotifyService) {
-        this.topics$ = this.store.select<Topic[]>(state => state.community.forumState.topics);
-        this.nextContinuationToken$ = this.store.select<string>(state => state.community.forumState.nextContinuationToken);
-        this.previousContinuationToken$ = this.store.select<string>(state => state.community.forumState.previousContinuationToken);
-        this.topics$ = this.store.select<Topic[]>(state => state.community.forumState.topics);
+        this.topics$ = this.store.select<Map<number, Topic[]>>(state => state.community.forumState.topics);
+        this.continuationToken$ = this.store.select<string>(state => state.community.forumState.continuationToken);
         this.user$ = this.store.select<User>(state => state.user.userState.user);
+        this.selectedPage$ = this.store.select<number>(state => state.community.forumState.selectedPage);
     }
 
     ngOnInit() {
         this.notifyService.setLoading(true);
         this.store.dispatch(new forumActions.SelectAllAction());
+        const self = this;
+        this.selectedPage$
+            .filter(page => page > 0)
+            .withLatestFrom(this.topics$)
+            .subscribe(([page, topics]) => {
+                self.currentPageTopics$.next(topics.get(page));
+            })
     }
 
     submitTopic(reply: Reply) {
@@ -39,13 +48,27 @@ export class TopicListComponent implements OnInit {
         this.store.dispatch(new forumActions.AddTopicAction(reply));
     }
 
-    getTopics(continuationToken: string, isNext?: boolean) {
+    getTopics(continuationToken: string) {
         this.notifyService.setLoading(true);
-
-        if(isNext) {
-            this.store.dispatch(new forumActions.SetPreviousTokenAction(continuationToken));
-        }
-
         this.store.dispatch(new forumActions.SelectAllAction(continuationToken));
+    }
+
+    getNextPage(data: any) {
+        const page = data.page;
+        const self = this;
+        
+        this.topics$
+            .take(1)
+            .subscribe((topics) => {
+                if(topics.get(page)) {
+                    self.store.dispatch(new forumActions.SetSelectedPageAction(page));
+                } else {
+                    self.getTopics(data.token);
+                }
+            })
+    }
+
+    getPreviousPage(page: number) {
+        this.store.dispatch(new forumActions.SetSelectedPageAction(page));
     }
 }

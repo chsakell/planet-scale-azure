@@ -6,7 +6,7 @@ import { PagedTopics } from '../../models/paged-topics';
 
 export const SELECTALL = '[Forum] Select All Topics';
 export const SELECTALL_COMPLETE = '[Forum] Select All Topics Complete';
-export const SET_PREVIOUS_TOKEN = '[Forum] Set Previous Token';
+export const SET_SELECTED_PAGE = '[Forum] Set Selected Page';
 export const SELECT_TOPIC = '[Forum] Select Topic';
 export const SELECT_TOPIC_COMPLETE = '[Forum] Select Topic Complete';
 export const ADD_REPLY = '[Forum] Add Reply';
@@ -24,10 +24,10 @@ export class SelectAllCompleteAction implements Action {
     constructor(public topics: PagedTopics) { }
 }
 
-export class SetPreviousTokenAction implements Action {
-    readonly type = SET_PREVIOUS_TOKEN;
+export class SetSelectedPageAction implements Action {
+    readonly type = SET_SELECTED_PAGE;
 
-    constructor(public token: string) { }
+    constructor(public page: number) { }
 }
 
 export class SelectTopicAction implements Action {
@@ -57,7 +57,7 @@ export class AddTopicAction implements Action {
 export type Actions
     = SelectAllAction
     | SelectAllCompleteAction
-    | SetPreviousTokenAction
+    | SetSelectedPageAction
     | SelectTopicAction
     | SelectTopicCompleteAction
     | AddReplyAction

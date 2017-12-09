@@ -14,18 +14,18 @@ export class TopicListPresentationComponent {
 
     @Input() topics: Topic[];
     @Input() nextToken: string;
-    @Input() previousToken: string;
+    @Input() currentPage: number;
     @Input() user: User;
     @Output() onCreateTopic: EventEmitter<Reply> = new EventEmitter();
-    @Output() onNext: EventEmitter<string> = new EventEmitter();
-    @Output() onPrevious: EventEmitter<string> = new EventEmitter();
+    @Output() onNext: EventEmitter<any> = new EventEmitter();
+    @Output() onPrevious: EventEmitter<number> = new EventEmitter();
 
     @ViewChild("fileInput") fileInput: any;
     viewCreateTopic: boolean = false;
     title: string = '';
     content: string = '';
     mediaDescription: string = '';
-    
+
 
     constructor() { }
 
@@ -62,10 +62,15 @@ export class TopicListPresentationComponent {
     }
 
     getNext() {
-        this.onNext.emit(this.nextToken);
+        this.onNext.emit(
+            {
+                token: this.nextToken,
+                page: this.currentPage + 1
+            }
+        );
     }
 
     getPrevious() {
-        this.onPrevious.emit(this.previousToken);
+        this.onPrevious.emit(this.currentPage - 1);
     }
 }

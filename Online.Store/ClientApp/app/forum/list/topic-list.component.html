@@ -1,5 +1,6 @@
-﻿<topic-list-presentation [topics]="topics$ | async" [user]="user$ | async" [previousToken]="previousContinuationToken$ | async"
-    [nextToken]="nextContinuationToken$ | async" (onCreateTopic)="submitTopic($event)"
-    (onPrevious)="getTopics($event)" (onNext)="getTopics($event, true)">
+﻿<topic-list-presentation [topics]="currentPageTopics$ | async" 
+[currentPage]="selectedPage$ | async" [user]="user$ | async" 
+[nextToken]="continuationToken$ | async" (onCreateTopic)="submitTopic($event)"
+    (onPrevious)="getPreviousPage($event)" (onNext)="getNextPage($event)">
 
 </topic-list-presentation>

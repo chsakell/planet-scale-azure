@@ -58,12 +58,8 @@
                     </div>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default" *ngIf="previousToken" (click)="getPrevious()">Previous</button>
+                    <button type="button" class="btn btn-default" *ngIf="currentPage > 1" (click)="getPrevious()">Previous</button>
                     <button type="button" class="btn btn-default" *ngIf="nextToken" (click)="getNext()">Next</button>
-                </div>
-                <div>
-                    <strong>previous:</strong> {{previousToken}} <br/>
-                    <strong>next:</strong> {{nextToken}}
                 </div>
             </div>
         </div>
