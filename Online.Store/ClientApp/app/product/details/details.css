@@ -7,6 +7,15 @@ h2.spec {
     width: 50%;
 }
 
+.medias {
+    margin-top: 15px;
+}
+
+.medias img {
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
 .ratings {
     padding-right: 10px;
     padding-left: 10px;

@@ -1,7 +1,8 @@
 <div class="container-fluid" *ngIf="product != null && !loading">
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="page-header"><i class="fa fa-camera-retro" aria-hidden="true"></i>
+            <h4 class="page-header">
+                <i class="fa fa-camera-retro" aria-hidden="true"></i>
                 {{product.title}}
             </h4>
         </div>
@@ -10,7 +11,18 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="thumbnail product-info">
-                <ngx-gallery [options]="galleryOptions" [images]="galleryImages" *ngIf="galleryImages"></ngx-gallery>
+                <div class="product-images">
+                    <img class="img-responsive" [src]="cdnImage" [src-fallback]="originalImage" alt="">
+                    <div class="row medias">
+                        <div *ngFor="let media of _medias; let i = index">
+                            <div class="col-xs-4 col-sm-3" (click)="setImages(media.cdnUrl, media.url)">
+                                <img class="img-thumbnail" [src]="media.cdnUrl" [src-fallback]="media.url" alt="">
+                            </div>
+                            <div *ngIf="i === 3" class="clearfix hidden-xs"></div>
+                            <div *ngIf="i === 2" class="clearfix visible-xs"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="caption-full">
                     <h4>
                         <a href="#">{{product.title}}</a>
@@ -38,7 +50,9 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-12" *ngFor="let feature of _features; let i = index">
-                        <h5><strong>{{feature.componentTitle}}</strong></h5>
+                        <h5>
+                            <strong>{{feature.componentTitle}}</strong>
+                        </h5>
                         <p>{{feature.componentDetail}}</p>
                     </div>
                 </div>
@@ -48,7 +62,9 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-6 col-md-4" *ngFor="let spec of _specs; let i = index">
-                        <h5><strong>{{spec.componentTitle}}</strong></h5>
+                        <h5>
+                            <strong>{{spec.componentTitle}}</strong>
+                        </h5>
                         <span>{{spec.componentDetail}}</span>
                     </div>
                 </div>
@@ -68,7 +84,9 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-6 col-md-3" *ngFor="let img of _imaging; let i = index">
-                        <h5><strong>{{img.componentTitle}}</strong></h5>
+                        <h5>
+                            <strong>{{img.componentTitle}}</strong>
+                        </h5>
                         <p>{{img.componentDetail}}</p>
                     </div>
                 </div>

@@ -23,7 +23,6 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducers } from "./reducers";
 
-import { NgxGalleryModule } from 'ngx-gallery';
 import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { Ng2CompleterModule } from "ng2-completer";
 import { SimpleNotificationsModule } from 'angular2-notifications';
@@ -48,7 +47,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
         AppRoutes,
         ImgFallbackModule,
         CoreModule.forRoot(),
-        NgxGalleryModule,
         NgxPaginationModule,
         LoadingModule.forRoot({
             animationType: ANIMATION_TYPES.threeBounce,

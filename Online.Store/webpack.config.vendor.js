@@ -22,7 +22,6 @@ const nonTreeShakableModules = [
     'event-source-polyfill',
     'font-awesome/css/font-awesome.css',
     'hammerjs',
-    'ngx-gallery',
     'ngx-loading',
     'ng2-completer',
     'ngx-img-fallback',

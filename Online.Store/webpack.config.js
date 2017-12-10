@@ -81,7 +81,7 @@ module.exports = (env) => {
         target: 'node',
         devtool: 'inline-source-map',
         externals: [nodeExternals({
-            whitelist: ['/^ngx-gallery/']
+            whitelist: []
         })]
     });
 
