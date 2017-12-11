@@ -5,8 +5,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading text-right">
                         <div>
-                            <button type="button" class="btn btn-default" *ngIf="!viewReply && user" (click)="viewReply = true">Add a reply</button>
-                            <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics/{{topic.id}}" class="btn btn-primary">Sign in to add a reply</a>
+                            <button type="button" class="btn btn-default" *ngIf="!viewReply && user" (click)="viewReply = true">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="false"></span> Add a reply</button>
+                            <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics/{{topic.id}}" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-user" aria-hidden="false"></span> Sign in to Add a Reply</a>
                         </div>
                         <div class="panel panel-default" *ngIf="viewReply">
                             <div class="panel-heading">Reply</div>
