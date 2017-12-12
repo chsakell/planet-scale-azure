@@ -6,7 +6,7 @@
                     <button type="button" class="btn btn-default" *ngIf="!viewCreateTopic && user" (click)="viewCreateTopic = true">
                         <span class="glyphicon glyphicon-plus" aria-hidden="false"></span> Create Topic</button>
                     <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics" class="btn btn-primary">
-                        <span class="glyphicon glyphicon-user" aria-hidden="false"></span> Sign in to create Topic</a>
+                        Sign in to create Topic <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span></a>
                 </div>
                 <div class="panel panel-default" *ngIf="viewCreateTopic">
                     <div class="panel-heading">New Topic</div>

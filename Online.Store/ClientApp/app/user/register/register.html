@@ -1,7 +1,8 @@
 <ul class="nav navbar-nav navbar-right">
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <b>Account</b>
+            <i class="fa fa-user"></i>
+            <b> Account</b>
             <span class="caret"></span>
         </a>
         <ul id="register-dp" class="dropdown-menu">
@@ -11,7 +12,7 @@
                         Login with Active Directory
                         <div class="social-buttons">
                             <a href="/Account/Signin" class="btn btn-fb">
-                                <i class="fa fa-user"></i> Sign in</a>
+                               Sign in  <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span></a>
                         </div>
                         or register a new account
                         <form (submit)="register()" novalidate="novalidate">
@@ -32,7 +33,7 @@
                                 <input class="form-control" type="password" name="ConfirmPassword" [(ngModel)]="user.confirmPassword">
                             </div>
                             <div class="bottom">
-                                <button type="submit" class="btn btn-primary">Register</button>
+                                <button type="submit" class="btn btn-primary">Register <i class="fa fa-user-plus"></i> </button>
                             </div>
                         </form>
                     </div>
