@@ -2120,11 +2120,6 @@
       "from": "ng2-completer@latest",
       "resolved": "https://registry.npmjs.org/ng2-completer/-/ng2-completer-1.6.3.tgz"
     },
-    "ngx-gallery": {
-      "version": "2.4.1",
-      "from": "ngx-gallery@>=2.4.1 <3.0.0",
-      "resolved": "https://registry.npmjs.org/ngx-gallery/-/ngx-gallery-2.4.1.tgz"
-    },
     "ngx-img-fallback": {
       "version": "1.2.0",
       "from": "ngx-img-fallback@latest",
@@ -2134,11 +2129,6 @@
       "version": "1.0.8",
       "from": "ngx-loading@latest",
       "resolved": "https://registry.npmjs.org/ngx-loading/-/ngx-loading-1.0.8.tgz"
-    },
-    "ngx-pagination": {
-      "version": "3.0.3",
-      "from": "ngx-pagination@latest",
-      "resolved": "https://registry.npmjs.org/ngx-pagination/-/ngx-pagination-3.0.3.tgz"
     },
     "no-case": {
       "version": "2.3.1",

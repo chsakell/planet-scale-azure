@@ -12,5 +12,6 @@ export class OrderDetail {
     public productTitle: string;
     public productPrice: number;
     public productImage: string;
+    public productCdnImage: string;
     public quantity: number;
 }

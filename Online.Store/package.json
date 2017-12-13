@@ -45,7 +45,6 @@
     "ng2-completer": "^1.6.3",
     "ngx-img-fallback": "^1.2.0",
     "ngx-loading": "^1.0.8",
-    "ngx-pagination": "^3.0.3",
     "preboot": "4.5.2",
     "raw-loader": "0.5.1",
     "reflect-metadata": "0.1.10",

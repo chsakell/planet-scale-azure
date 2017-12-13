@@ -27,7 +27,9 @@ namespace Online.Store.Mappings
             CreateMap<Order, OrderViewModel>();
             CreateMap<OrderDetail, OrderDetailViewModel>()
                 .ForMember(vm => vm.ProductImage, map => map.MapFrom(od =>
-                        storageBlobEndpoint + "product-images/" + od.ProductModel + "/1.jpg"));
+                        storageBlobEndpoint + "product-images/" + od.ProductModel + "/1.jpg"))
+                .ForMember(vm => vm.ProductCdnImage, map => map.MapFrom(od =>
+                        cdnEndpoint + "/product-images/" + od.ProductModel + "/1.jpg"));
         }
     }
 }

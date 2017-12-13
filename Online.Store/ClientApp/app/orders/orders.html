@@ -25,7 +25,7 @@
                     
                         <div class="product" *ngFor="let orderDetail of order.orderDetails; let i = index">
                             <div class="product-image">
-                                <img [src]="orderDetail.productImage">
+                                <img [src]="orderDetail.productCdnImage" [src-fallback]="orderDetail.productImage">
                             </div>
                             <div class="product-details">
                                 <div class="product-title"><a [routerLink]="['/products/details', orderDetail.productId]">{{orderDetail.productTitle}}</a></div>

@@ -26,7 +26,6 @@ const nonTreeShakableModules = [
     'ng2-completer',
     'ngx-img-fallback',
     'angular2-notifications',
-    'ngx-pagination',
     'jquery',
 ];
 const allModules = treeShakableModules.concat(nonTreeShakableModules);

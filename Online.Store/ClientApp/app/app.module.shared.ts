@@ -27,7 +27,6 @@ import { LoadingModule, ANIMATION_TYPES } from 'ngx-loading';
 import { Ng2CompleterModule } from "ng2-completer";
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { ImgFallbackModule } from 'ngx-img-fallback';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -47,7 +46,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
         AppRoutes,
         ImgFallbackModule,
         CoreModule.forRoot(),
-        NgxPaginationModule,
         LoadingModule.forRoot({
             animationType: ANIMATION_TYPES.threeBounce,
             backdropBackgroundColour: 'rgba(0,0,0,0.1)', 

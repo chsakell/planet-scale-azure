@@ -26,6 +26,7 @@ namespace Online.Store.ViewModels
         public string ProductTitle { get; set; }
         public double ProductPrice { get; set; }
         public string ProductImage { get; set; }
+        public string ProductCdnImage { get; set; }
         public int Quantity { get; set; }
     }
 }
