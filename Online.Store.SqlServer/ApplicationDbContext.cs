@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Online.Store.SqlServer
 {
+    // Read-Write DbContext
     public class ApplicationDbContext : DbContext
     {
         public DbSet<Order> Orders { get; set; }
