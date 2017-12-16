@@ -32,20 +32,6 @@ namespace Online.Store.Controllers
 
             productsViewData = Mapper.Map<IEnumerable<Product>, List<ProductViewModel>>(products);
 
-            //productsViewData.Add(new ProductViewModel
-            //{
-            //    Id = "ac942c68-dad6-492f-98dc-a0027299464d",
-            //    CdnImage = "https://planetscalestore.azureedge.net/product-images/DSCW830/1.jpg",
-            //    Description = "This Sony DSC-W800 digital camera's 20.1-megapixel",
-            //    Image = "https://onlinestorestorage.blob.core.windows.net/product-images/DSCW830/1.jpg",
-            //    Model = "DSCW830",
-            //    Price = 96.19,
-            //    Rates = 1194,
-            //    Rating = 3.4m,
-            //    SKU = "349014",
-            //    Title = "Sony - DSC-W830 20.1-Megapixel Digital Camera - Silver"
-            //});
-
             return productsViewData;
         }
 

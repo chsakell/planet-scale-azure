@@ -18,7 +18,7 @@
                         <form (submit)="register()" novalidate="novalidate">
                             <div class="form-group">
                                 <label for="Email">Email</label>
-                                <input class="form-control" type="email" id="Email" name="Email" value="" [(ngModel)]="user.email">
+                                <input class="form-control" type="email" name="Email" value="" [(ngModel)]="user.email">
                             </div>
                             <div class="form-group">
                                 <label for="Username">Username</label>
@@ -26,7 +26,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="Password">Password</label>
-                                <input class="form-control" type="password" id="Password" name="Password" [(ngModel)]="user.password">
+                                <input class="form-control" type="password" name="Password" [(ngModel)]="user.password">
                             </div>
                             <div class="form-group">
                                 <label for="ConfirmPassword">Confirm password</label>

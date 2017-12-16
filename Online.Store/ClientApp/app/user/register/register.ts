@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { RegisterVM } from '../../models/register-vm';
-//import { Topic } from "../../models/topic";
 
 @Component({
     selector: 'user-register-presentation',

@@ -135,7 +135,7 @@ namespace Online_Store
                     defaults: new { controller = "Home", action = "Index" });
             });
 
-            // DocumentDBInitializer.Initialize(Configuration);
+            DocumentDBInitializer.Initialize(Configuration);
         }
     }
 }
