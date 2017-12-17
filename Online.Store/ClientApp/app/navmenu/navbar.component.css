@@ -1,3 +1,24 @@
+.navbar-inverse {
+    background-color: #007db8;
+    border-color: transparent;
+}
+
+.navbar-footer {
+    position: relative;
+    z-index: 0;
+    content: "";
+    width: 80%;
+    height: 5px;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-box-shadow: 0 0 18px #000;
+    -webkit-box-shadow: 0 0 18px rgba(0,0,0,0.5);
+    -ms-box-shadow: 0 0 18px #000;
+    box-shadow: 0 0 18px #000;
+    box-shadow: 0 0 18px rgba(0,0,0,0.5);
+    margin: -4px auto 0;
+}
+
 .navbar-search {
     display: inline-block;
     float: none;

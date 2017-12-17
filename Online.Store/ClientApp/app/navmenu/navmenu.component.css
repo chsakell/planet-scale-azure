@@ -1,3 +1,8 @@
+.navbar-inverse {
+    background-color: #007db8;
+    border-color: transparent;
+}
+
 .user-view-nav {
     display: none;
 }
