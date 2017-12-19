@@ -1,5 +1,8 @@
 ﻿
 ECHO OFF
+
+# Enable-AzureRmContextAutosave
+
 # sign in
 Write-Host "Logging in...";
 # Login-AzureRmAccount;
@@ -74,4 +77,47 @@ if ($cdnNotPresent)
 else
 {
     Write-Host "CDN profile $cdnProfileName already exists.."
+}
+#####################################################################################################
+# Create the Azure Cosmos DocumentDB Account
+# https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/create-database-account-powershell?toc=%2fpowershell%2fmodule%2ftoc.json
+# https://docs.microsoft.com/en-us/azure/cosmos-db/manage-account-with-powershell
+
+$documentDbDatabase = "planetscalestore";
+
+
+$query = Find-AzureRmResource -ResourceNameContains $documentDbDatabase -ResourceType "Microsoft.DocumentDb/databaseAccounts"
+
+if (!$query)
+{ 
+    Write-Host "Creating DocumentDB account $documentDbDatabase.."
+    # Create the account
+
+    # Write and read locations and priorities for the database
+    $locations = @(@{"locationName"= $primaryResourceGroupLocation; 
+                     "failoverPriority"=0})
+
+    # Consistency policy
+    $consistencyPolicy = @{"defaultConsistencyLevel"="BoundedStaleness";
+                           "maxIntervalInSeconds"="10"; 
+                           "maxStalenessPrefix"="200"}
+
+    # DB properties
+    $DBProperties = @{"databaseAccountOfferType"="Standard"; 
+                              "locations"=$locations; 
+                              "consistencyPolicy"=$consistencyPolicy}
+
+    # Create the database
+    New-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
+                        -ApiVersion "2015-04-08" `
+                        -ResourceGroupName $primaryResourceGroupName `
+                        -Location $primaryResourceGroupLocation `
+                        -Name $documentDbDatabase `
+                        -PropertyObject $DBProperties
+    
+    Write-Host "DocumentDB account $documentDbDatabase succesfully created.."
+}
+else
+{
+    Write-Host "DocumentDB account $documentDbDatabase already exists.."
 }
