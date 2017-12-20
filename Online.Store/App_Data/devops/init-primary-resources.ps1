@@ -121,3 +121,23 @@ else
 {
     Write-Host "DocumentDB account $documentDbDatabase already exists.."
 }
+#####################################################################################################
+# Create the Traffic Manager Account
+
+$tmpProfileName = "planetscalestore";
+$tmpDnsName = "planetscalestore";
+
+try {
+    Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $primaryResourceGroupName -ErrorAction Stop
+    Write-Host "Traffic Maanger $tmpProfileName already exists.."
+ }
+catch {
+     $ErrorMessage = $_.Exception.Message;
+     Write-Host $ErrorMessage;
+
+     Write-Host "Creating Traffic Manager Profile $tmpProfileName.."
+
+     New-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $primaryResourceGroupName -TrafficRoutingMethod Performance `
+    -RelativeDnsName $tmpDnsName -Ttl 30 -MonitorProtocol HTTP -MonitorPort 80 -MonitorPath "/"
+}
+
