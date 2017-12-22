@@ -8,7 +8,7 @@ Write-Host "Logging in...";
 # Login-AzureRmAccount;
 
 # select subscription
-$subscriptionId = "8433038c-5b0f-4501-ba56-4a4fea6a0ee3";
+$subscriptionId = "YOUR-SUBSCRIPTION-ID";
 Write-Host "Selecting subscription";
 # Select-AzureRmSubscription -SubscriptionID $subscriptionId;
 
