@@ -137,3 +137,18 @@ else {
     -ResourceName $searchEngineName `
     -ApiVersion 2015-08-19 `
 }
+# Continue with the Data Source
+# https://docs.microsoft.com/en-us/rest/api/searchservice/create-data-source
+
+# Get DocumentDB account keys
+# https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/secure-get-account-key-powershell?toc=%2fpowershell%2fmodule%2ftoc.json
+
+$primaryResourceGroupName = "planetscalestore";
+$documentDbDatabase = $primaryResourceGroupName
+
+# Retrieve the primary and secondary account keys
+$primaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
+    -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
+    -ApiVersion "2015-04-08" `
+    -ResourceGroupName $primaryResourceGroupName `
+    -Name $documentDbDatabase | select -ExpandProperty  primaryMasterKey

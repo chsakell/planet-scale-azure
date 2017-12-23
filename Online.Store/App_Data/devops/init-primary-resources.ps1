@@ -73,6 +73,25 @@ if ($cdnNotPresent)
                           -Sku Standard_Verizon -Location $primaryResourceGroupLocation
     
     Write-Host "CDN profile $cdnProfileName succesfully created.."
+
+    # Adding endpoint to the storage account
+
+    # Create a new endpoint
+    # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell#creating-cdn-profiles-and-endpoints
+
+    $cdnEnpointName = "planetscalestore";
+    $endpointHost =  "planetscalestore.blob.core.windows.net"
+
+    $availability = Get-AzureRmCdnEndpointNameAvailability -EndpointName $cdnEnpointName
+
+    if($availability.NameAvailable) {
+        Write-Host "Creating endpoint..."
+
+        New-AzureRmCdnEndpoint -ProfileName $cdnProfileName -ResourceGroupName $primaryResourceGroupName `
+         -Location $primaryResourceGroupLocation -EndpointName $cdnEnpointName `
+         -OriginName "planetscalestore" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
+    }
+    
 }
 else
 {

@@ -54,6 +54,7 @@
     <None Remove="Properties\PublishProfiles\planetscalestore-eu - FTP.pubxml" />
     <None Remove="Properties\PublishProfiles\planetscalestore-eu - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\planetscalestore-wcus - FTP.pubxml" />
+    <None Remove="Properties\PublishProfiles\planetscalestore-wcus - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,6 +87,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\app\forum\store\" />
     <Folder Include="Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
   <ItemGroup>
