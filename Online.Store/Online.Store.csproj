@@ -24,15 +24,16 @@
 
   <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
+    <Compile Remove="ClientApp\app\cart\**" />
     <Compile Remove="ClientApp\app\product\NewFolder\**" />
     <Content Remove="ClientApp\**" />
+    <EmbeddedResource Remove="ClientApp\app\cart\**" />
     <EmbeddedResource Remove="ClientApp\app\product\NewFolder\**" />
+    <None Remove="ClientApp\app\cart\**" />
     <None Remove="ClientApp\app\product\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\app\cart\cart.module.ts" />
-    <None Remove="ClientApp\app\cart\store\cart.action.ts" />
     <None Remove="ClientApp\app\checkout\checkout.component.ts" />
     <None Remove="ClientApp\app\checkout\checkout.ts" />
     <None Remove="ClientApp\app\forum\forum.component.ts" />
@@ -55,6 +56,7 @@
     <None Remove="Properties\PublishProfiles\planetscalestore-eu - Web Deploy.pubxml" />
     <None Remove="Properties\PublishProfiles\planetscalestore-wcus - FTP.pubxml" />
     <None Remove="Properties\PublishProfiles\planetscalestore-wcus - Web Deploy.pubxml" />
+    <None Remove="Properties\PublishProfiles\planetscalestore-westeurope-a - Web Deploy.pubxml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,9 +65,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app\cart\cart.module.ts" />
-    <TypeScriptCompile Include="ClientApp\app\cart\store\cart.state.ts" />
-    <TypeScriptCompile Include="ClientApp\app\cart\store\cart.action.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\checkout\checkout.ts" />
     <TypeScriptCompile Include="ClientApp\app\forum\details\details.ts" />
