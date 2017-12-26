@@ -1,27 +1,28 @@
-﻿# Check for resources 
-# https://docs.microsoft.com/en-us/powershell/module/azurerm.resources/find-azurermresource?view=azurermps-5.1.1
+﻿<#
+.SYNOPSIS
+Create the Parent Region with its Resources [Service Bus, Redis Cache, Search Engine]
+All Resources in the Resource Group are named the same "$primaryName-" + "$resourceGroupLocation",
+e.g. planetscalestore-westeurope
 
-ECHO OFF
+.Author: Christos Sakellarios
 
-# Enable-AzureRmContextAutosave
+.PARAMETER PrimaryName
+Basic name to be used for resources
+.PARAMETER ResourceGroupLocation
+Azure Region for the parent resource group
 
-# sign in
-Write-Host "Logging in...";
-# Login-AzureRmAccount;
-
-# select subscription
-$subscriptionId = "YOUR-SUBSCRIPTION-ID";
-Write-Host "Selecting subscription";
-# Select-AzureRmSubscription -SubscriptionID $subscriptionId;
+#>
+param (
+    [Parameter(Mandatory = $true)] [string] $PrimaryName,
+    [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation
+)
 
 #####################################################################################################
 # Create the parent Resource Group
 # Get list of locations and select one.
 # Get-AzureRmLocation | select Location 
 
-$primaryName = "planetscalestore";
-$resourceGroupLocation = "westeurope";
-$resourceGroupName = "$primaryName-" + $resourceGroupLocation;
+$resourceGroupName = "$PrimaryName-" + "$ResourceGroupLocation";
 
 Get-AzureRmResourceGroup -Name $resourceGroupName -ev notPresent -ea 0
 
@@ -29,7 +30,7 @@ if ($notPresent)
 {
     # ResourceGroup doesn't exist
     Write-Host "Trying to create Resource Group: $resourceGroupName "
-    New-AzureRmResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation
+    New-AzureRmResourceGroup -Name $resourceGroupName -Location $ResourceGroupLocation
 }
 else
 {
@@ -40,24 +41,24 @@ else
 # Create the Service Bus
 # https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-manage-with-ps
 
-$serviceBusNameSpace = "$primaryName-" + $resourceGroupLocation;
+$serviceBusNameSpace = "$PrimaryName-" + $ResourceGroupLocation;
 
 $serviceBusExists = Test-AzureName -ServiceBusNamespace $serviceBusNameSpace
 
 # Check if the namespace already exists or needs to be created
 if ($serviceBusExists)
 {
-    Write-Host "The namespace $serviceBusNameSpace already exists in the $resourceGroupLocation region:"
+    Write-Host "The namespace $serviceBusNameSpace already exists in the $ResourceGroupLocation region:"
     # Report what was found
     Get-AzureRMServiceBusNamespace -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace
 }
 else
 {
     Write-Host "The $serviceBusNameSpace namespace does not exist."
-    Write-Host "Creating the $serviceBusNameSpace namespace in the $resourceGroupLocation region..."
-    New-AzureRmServiceBusNamespace -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -Location $resourceGroupLocation
+    Write-Host "Creating the $serviceBusNameSpace namespace in the $ResourceGroupLocation region..."
+    New-AzureRmServiceBusNamespace -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -Location $ResourceGroupLocation
     $namespace = Get-AzureRMServiceBusNamespace -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace
-    Write-Host "The $serviceBusNameSpace namespace in Resource Group $resourceGroupName in the $resourceGroupLocation region has been successfully created."
+    Write-Host "The $serviceBusNameSpace namespace in Resource Group $resourceGroupName in the $ResourceGroupLocation region has been successfully created."
 
     # Create the Orders queue
     # Check if queue already exists
@@ -67,15 +68,15 @@ else
 
     if($ordersQueue)
     {
-        Write-Host "The queue $queueName already exists in the $resourceGroupLocation region:"
+        Write-Host "The queue $queueName already exists in the $ResourceGroupLocation region:"
     }
     else
     {
         Write-Host "The $queueName queue does not exist."
-        Write-Host "Creating the $queueName queue in the $resourceGroupLocation region..."
+        Write-Host "Creating the $queueName queue in the $ResourceGroupLocation region..."
         New-AzureRmServiceBusQueue -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -QueueName $queueName -EnablePartitioning $True
         $ordersQueue = Get-AzureRmServiceBusQueue -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -QueueName $queueName
-        Write-Host "The $queueName queue in Resource Group $resourceGroupName in the $resourceGroupLocation region has been successfully created."
+        Write-Host "The $queueName queue in Resource Group $resourceGroupName in the $ResourceGroupLocation region has been successfully created."
     }
 
     # Create new Authorization Rules
@@ -126,7 +127,7 @@ Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Cache"
 
 # Get-Help New-AzureRmRedisCache -detailed
 
-$cacheName = "$primaryName-" + $resourceGroupLocation;
+$cacheName = "$PrimaryName-" + "$ResourceGroupLocation";
 
 try {
     Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName -ErrorAction Stop
@@ -137,10 +138,10 @@ catch {
      Write-Host $ErrorMessage;
      
      Write-Host "The $cacheName Redis Cache does not exist."
-     Write-Host "Creating the $cacheName Redis Caache in the $resourceGroupLocation region..."
+     Write-Host "Creating the $cacheName Redis Cache in the $ResourceGroupLocation region..."
     
      New-AzureRmRedisCache -ResourceGroupName $resourceGroupName -Name $cacheName `
-      -Location $resourceGroupLocation -Size 250MB
+      -Location $ResourceGroupLocation -Size 250MB
 
      Write-Host "$cacheName Redis Cache successfully created.." 
      Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName
@@ -153,8 +154,8 @@ catch {
 # Register the ARM provider idempotently. This must be done once per subscription
 # Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Search"
 
-$searchEngineName = "$primaryName-" + $resourceGroupLocation;  #"your-service-name-lowercase-with-dashes"
-$sku = "free" # or "basic" or "standard" for paid services
+$searchEngineName = "$PrimaryName-" + "$ResourceGroupLocation";  #"your-service-name-lowercase-with-dashes"
+$sku = "basic" # or "basic" or "standard" for paid services
 
 # You can get a list of potential locations with
 # (Get-AzureRmResourceProvider -ListAvailable | Where-Object {$_.ProviderNamespace -eq 'Microsoft.Search'}).Locations
@@ -164,14 +165,14 @@ $query = Find-AzureRmResource -ResourceNameContains $searchEngineName -ResourceT
 if (!$query) {
     
 # Create a new search service
-    Write-Host "Creating Search Engine $searchEngineName in Resource Group $resourceGroupLocation"
+    Write-Host "Creating Search Engine $searchEngineName in Resource Group $ResourceGroupLocation"
   
     New-AzureRmResourceGroupDeployment `
     -ResourceGroupName $resourceGroupName `
     -TemplateUri "https://gallery.azure.com/artifact/20151001/Microsoft.Search.1.0.9/DeploymentTemplates/searchServiceDefaultTemplate.json" `
     -NameFromTemplate $searchEngineName `
     -Sku $sku `
-    -Location $resourceGroupLocation `
+    -Location $ResourceGroupLocation `
     -PartitionCount 1 `
     -ReplicaCount 1
 }
@@ -182,7 +183,7 @@ else {
     -ResourceType "Microsoft.Search/searchServices" `
     -ResourceGroupName $resourceGroupName `
     -ResourceName $searchEngineName `
-    -ApiVersion 2015-08-19 `
+    -ApiVersion "2015-08-19" `
 }
 # Continue with the Data Source
 # https://docs.microsoft.com/en-us/rest/api/searchservice/create-data-source
@@ -190,6 +191,7 @@ else {
 # Get DocumentDB account keys
 # https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/secure-get-account-key-powershell?toc=%2fpowershell%2fmodule%2ftoc.json
 
+<#
 $primaryResourceGroupName = "planetscalestore";
 $documentDbDatabase = $primaryResourceGroupName
 
@@ -199,3 +201,4 @@ $primaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
     -ApiVersion "2015-04-08" `
     -ResourceGroupName $primaryResourceGroupName `
     -Name $documentDbDatabase | select -ExpandProperty  primaryMasterKey
+#>

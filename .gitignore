@@ -262,3 +262,6 @@ __pycache__/
 
 # Webjob
 Online.Store.WebJob/appsettings.json
+
+# DevOps script
+Online.Store/App_Data/devops/devops.ps1
