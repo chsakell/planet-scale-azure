@@ -1,15 +1,52 @@
-﻿
-# sign in
-Write-Host "Logging in...";
-# Login-AzureRmAccount;
+﻿<#
+.SYNOPSIS
+Create the sub-region resources [App Service, SQL Server, Database(optional)]
+All Resources in the Resource Group are named the same "$primaryName-" + "$resourceGroupLocation",
+e.g. planetscalestore-westeurope-a
 
-# select subscription
-$subscriptionId = "YOUR-SUBSCRIPTION-ID";
-Write-Host "Selecting subscription";
-#Select-AzureRmSubscription -SubscriptionID $subscriptionId;
+.Author: Christos Sakellarios
 
-# Check available locations per resource type
-# Get-AzureRmResourceProvider
+.PARAMETER PrimaryName
+Basic name to be used for resources
+
+.PARAMETER ResourceGroupLocation
+Azure Region for the resource group. Must be the same with the parent one
+
+.PARAMETER Version
+Sub region Version. Usually you will need two for business continuity
+e.g a or b
+
+.PARAMETER SqlServerLogin
+SQL Logical Server's admin username.
+
+.PARAMETER SqlServerPassword
+SQL Logical Server's admin password.
+
+.PARAMETER CreateDatabase
+Define to create or not the database. Set true only to the primary sub-region
+All secondary databases will be created during geo-replication
+
+.PARAMETER Database
+The database name
+
+#>
+param (
+    [Parameter(Mandatory = $true)] [string] $PrimaryName,
+    [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation,
+    [Parameter(Mandatory = $true)] [string] $Version,
+    [Parameter(Mandatory = $true)] [string] $SqlServerLogin,
+    [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
+    [Parameter(Mandatory = $true)] [bool] $CreateDatabase,
+    [Parameter(Mandatory = $true)] [string] $Database
+)
+
+Write-Host "PrimaryName: $PrimaryName"
+Write-Host "ResourceGroupLocation $ResourceGroupLocation"
+Write-Host "Version $Version"
+Write-Host "SqlServerLogin $SqlServerLogin"
+Write-Host "SqlServerPassword $SqlServerPassword"
+Write-Host "CreateDatabase $CreateDatabase"
+Write-Host "Database $Database"
 
 
 #####################################################################################################
@@ -17,10 +54,7 @@ Write-Host "Selecting subscription";
 # Get list of locations and select one.
 # Get-AzureRmLocation | select Location 
 
-$version = "a" # switch between a and b
-$primaryName = "planetscalestore";
-$resourceGroupLocation = "westeurope";
-$resourceGroupName = "$primaryName-$resourceGroupLocation-$version";
+$resourceGroupName = "$PrimaryName-$ResourceGroupLocation-$Version";
 
 Get-AzureRmResourceGroup -Name $resourceGroupName -ev notPresent -ea 0
 
@@ -28,7 +62,7 @@ if ($notPresent)
 {
     # ResourceGroup doesn't exist
     Write-Host "Trying to create Resource Group: $resourceGroupName "
-    New-AzureRmResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation
+    New-AzureRmResourceGroup -Name $resourceGroupName -Location $ResourceGroupLocation
 }
 else
 {
@@ -48,7 +82,7 @@ if ($planNotPresent)
 {
     # App Service Plan doesn't exist
     Write-Host "Trying to create App Service Plan $resourceGroupName "
-    New-AzureRmAppServicePlan -Name $webappName -Location $resourceGroupLocation `
+    New-AzureRmAppServicePlan -Name $webappName -Location $ResourceGroupLocation `
         -ResourceGroupName $resourceGroupName -Tier Standard -WorkerSize Small
 }
 else
@@ -71,7 +105,7 @@ else {
     # App Service Plan doesn't exist
     Write-Host "Trying to create App Service $webappName "
 
-    New-AzureRmWebApp -Name $webappName -Location $resourceGroupLocation `
+    New-AzureRmWebApp -Name $webappName -Location $ResourceGroupLocation `
         -AppServicePlan $webappName -ResourceGroupName $resourceGroupName
 
     Write-Host "App Service $webappName successfully created at $resourceGroupName"
@@ -85,8 +119,6 @@ else {
 $serverName =  "$resourceGroupName";
 # Set an admin login and password for your database
 # The login information for the server
-$adminLogin = "your-admin-login" 
-$password = "your-admin-login-password"
 
 # Create the logical server
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserver?view=azurermps-5.1.1
@@ -101,8 +133,8 @@ else {
 
     New-AzureRmSqlServer -ResourceGroupName $resourceGroupName `
     -ServerName $serverName `
-    -Location $resourceGroupLocation `
-    -SqlAdministratorCredentials $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $adminLogin, $(ConvertTo-SecureString -String $password -AsPlainText -Force))
+    -Location $ResourceGroupLocation `
+    -SqlAdministratorCredentials $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $SqlServerLogin, $(ConvertTo-SecureString -String $SqlServerPassword -AsPlainText -Force))
 
     Write-Host "SQL Server $serverName successfully created..."
 
@@ -120,32 +152,33 @@ else {
 # https://docs.microsoft.com/en-us/azure/sql-database/sql-database-what-is-a-dtu
 # https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.sql.models.database.requestedserviceobjectivename?view=azure-dotnet
 
-$databaseName = "$primaryName";
+if($CreateDatabase) {
+    $azureDatabase = Get-AzureRmSqlDatabase -ResourceGroupName $resourceGroupName `
+     -ServerName $serverName -DatabaseName $Database -ErrorAction SilentlyContinue
 
-$database = Get-AzureRmSqlDatabase -ResourceGroupName $resourceGroupName `
- -ServerName $serverName -DatabaseName $databaseName -ErrorAction SilentlyContinue
+    if ($azureDatabase) { 
+        Write-Host "Azure SQL Database $Database already exists..."
+    }
+    else {
+        Write-Host "Trying to create Azure SQL Database $Database at Server $serverName.."
 
-if ($database) { 
-    Write-Host "Azure SQL Database $databaseName already exists..."
-}
-else {
-    Write-Host "Trying to create Azure SQL Database $databaseName at Server $serverName.."
+        New-AzureRmSqlDatabase  -ResourceGroupName $resourceGroupName `
+        -ServerName $serverName `
+        -DatabaseName $Database `
+        -RequestedServiceObjectiveName "Basic" `
+        -MaxSizeBytes 524288000
 
-    New-AzureRmSqlDatabase  -ResourceGroupName $resourceGroupName `
-    -ServerName $serverName `
-    -DatabaseName $databaseName `
-    -RequestedServiceObjectiveName "Basic" `
-    -MaxSizeBytes 524288000
+        Write-Host "Azure SQL Database $databaseName successfully created..."
 
-    Write-Host "Azure SQL Database $databaseName successfully created..."
-
+    }
 }
 
 #####################################################################################################
 # Set App Service settings
-$primaryResourceGroupName = "planetscalestore";
-$documentDbDatabase = "planetscalestore"
-$region = "$resourceGroupLocation-$version";
+
+$primaryResourceGroupName = "$PrimaryName";
+$documentDbDatabase = "$PrimaryName"
+$region = "$ResourceGroupLocation-$Version";
 # Retrieve the primary account keys
 $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
     -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
@@ -157,15 +190,15 @@ $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
 $storageAccountKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $primaryResourceGroupName `
  -AccountName $primaryResourceGroupName).Value[0] 
 
-$parentResourceGroup = "$primaryName-$resourceGroupLocation"
+$parentResourceGroup = "$PrimaryName-$ResourceGroupLocation"
 # Get Redis Cache Key
-$cacheName = "$primaryName-$resourceGroupLocation"
+$cacheName = "$PrimaryName-$ResourceGroupLocation"
 $cachePrimaryKey = (Get-AzureRmRedisCacheKey -Name $cacheName -ResourceGroupName $parentResourceGroup).PrimaryKey
 
 # Get Service Bus Queue orders Write Rule Key
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.servicebus/Get-AzureRmServiceBusKey?view=azurermps-5.1.1
 $queueName = "orders"
-$serviceBusNameSpace = "$primaryName-" + $resourceGroupLocation;
+$serviceBusNameSpace = "$PrimaryName-" + $ResourceGroupLocation;
 $writeAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup `
      -Namespace $serviceBusNameSpace -Queue $queueName -Name "write").PrimaryKey
 
@@ -175,8 +208,8 @@ $settings = @{
     "SearchService:ApiKey" = "todo";
     "Storage:AccountKey" = "$storageAccountKey";
     "MediaServices:AccountKey" = "SjcR8Jl6tBXmWgrR8VG5hhl11vsZMoHU/zpWfyhS8AY=";
-    "SQL:ElasticDbUsername" = "sqladmin";
-    "SQL:ElasticDbPassword" = "%Kupimarko10";
+    "SQL:ElasticDbUsername" = "test";
+    "SQL:ElasticDbPassword" = "test";
     "RedisCache:Endpoint" = "$parentResourceGroup.redis.cache.windows.net:6380";
     "RedisCache:Key" = "$cachePrimaryKey";
     "AzureAd:Instance" = "https://login.microsoftonline.com/";
@@ -202,7 +235,7 @@ Write-Host "App Settings updated successfully..."
 # Create Hash variable for Connection Strings
 $connString = @{}
 # Add or Update a desired Connection String within the Hash collection
-$connString["DefaultConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$serverName.database.windows.net,1433;Initial Catalog=$databaseName;Persist Security Info=False;User ID=$adminLogin;Password=$password;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
+$connString["DefaultConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$serverName.database.windows.net,1433;Initial Catalog=$Database;Persist Security Info=False;User ID=$SqlServerLogin;Password=$SqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
 
 Write-Host "Setting Connection String for $webappName"
 # Save Connection String to Azure Web App
