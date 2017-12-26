@@ -2,14 +2,14 @@
 # https://www.appveyor.com/docs/api/environments-deployments/
 
 $token = 'appveyor-api-token' # API Token Page in AppVeyor
-$accountName = 'app-veyor-account-name'
-$projectSlug = 'app-veyor-project-name-from-url'
+$accountName = 'appveyor-account'
+$projectSlug = 'appveyor-project-from-url'
 $headers = @{
   "Authorization" = "Bearer $token"
   "Content-type" = "application/json"
 }
-$webappName = "app-service-name";
-$resourceGroupName = "resource-group-name"
+$webappName = "azure-webapp";
+$resourceGroupName = "azure-webapp-resource-group"
 
 ####################################################################
 # Get App Service publish profile
