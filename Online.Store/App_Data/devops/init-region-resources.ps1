@@ -59,6 +59,53 @@ else
     $namespace = Get-AzureRMServiceBusNamespace -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace
     Write-Host "The $serviceBusNameSpace namespace in Resource Group $resourceGroupName in the $resourceGroupLocation region has been successfully created."
 
+    # Create the Orders queue
+    # Check if queue already exists
+    $queueName = "orders"
+    $ordersQueue = Get-AzureRmServiceBusQueue -ResourceGroup $resourceGroupName `
+         -NamespaceName $serviceBusNameSpace -QueueName $queueName -ErrorAction SilentlyContinue
+
+    if($ordersQueue)
+    {
+        Write-Host "The queue $queueName already exists in the $resourceGroupLocation region:"
+    }
+    else
+    {
+        Write-Host "The $queueName queue does not exist."
+        Write-Host "Creating the $queueName queue in the $resourceGroupLocation region..."
+        New-AzureRmServiceBusQueue -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -QueueName $queueName -EnablePartitioning $True
+        $ordersQueue = Get-AzureRmServiceBusQueue -ResourceGroup $resourceGroupName -NamespaceName $serviceBusNameSpace -QueueName $queueName
+        Write-Host "The $queueName queue in Resource Group $resourceGroupName in the $resourceGroupLocation region has been successfully created."
+    }
+
+    # Create new Authorization Rules
+    # https://docs.microsoft.com/en-us/powershell/module/azurerm.servicebus/New-AzureRmServiceBusAuthorizationRule?view=azurermps-5.1.1
+    # https://docs.microsoft.com/en-us/powershell/module/azurerm.servicebus/Get-AzureRmServiceBusAuthorizationRule?view=azurermps-5.1.1
+    $writeRule = "write"
+    $readRule = "read"
+
+    $authWriteRule = Get-AzureRmServiceBusAuthorizationRule -ResourceGroup $resourceGroupName -Namespace $serviceBusNameSpace `
+         -Queue $queueName -Name $writeRule -ErrorAction SilentlyContinue
+    if(!$authWriteRule) {
+        "Write Rule not found. Creating rule in namespace $serviceBusNameSpace.."
+        New-AzureRmServiceBusAuthorizationRule -ResourceGroup $resourceGroupName -Namespace $serviceBusNameSpace `
+         -Queue $queueName -Name $writeRule -Rights @("Send")
+    } 
+    else {
+        Write-Host "Write Rule already exists..."
+    }
+
+    $authReadRule = Get-AzureRmServiceBusAuthorizationRule -ResourceGroup $resourceGroupName -Namespace $serviceBusNameSpace `
+         -Queue $queueName -Name $readRule -ErrorAction SilentlyContinue
+    if(!$authReadRule) {
+        "Read Rule not found. Creating rule in namespace $serviceBusNameSpace.."
+        New-AzureRmServiceBusAuthorizationRule -ResourceGroup $resourceGroupName -Namespace $serviceBusNameSpace `
+         -Queue $queueName -Name $readRule -Rights @("Listen")
+    } 
+    else {
+        Write-Host "Read Rule already exists..."
+    }
+
 }
 #####################################################################################################
 # Create the Redis Cache
