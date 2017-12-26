@@ -3,8 +3,8 @@
 
 # AppVeyor settings
 $token = 'appveyor-api-token' # API Token Page in AppVeyor
-$accountName = 'app-veyor-account-name'
-$projectSlug = 'app-veyor-project-name-from-url'
+$accountName = 'appveyor-account'
+$projectSlug = 'appveyor-project-from-url' # AppVeyor project's URL e.g dotnetcoreangular-to-azure
 $headers = @{
   "Authorization" = "Bearer $token"
   "Content-type" = "application/json"
