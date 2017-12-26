@@ -85,8 +85,8 @@ else {
 $serverName =  "$resourceGroupName";
 # Set an admin login and password for your database
 # The login information for the server
-$adminLogin = "YOUR-ADMIN-LOGIN" 
-$password = "YOUR-ADMIN-PASSWORD"
+$adminLogin = "your-admin-login" 
+$password = "your-admin-login-password"
 
 # Create the logical server
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserver?view=azurermps-5.1.1
@@ -144,6 +144,7 @@ else {
 #####################################################################################################
 # Set App Service settings
 $primaryResourceGroupName = "planetscalestore";
+$documentDbDatabase = "planetscalestore"
 $region = "$resourceGroupLocation-$version";
 # Retrieve the primary account keys
 $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
@@ -156,10 +157,17 @@ $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
 $storageAccountKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $primaryResourceGroupName `
  -AccountName $primaryResourceGroupName).Value[0] 
 
- # Get Redis Cache Key
- $cacheName = "$primaryName-$resourceGroupLocation"
- $parentResourceGroup = $cacheName
- $cachePrimaryKey = (Get-AzureRmRedisCacheKey -Name $cacheName -ResourceGroupName $parentResourceGroup).PrimaryKey
+$parentResourceGroup = "$primaryName-$resourceGroupLocation"
+# Get Redis Cache Key
+$cacheName = "$primaryName-$resourceGroupLocation"
+$cachePrimaryKey = (Get-AzureRmRedisCacheKey -Name $cacheName -ResourceGroupName $parentResourceGroup).PrimaryKey
+
+# Get Service Bus Queue orders Write Rule Key
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.servicebus/Get-AzureRmServiceBusKey?view=azurermps-5.1.1
+$queueName = "orders"
+$serviceBusNameSpace = "$primaryName-" + $resourceGroupLocation;
+$writeAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup `
+     -Namespace $serviceBusNameSpace -Queue $queueName -Name "write").PrimaryKey
 
 $settings = @{
     "WEBSITE_NODE_DEFAULT_VERSION" = "6.11.2";
@@ -180,10 +188,8 @@ $settings = @{
     "Region"= "$region";
     "ServiceBus:Namespace" = "$parentResourceGroup";
     "ServiceBus:Queue" = "orders";
-    "ServiceBus:WriteAccessKeyName" = "Write";
-    "ServiceBus:WriteAccessKey" = "todo";
-    "ServiceBus:ReadAccessKeyName" = "Read";
-    "ServiceBus:ReadAccessKey" = "todo";
+    "ServiceBus:WriteAccessKeyName" = "write";
+    "ServiceBus:WriteAccessKey" = "$writeAccessKey";
 }
 
 Write-Host "Setting App Settings for $webappName"
@@ -202,3 +208,10 @@ Write-Host "Setting Connection String for $webappName"
 # Save Connection String to Azure Web App
 Set-AzureRmWebAppSlot -ResourceGroupName $resourceGroupName -Name $webappName -Slot production -ConnectionStrings $connString
 Write-Host "Connection String saved succeffully.."
+
+#####################################################################################################
+# Set Always-On property True - Required for continuous Web Jobs
+$WebAppPropertiesObject = @{"siteConfig" = @{"AlwaysOn" = $true}}
+$WebAppResourceType = 'microsoft.web/sites'
+$webAppResource = Get-AzureRmResource -ResourceType $WebAppResourceType -ResourceGroupName $resourceGroupName -ResourceName $webappName
+$webAppResource | Set-AzureRmResource -PropertyObject $WebAppPropertiesObject -Force
