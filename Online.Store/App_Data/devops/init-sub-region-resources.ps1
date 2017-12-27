@@ -29,6 +29,11 @@ All secondary databases will be created during geo-replication
 .PARAMETER Database
 The database name
 
+.PARAMETER DocumentDBPolicies
+The Connection Policies for connecting to Azure DocumentDB, comma separated
+Start from first to second etc..
+e.g. West Europe,Central US
+
 #>
 param (
     [Parameter(Mandatory = $true)] [string] $PrimaryName,
@@ -37,7 +42,8 @@ param (
     [Parameter(Mandatory = $true)] [string] $SqlServerLogin,
     [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
     [Parameter(Mandatory = $true)] [bool] $CreateDatabase,
-    [Parameter(Mandatory = $true)] [string] $Database
+    [Parameter(Mandatory = $true)] [string] $Database,
+    [Parameter(Mandatory = $true)] [string] $DocumentDBPolicies
 )
 
 Write-Host "PrimaryName: $PrimaryName"
@@ -205,6 +211,7 @@ $writeAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup
 $settings = @{
     "WEBSITE_NODE_DEFAULT_VERSION" = "6.11.2";
     "DocumentDB:Key" = "$docDbPrimaryMasterKey";
+    "DocumentDB:ConnectionPolicies" = "$DocumentDBPolicies";
     "SearchService:ApiKey" = "todo";
     "Storage:AccountKey" = "$storageAccountKey";
     "MediaServices:AccountKey" = "SjcR8Jl6tBXmWgrR8VG5hhl11vsZMoHU/zpWfyhS8AY=";
@@ -226,6 +233,8 @@ $settings = @{
 }
 
 Write-Host "Setting App Settings for $webappName"
+$printSettings = ConvertTo-Json $settings -Depth 2
+$printSettings
 Set-AzureWebsite $webappName -AppSettings $settings
 Write-Host "App Settings updated successfully..."
 
