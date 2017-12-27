@@ -1,19 +1,59 @@
+<#
+.SYNOPSIS
+Deployes a WebJob to an App Service. Builds dynamically the app setting,
+Builds, publishes and Zips the artifacts. Finally uploads the Zip to App Service.
+
+.Author: Christos Sakellarios
+
+.PARAMETER PrimaryDatabaseServer
+The Database Server with read/write permissions
+
+.PARAMETER Database
+The database that the WebJob writes
+
+.PARAMETER SqlServerLogin
+SQL Logical Server's admin username.
+
+.PARAMETER SqlServerPassword
+SQL Logical Server's admin password.
+
+
+.PARAMETER WebappParentResourceGroup
+App Service's parent resource group to get the DocumentDB keys
+
+.PARAMETER WebappResourceGroup
+App Service Resource Group & Name
+
+.PARAMETER WebjobAppLocation
+Local path of the Online.Store.WebJob project
+e.g. "C:\workspace\chsakell\planet-scale-azure\Online.Store.WebJob"
+
+#>
+param (
+    [Parameter(Mandatory = $true)] [string] $PrimaryDatabaseServer,
+    [Parameter(Mandatory = $true)] [string] $Database,
+    [Parameter(Mandatory = $true)] [string] $SqlServerLogin,
+    [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
+    [Parameter(Mandatory = $true)] [string] $WebappParentResourceGroup,
+    [Parameter(Mandatory = $true)] [string] $WebappResourceGroup,
+    [Parameter(Mandatory = $true)] [string] $WebjobAppLocation
+)
+
+
 # https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
-#Resource details :
-$commonResourcesName = "webapp-resource-group";
-$databaseName = "planetscalestore";
-$adminLogin = "your-sql-admin-login";
-$adminPassword = "your-sql-admin-password";
+
+$serviceBusNameSpace = "$WebappParentResourceGroup"
+$webAppName = "$WebappResourceGroup";
 $queueName = "orders"
-$parentResourceGroup = "parent-resource-group";
-$readAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup `
+
+$readAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $WebappParentResourceGroup `
      -Namespace $serviceBusNameSpace -Queue $queueName -Name "read").PrimaryKey
 
 $webjobAppSettings = @{
   "ConnectionStrings" = @{
-    "DefaultConnection" = "Server=tcp:$commonResourcesName.database.windows.net,1433;Initial Catalog=$databaseName;Persist Security Info=False;User ID=$adminLogin;Password=$adminPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    "DefaultConnection" = "Server=tcp:$PrimaryDatabaseServer.database.windows.net,1433;Initial Catalog=$Database;Persist Security Info=False;User ID=$SqlServerLogin;Password=$SqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   };
-  "ServiceBus:Namespace" = "$parentResourceGroup";
+  "ServiceBus:Namespace" = "$WebappParentResourceGroup";
   "ServiceBus:Queue" = "$queueName";
   "ServiceBus:ReadAccessKeyName" = "read";
   "ServiceBus:ReadAccessKey" = "$readAccessKey";
@@ -21,16 +61,16 @@ $webjobAppSettings = @{
 
 $webjobAppSettings = ConvertTo-Json $webjobAppSettings -Depth 2
 
-$webjobAppLocation = "C:\workspace\chsakell\planet-scale-azure\Online.Store.WebJob";
+
 # Update settings in WebJob project..
-$webjobAppSettingsLocation = "$webjobAppLocation\appsettings.json";
+$webjobAppSettingsLocation = "$WebjobAppLocation\appsettings.json";
 Set-Content -Path $webjobAppSettingsLocation -Value $webjobAppSettings -Encoding Unicode
 
 # Build WebJob project..
-dotnet publish "$webjobAppLocation\Online.Store.WebJob.csproj" -c Release
+dotnet publish "$WebjobAppLocation\Online.Store.WebJob.csproj" -c Release
 
 # Zip publish folder..
-$publishFolder = "$webjobAppLocation\bin\Release\netcoreapp2.0\publish"
+$publishFolder = "$WebjobAppLocation\bin\Release\netcoreapp2.0\publish"
 $deploymentFolder = "$publishFolder\deployment"
 if(!(Test-Path -Path $deploymentFolder )){
     New-Item -ItemType directory -Path $deploymentFolder
@@ -58,18 +98,18 @@ $webjobName = "orders"
 function Get-PublishingProfileCredentials($resourceGroupName, $webAppName) {
     $resourceType = "Microsoft.Web/sites/config"
     $resourceName = "$webAppName/publishingcredentials"
-    $publishingCredentials = Invoke-AzureRmResourceAction -ResourceGroupName $resourceGroupName `
+    $publishingCredentials = Invoke-AzureRmResourceAction -ResourceGroupName $WebappResourceGroup `
      -ResourceType $resourceType -ResourceName $resourceName -Action list -ApiVersion $Apiversion -Force
        return $publishingCredentials
 }
 
 #Pulling authorization access token :
 function Get-KuduApiAuthorisationHeaderValue($resourceGroupName, $webAppName) {
-    $publishingCredentials = Get-PublishingProfileCredentials $resourceGroupName $webAppName
+    $publishingCredentials = Get-PublishingProfileCredentials $WebappResourceGroup $webAppName
     return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $publishingCredentials.Properties.PublishingUserName, $publishingCredentials.Properties.PublishingPassword))))
 }
 
-$accessToken = Get-KuduApiAuthorisationHeaderValue $resourceGroupName $webAppname
+$accessToken = Get-KuduApiAuthorisationHeaderValue $WebappResourceGroup $webAppname
 
 #Generating header to create and publish the Webjob :
 $Header = @{
