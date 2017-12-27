@@ -1,45 +1,47 @@
-﻿
-ECHO OFF
+﻿<#
+.SYNOPSIS
+Create the Primary Region with its Resources [Storage Account, CDN Profile, Document DB Account & Database, Traffic Manager Profile]
+All Resources in the Resource Group are named the same "$primaryName-" + "$resourceGroupLocation",
+e.g. planetscalestore-westeurope
 
-# Enable-AzureRmContextAutosave
+.Author: Christos Sakellarios
 
-# sign in
-Write-Host "Logging in...";
-# Login-AzureRmAccount;
+.PARAMETER PrimaryName
+Basic name to be used for resources
+.PARAMETER ResourceGroupLocation
+Azure Region for the primary resource group
 
-# select subscription
-$subscriptionId = "YOUR-SUBSCRIPTION-ID";
-Write-Host "Selecting subscription";
-# Select-AzureRmSubscription -SubscriptionID $subscriptionId;
+#>
+param (
+    [Parameter(Mandatory = $true)] [string] $PrimaryName,
+    [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation
+)
 
 #####################################################################################################
 # Create the parent Resource Group
 # Get list of locations and select one.
 # Get-AzureRmLocation | select Location 
 
-$primaryResourceGroupName = "planetscalestore";
-$primaryResourceGroupLocation = "westeurope";
-
-Get-AzureRmResourceGroup -Name $primaryResourceGroupName -ev notPresent -ea 0
+Get-AzureRmResourceGroup -Name $PrimaryName -ev notPresent -ea 0
 
 if ($notPresent)
 {
     # ResourceGroup doesn't exist
-    Write-Host "Trying to create Resource Group: $primaryResourceGroupName "
-    New-AzureRmResourceGroup -Name $primaryResourceGroupName -Location $primaryResourceGroupLocation
+    Write-Host "Trying to create Resource Group: $PrimaryName "
+    New-AzureRmResourceGroup -Name $PrimaryName -Location $ResourceGroupLocation
 }
 else
 {
     # ResourceGroup exist
-    Write-Host "Resource Group:  $primaryResourceGroupName  already exists.."
+    Write-Host "Resource Group:  $PrimaryName  already exists.."
 }
 #####################################################################################################
 # Create the Storage Account
 # https://docs.microsoft.com/en-us/azure/storage/common/storage-powershell-guide-full
 # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
-$storageAccountName = "planetscalestore";
+$storageAccountName = "$PrimaryName";
 
-Get-AzureRmStorageAccount -ResourceGroupName $primaryResourceGroupName `
+Get-AzureRmStorageAccount -ResourceGroupName $PrimaryName `
                           -Name $storageAccountName -ev storageNotPresent -ea 0
 
 if ($storageNotPresent)
@@ -48,9 +50,9 @@ if ($storageNotPresent)
     $skuName = "Standard_GRS"
 
     # Create the storage account.
-    $storageAccount = New-AzureRmStorageAccount -ResourceGroupName $primaryResourceGroupName `
+    $storageAccount = New-AzureRmStorageAccount -ResourceGroupName $PrimaryName `
       -Name $storageAccountName `
-      -Location $primaryResourceGroupLocation `
+      -Location $ResourceGroupLocation `
       -SkuName $skuName
 
     Write-Host "Storage Account $storageAccountName successfully created.."
@@ -62,15 +64,15 @@ else
 #####################################################################################################
 # Create the CDN Account
 # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell
-$cdnProfileName = "planetscalestore";
+$cdnProfileName = "$PrimaryName";
 
-Get-AzureRmCdnProfile -ProfileName $cdnProfileName -ResourceGroupName $primaryResourceGroupName -ev cdnNotPresent -ea 0
+Get-AzureRmCdnProfile -ProfileName $cdnProfileName -ResourceGroupName $PrimaryName -ev cdnNotPresent -ea 0
 if ($cdnNotPresent)
 { 
     Write-Host "Creating CDN profile $cdnProfileName.."
     # Create a new profile
-    New-AzureRmCdnProfile -ProfileName $cdnProfileName -ResourceGroupName $primaryResourceGroupName `
-                          -Sku Standard_Verizon -Location $primaryResourceGroupLocation
+    New-AzureRmCdnProfile -ProfileName $cdnProfileName -ResourceGroupName $PrimaryName `
+                          -Sku Standard_Verizon -Location $ResourceGroupLocation
     
     Write-Host "CDN profile $cdnProfileName succesfully created.."
 
@@ -79,17 +81,17 @@ if ($cdnNotPresent)
     # Create a new endpoint
     # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell#creating-cdn-profiles-and-endpoints
 
-    $cdnEnpointName = "planetscalestore";
-    $endpointHost =  "planetscalestore.blob.core.windows.net"
+    $cdnEnpointName = "$PrimaryName";
+    $endpointHost =  "$PrimaryName.blob.core.windows.net"
 
     $availability = Get-AzureRmCdnEndpointNameAvailability -EndpointName $cdnEnpointName
 
     if($availability.NameAvailable) {
         Write-Host "Creating endpoint..."
 
-        New-AzureRmCdnEndpoint -ProfileName $cdnProfileName -ResourceGroupName $primaryResourceGroupName `
-         -Location $primaryResourceGroupLocation -EndpointName $cdnEnpointName `
-         -OriginName "planetscalestore" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
+        New-AzureRmCdnEndpoint -ProfileName $cdnProfileName -ResourceGroupName $PrimaryName `
+         -Location $ResourceGroupLocation -EndpointName $cdnEnpointName `
+         -OriginName "$PrimaryName" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
     }
     
 }
@@ -102,7 +104,7 @@ else
 # https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/create-database-account-powershell?toc=%2fpowershell%2fmodule%2ftoc.json
 # https://docs.microsoft.com/en-us/azure/cosmos-db/manage-account-with-powershell
 
-$documentDbDatabase = "planetscalestore";
+$documentDbDatabase = "$PrimaryName";
 
 
 $query = Find-AzureRmResource -ResourceNameContains $documentDbDatabase -ResourceType "Microsoft.DocumentDb/databaseAccounts"
@@ -113,15 +115,14 @@ if (!$query)
     # Create the account
 
     # Write and read locations and priorities for the database
-    $locations = @(@{"locationName"= $primaryResourceGroupLocation; 
+    $locations = @(@{"locationName"= $ResourceGroupLocation; 
                      "failoverPriority"=0})
 
     # Consistency policy
-    $consistencyPolicy = @{"defaultConsistencyLevel"="BoundedStaleness";
-                           "maxIntervalInSeconds"="10"; 
-                           "maxStalenessPrefix"="200"}
+    $consistencyPolicy = @{"defaultConsistencyLevel"="Session";}
 
     # DB properties
+    # https://docs.microsoft.com/en-us/azure/cosmos-db/consistency-levels
     $DBProperties = @{"databaseAccountOfferType"="Standard"; 
                               "locations"=$locations; 
                               "consistencyPolicy"=$consistencyPolicy}
@@ -129,8 +130,8 @@ if (!$query)
     # Create the database
     New-AzureRmResource -ResourceType "Microsoft.DocumentDb/databaseAccounts" `
                         -ApiVersion "2015-04-08" `
-                        -ResourceGroupName $primaryResourceGroupName `
-                        -Location $primaryResourceGroupLocation `
+                        -ResourceGroupName $PrimaryName `
+                        -Location $ResourceGroupLocation `
                         -Name $documentDbDatabase `
                         -PropertyObject $DBProperties
     
@@ -143,11 +144,11 @@ else
 #####################################################################################################
 # Create the Traffic Manager Account
 
-$tmpProfileName = "planetscalestore";
-$tmpDnsName = "planetscalestore";
+$tmpProfileName = "$PrimaryName";
+$tmpDnsName = "$PrimaryName";
 
 try {
-    Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $primaryResourceGroupName -ErrorAction Stop
+    Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -ErrorAction Stop
     Write-Host "Traffic Maanger $tmpProfileName already exists.."
  }
 catch {
@@ -156,7 +157,9 @@ catch {
 
      Write-Host "Creating Traffic Manager Profile $tmpProfileName.."
 
-     New-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $primaryResourceGroupName -TrafficRoutingMethod Performance `
+     New-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -TrafficRoutingMethod Performance `
     -RelativeDnsName $tmpDnsName -Ttl 30 -MonitorProtocol HTTP -MonitorPort 80 -MonitorPath "/"
+
+    Write-Host "Traffic Manager Profile created successfully.."
 }
 
