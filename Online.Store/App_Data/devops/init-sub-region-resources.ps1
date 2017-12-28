@@ -117,6 +117,27 @@ else {
     Write-Host "App Service $webappName successfully created at $resourceGroupName"
 }
 
+#####################################################################################################
+# Add the Traffic Manager Endpoint if not exists
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.trafficmanager/new-azurermtrafficmanagerendpoint?view=azurermps-5.1.1
+$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName $PrimaryResourceGroup `
+                     -ResourceGroupName PrimaryResourceGroup -Type AzureEndpoints -ErrorAction SilentlyContinue
+
+if(!$TrafficManagerEndpoint) {
+
+    $webAppResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $webappName -ResourceType "Microsoft.web/sites").ResourceId
+
+    Write-Host "Adding new Traffic Manager Endpoint [$webappName]..."
+
+    New-AzureRmTrafficManagerEndpoint -EndpointStatus Disabled -Name $webappName `
+         -ProfileName $PrimaryName -ResourceGroupName $PrimaryName -Type AzureEndpoints `
+         -TargetResourceId "$webAppResourceId"
+
+    Write-Host "Endpoint [$webappName] added successfully.."
+} else {
+    Write-Host "Traffic Manager Endpoint [$webappName] already exists..."
+}
+
 
 #####################################################################################################
 # Create the Logical SQL Server and Database
