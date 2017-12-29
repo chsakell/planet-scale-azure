@@ -120,8 +120,8 @@ else {
 #####################################################################################################
 # Add the Traffic Manager Endpoint if not exists
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.trafficmanager/new-azurermtrafficmanagerendpoint?view=azurermps-5.1.1
-$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName $PrimaryResourceGroup `
-                     -ResourceGroupName PrimaryResourceGroup -Type AzureEndpoints -ErrorAction SilentlyContinue
+$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName $PrimaryName `
+                     -ResourceGroupName $PrimaryName -Type AzureEndpoints -ErrorAction SilentlyContinue
 
 if(!$TrafficManagerEndpoint) {
 
@@ -229,11 +229,28 @@ $serviceBusNameSpace = "$PrimaryName-" + $ResourceGroupLocation;
 $writeAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup `
      -Namespace $serviceBusNameSpace -Queue $queueName -Name "write").PrimaryKey
 
+# Get Search Service Primary Key
+# https://docs.microsoft.com/en-us/azure/search/search-manage-powershell
+$searchServiceInfo = "$PrimaryName-" + $ResourceGroupLocation;
+# Get information about your new service and store it in $resource
+$searchService = Get-AzureRmResource `
+    -ResourceType "Microsoft.Search/searchServices" `
+    -ResourceGroupName $searchServiceInfo `
+    -ResourceName $searchServiceInfo `
+    -ApiVersion "2015-08-19"
+
+# Get the primary admin API key
+$searchServicePrimaryKey = (Invoke-AzureRmResourceAction `
+    -Action listAdminKeys `
+    -ResourceId $searchService.ResourceId `
+    -ApiVersion 2015-08-19).PrimaryKey
+
 $settings = @{
     "WEBSITE_NODE_DEFAULT_VERSION" = "6.11.2";
     "DocumentDB:Key" = "$docDbPrimaryMasterKey";
     "DocumentDB:ConnectionPolicies" = "$DocumentDBPolicies";
-    "SearchService:ApiKey" = "todo";
+    "SearchService:Name" = "$searchServiceInfo";
+    "SearchService:ApiKey" = "$searchServicePrimaryKey";
     "Storage:AccountKey" = "$storageAccountKey";
     "MediaServices:AccountKey" = "SjcR8Jl6tBXmWgrR8VG5hhl11vsZMoHU/zpWfyhS8AY=";
     "SQL:ElasticDbUsername" = "test";
