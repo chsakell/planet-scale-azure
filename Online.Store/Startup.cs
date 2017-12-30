@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authentication;
 using Online.Store.ServiceBus;
 using Online.Store.Storage;
+using Online.Store.AzureSearch;
 
 namespace Online_Store
 {
@@ -72,9 +73,11 @@ namespace Online_Store
             services.AddScoped<IShardingRepository, ShardingRepository>();
             services.AddScoped<IServiceBusRepository, ServiceBusRepository>();
             services.AddScoped<IStorageRepository, StorageRepository>();
+            services.AddScoped<ISearchRepository, SearchStoreRepository>();
             services.AddScoped<IStoreService, StoreService>();
             services.AddScoped<IServiceBusService, ServiceBusService>();
             services.AddScoped<IMediaService, MediaService>();
+            services.AddScoped<IAzureSearchService, AzureSearchService>();
             services.AddTransient<IEmailSender, EmailSender>();
 
             services.AddMvc();

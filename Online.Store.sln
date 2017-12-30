@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{1B255F12-5F5D-43FC-BF7A-6FF7FA2AAA87}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,7 +26,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.SqlServer", "O
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.ServiceBus", "Online.Store.ServiceBus\Online.Store.ServiceBus.csproj", "{E7D7AB43-0F7F-4EA0-ADBD-54107385344F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.WebJob", "Online.Store.WebJob\Online.Store.WebJob.csproj", "{FC8524B6-CE62-4EC5-BB77-9CE2564ADAAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Online.Store.WebJob", "Online.Store.WebJob\Online.Store.WebJob.csproj", "{FC8524B6-CE62-4EC5-BB77-9CE2564ADAAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Online.Store.AzureSearch", "Online.Store.AzureSearch\Online.Store.AzureSearch.csproj", "{E1666EB5-C3EC-4DB8-A94A-274B456E2715}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,13 +76,17 @@ Global
 		{FC8524B6-CE62-4EC5-BB77-9CE2564ADAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC8524B6-CE62-4EC5-BB77-9CE2564ADAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC8524B6-CE62-4EC5-BB77-9CE2564ADAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1666EB5-C3EC-4DB8-A94A-274B456E2715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1666EB5-C3EC-4DB8-A94A-274B456E2715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1666EB5-C3EC-4DB8-A94A-274B456E2715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1666EB5-C3EC-4DB8-A94A-274B456E2715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
 		SolutionGuid = {C4EBA847-C3EF-4DCA-BB11-98CD97FDBC55}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\TransientFaultHandling.Core.5.1.1209.1\lib\NET4
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

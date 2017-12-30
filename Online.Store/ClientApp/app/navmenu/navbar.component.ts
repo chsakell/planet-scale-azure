@@ -22,7 +22,7 @@ export class NavBarComponent implements OnInit {
     }
 
     public viewProduct(item: CompleterItem) {
-        if(item.originalObject) {
+        if(item && item.originalObject) {
             console.log(item.originalObject);
             this.router.navigate(['/products/details/' + item.originalObject.id]);
         }

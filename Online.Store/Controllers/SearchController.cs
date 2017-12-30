@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Online.Store.Azure.Services;
 using Microsoft.Extensions.Configuration;
 using Online.Store.ViewModels;
+using AutoMapper;
+using Online.Store.Core.DTOs;
 
 namespace Online.Store.Controllers
 {
@@ -14,13 +16,12 @@ namespace Online.Store.Controllers
     [Route("api/Search")]
     public class SearchController : Controller
     {
-        private SearchAppServices _searchService;
+        private IAzureSearchService _searchService;
         private string _cdnEndpoint;
 
-        public SearchController(IConfiguration configuration)
+        public SearchController(IAzureSearchService searchService)
         {
-            _searchService = new SearchAppServices(configuration["SearchService:Name"], configuration["SearchService:ApiKey"]);
-            this._cdnEndpoint = configuration["CDN:Endpoint"];
+            _searchService = searchService;
         }
 
         // GET: api/Search/term
@@ -28,22 +29,24 @@ namespace Online.Store.Controllers
         public async Task<IEnumerable<SearchResultViewModel>> Get(string term)
         {
             var products = new List<SearchResultViewModel>();
-            var productsSearch = _searchService.SearchProduct(term, null);
+            var productsSearch = await _searchService.SearchProductsAsync(term);
 
-            if (productsSearch != null && productsSearch.value != null)
-            {
-                foreach (var item in productsSearch.value)
-                {
-                    string productImage = this._cdnEndpoint + "product-images/" + item.model + "/1.jpg";
-                    products.Add(new SearchResultViewModel()
-                    {
-                        Id = item.id,
-                        Title = item.title,
-                        Description = item.description,
-                        Image = productImage
-                    });
-                }
-            }
+            products = Mapper.Map<IEnumerable<ProductInfo>, List<SearchResultViewModel>>(productsSearch);
+
+            //if (productsSearch != null && productsSearch.value != null)
+            //{
+            //    foreach (var item in productsSearch.value)
+            //    {
+            //        string productImage = this._cdnEndpoint + "product-images/" + item.model + "/1.jpg";
+            //        products.Add(new SearchResultViewModel()
+            //        {
+            //            Id = item.id,
+            //            Title = item.title,
+            //            Description = item.description,
+            //            Image = productImage
+            //        });
+            //    }
+            //}
 
             return products;
         }

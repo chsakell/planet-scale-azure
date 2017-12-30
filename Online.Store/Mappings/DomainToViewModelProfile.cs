@@ -35,6 +35,10 @@ namespace Online.Store.Mappings
                         storageBlobEndpoint + "product-images/" + od.ProductModel + "/1.jpg"))
                 .ForMember(vm => vm.ProductCdnImage, map => map.MapFrom(od =>
                         cdnEndpoint + "/product-images/" + od.ProductModel + "/1.jpg"));
+
+            CreateMap<ProductInfo, SearchResultViewModel>()
+                .ForMember(vm => vm.CdnImage, map => map.MapFrom(i =>
+                    i.Image.Replace(i.Image.Substring(0, i.Image.LastIndexOf(".net") + 4), cdnEndpoint)));
         }
     }
 }
