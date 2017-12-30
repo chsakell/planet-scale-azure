@@ -14,7 +14,6 @@ namespace Online.Store.Azure.Services
         private HttpClient _httpClient;
         public string errorMessage;
         private const string productIndexName = "product-index";
-        private const string communityIndexName = "posts";
         private const string suggesterName = "product-suggester";
 
         public SearchAppServices(string searchServiceName, string searchServiceApiKey)
@@ -41,22 +40,6 @@ namespace Online.Store.Azure.Services
             string orderby = BuildSort(sort);
 
             Uri uri = new Uri(_serviceUri, $"/indexes/{productIndexName}/docs?$count=true{search}{select}{paging}{orderby}");
-            HttpResponseMessage response = SearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
-            SearchServices.EnsureSuccessfulSearchResponse(response);
-
-            return SearchServices.DeserializeJson<dynamic>(response.Content.ReadAsStringAsync().Result);
-        }
-
-        public dynamic SearchPost(string searchText, string sort)
-        {
-            string search = "&search=" + Uri.EscapeDataString(searchText);
-            string facets = "&facet=title&facet=content";
-            string paging = "&$top=100";
-            string select = "$select[postId,title,userId,content,mediaDescription]";
-            string filter = BuildFilter();
-            string orderby = BuildSort(sort);
-
-            Uri uri = new Uri(_serviceUri, $"/indexes/{communityIndexName}/docs?$count=true{search}{select}{facets}{paging}{orderby}");
             HttpResponseMessage response = SearchServices.SendSearchRequest(_httpClient, HttpMethod.Get, uri);
             SearchServices.EnsureSuccessfulSearchResponse(response);
 
