@@ -138,7 +138,9 @@ namespace Online_Store
                     defaults: new { controller = "Home", action = "Index" });
             });
 
+            StorageInitializer.Initialize(Configuration);
             DocumentDBInitializer.Initialize(Configuration);
+            AzureSearchInitializer.Initialize(Configuration);
         }
     }
 }

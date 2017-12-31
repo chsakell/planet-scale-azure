@@ -15,7 +15,6 @@ namespace Online.Store.Azure.Services
         #region "Private Constant Members"
 
         private const string _PRODUCT_COLLECTION_ID = "Items";
-        private const string _CART_COLLECTION_ID = "Cart";
         private const string _FORUM_COLLECTION_ID = "Forum";
         private int PAGE_SIZE = 5;
         #endregion
@@ -39,20 +38,6 @@ namespace Online.Store.Azure.Services
         }
 
         #region DocumentDB
-        public async Task<List<CommunityDTO>> GetTopCommunityPost()
-        {
-            var data = new List<CommunityDTO>();
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
-
-            var communities = await this._repository.GetItemsAsync<CommunityDTO>();
-
-            data = communities.OrderByDescending(x => x.CreatedDate).ToList();
-            if (data != null && data.Count > 5)
-            {
-                return data.Take(5).ToList();
-            }
-            return data ?? new List<CommunityDTO>();
-        }
 
         public async Task<List<Topic>> GetTopics()
         {
@@ -127,37 +112,6 @@ namespace Online.Store.Azure.Services
             return product;
         }
 
-        /// <summary>
-        /// Add to Cart.
-        /// </summary>
-        /// <returns></returns>
-        public async Task AddToCart(CartDTO item)
-        {
-            await _repository.InitAsync(_CART_COLLECTION_ID);
-            await _repository.CreateItemAsync<CartDTO>(item);
-        }
-
-        /// <summary>
-        /// Update cart items.
-        /// </summary>
-        /// <returns></returns>
-        public async Task UpdateToCart(CartDTO item)
-        {
-            await _repository.InitAsync(_CART_COLLECTION_ID);
-
-            await _repository.UpdateItemAsync<CartDTO>(item.Id, item);
-        }
-
-        /// <summary>
-        /// Removes from cart.
-        /// </summary>
-        /// <returns></returns>
-        public async Task RemoveFromCart(CartDTO item)
-        {
-            await _repository.InitAsync(_CART_COLLECTION_ID);
-
-            await _repository.DeleteItemAsync(item.Id);
-        }
 
         #region Private methods
         private async Task<IEnumerable<Product>> GetAllProducts()
@@ -305,11 +259,8 @@ namespace Online.Store.Azure.Services
         Task<IEnumerable<Product>> GetProducts(string filter);
         Task<Product> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
-        Task AddToCart(CartDTO Item);
         Task<CartDTO> AddProductToCart(string cardId, string productId);
         Task<CartDTO> RemoveProductFromCart(string cardId, string productId);
-        Task UpdateToCart(CartDTO item);
-        Task RemoveFromCart(CartDTO Item);
         Task RemoveCart(string key);
         int? AddOrder(Order order);
     }

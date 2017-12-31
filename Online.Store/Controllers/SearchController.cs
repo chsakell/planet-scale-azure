@@ -17,7 +17,6 @@ namespace Online.Store.Controllers
     public class SearchController : Controller
     {
         private IAzureSearchService _searchService;
-        private string _cdnEndpoint;
 
         public SearchController(IAzureSearchService searchService)
         {
@@ -32,21 +31,6 @@ namespace Online.Store.Controllers
             var productsSearch = await _searchService.SearchProductsAsync(term);
 
             products = Mapper.Map<IEnumerable<ProductInfo>, List<SearchResultViewModel>>(productsSearch);
-
-            //if (productsSearch != null && productsSearch.value != null)
-            //{
-            //    foreach (var item in productsSearch.value)
-            //    {
-            //        string productImage = this._cdnEndpoint + "product-images/" + item.model + "/1.jpg";
-            //        products.Add(new SearchResultViewModel()
-            //        {
-            //            Id = item.id,
-            //            Title = item.title,
-            //            Description = item.description,
-            //            Image = productImage
-            //        });
-            //    }
-            //}
 
             return products;
         }

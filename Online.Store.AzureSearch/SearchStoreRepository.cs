@@ -18,7 +18,6 @@ namespace Online.Store.AzureSearch
             string _azureSearchServiceKey = configuration["SearchService:ApiKey"];
 
             _serviceClient = new SearchServiceClient(_azureSearchServiceName, new SearchCredentials(_azureSearchServiceKey));
-
         }
     }
 }
