@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ElasticScale.Client\Microsoft.Azure.SqlDatabase.ElasticScale.Client.csproj" />
     <ProjectReference Include="..\Online.Store.Core\Online.Store.Core.csproj" />
   </ItemGroup>
 

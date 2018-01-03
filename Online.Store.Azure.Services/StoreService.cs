@@ -26,15 +26,11 @@ namespace Online.Store.Azure.Services
 
         private IRedisCacheRepository _cacheRepository;
 
-        IShardingRepository _dataRepository;
-
         public StoreService(IDocumentDBRepository<DocumentDBStoreRepository> _repository,
-                            IRedisCacheRepository cacheRepository,
-                            IShardingRepository dataRepository)
+                            IRedisCacheRepository cacheRepository)
         {
             this._repository = _repository;
             this._cacheRepository = cacheRepository;
-            this._dataRepository = dataRepository;
         }
 
         #region DocumentDB
@@ -237,7 +233,7 @@ namespace Online.Store.Azure.Services
         #endregion
 
         #region Sharding
-
+        /*
         public int? AddOrder(Order order)
         {
             int shardingKey = _dataRepository.TotalOrders() + 1;
@@ -245,7 +241,7 @@ namespace Online.Store.Azure.Services
 
             return orderId;
         }
-
+        */
         #endregion
     }
 
@@ -262,6 +258,6 @@ namespace Online.Store.Azure.Services
         Task<CartDTO> AddProductToCart(string cardId, string productId);
         Task<CartDTO> RemoveProductFromCart(string cardId, string productId);
         Task RemoveCart(string key);
-        int? AddOrder(Order order);
+        //int? AddOrder(Order order);
     }
 }

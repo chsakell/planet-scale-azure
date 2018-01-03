@@ -70,7 +70,7 @@ namespace Online_Store
 
             services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
-            services.AddScoped<IShardingRepository, ShardingRepository>();
+            // services.AddScoped<IShardingRepository, ShardingRepository>();
             services.AddScoped<IServiceBusRepository, ServiceBusRepository>();
             services.AddScoped<IStorageRepository, StorageRepository>();
             services.AddScoped<ISearchRepository, SearchStoreRepository>();
