@@ -48,13 +48,16 @@ namespace Online_Store
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Online.Store.SqlServer")));
 
-            services.AddAuthentication(sharedOptions =>
+            if (!string.IsNullOrEmpty(Configuration["AzureAd:ClientId"]))
             {
-                sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-            .AddCookie();
+                services.AddAuthentication(sharedOptions =>
+                {
+                    sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                })
+                .AddAzureAd(options => Configuration.Bind("AzureAd", options))
+                .AddCookie();
+            }
 
             // Configure Cache
             services.AddDistributedRedisCache(option =>

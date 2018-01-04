@@ -13,16 +13,22 @@ namespace Online.Store.AzureSearch
         static string _dataSourceCollection = "Items";
         static string _productIndex = "product-index";
         static string _productSuggester = "product-suggester";
-        static string _productsIndexer = "products-indexer";
+        static string _productsIndexer = "product-indexer";
         public static async Task Initialize(IConfiguration configuration)
         {
-            SearchStoreRepository _searchStoreRepository = new SearchStoreRepository(configuration);
+            string _azureSearchServiceName = configuration["SearchService:Name"];
+            string _azureSearchServiceKey = configuration["SearchService:ApiKey"];
 
-            await _searchStoreRepository.CreateOrUpdateDocumentDbDataSourceAsync(_productsDataSource, _dataSourceCollection);
+            if (!string.IsNullOrEmpty(_azureSearchServiceName) && !string.IsNullOrEmpty(_azureSearchServiceKey))
+            {
+                SearchStoreRepository _searchStoreRepository = new SearchStoreRepository(configuration);
 
-            await _searchStoreRepository.CreateOrUpdateIndexAsync<ProductInfo>(_productIndex, _productSuggester, new List<string> { "title", "description" });
+                await _searchStoreRepository.CreateOrUpdateDocumentDbDataSourceAsync(_productsDataSource, _dataSourceCollection);
 
-            await _searchStoreRepository.CreateOrUpdateIndexerAsync(_productsIndexer, _productsDataSource, _productIndex);
+                await _searchStoreRepository.CreateOrUpdateIndexAsync<ProductInfo>(_productIndex, _productSuggester, new List<string> { "title", "description" });
+
+                await _searchStoreRepository.CreateOrUpdateIndexerAsync(_productsIndexer, _productsDataSource, _productIndex);
+            }
         }
     }
 }
