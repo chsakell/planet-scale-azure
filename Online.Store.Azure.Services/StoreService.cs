@@ -16,7 +16,6 @@ namespace Online.Store.Azure.Services
 
         private const string _PRODUCT_COLLECTION_ID = "Items";
         private const string _FORUM_COLLECTION_ID = "Forum";
-        private int PAGE_SIZE = 5;
         #endregion
 
         /// <summary>
@@ -43,28 +42,20 @@ namespace Online.Store.Azure.Services
 
             var justTopics = await _repository.CreateDocumentQueryAsync<Topic>(query, new Microsoft.Azure.Documents.Client.FeedOptions() { EnableCrossPartitionQuery = true });
 
-            return justTopics.ToList(); // topics.ToList();
+            return justTopics.ToList();
         }
 
         public async Task<PagedTopics> GetTopics(int size, string continuationToken)
         {
-            try
+            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+
+            var dic = await _repository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
+
+            return new PagedTopics
             {
-                await _repository.InitAsync(_FORUM_COLLECTION_ID);
-
-                var dic = await _repository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
-
-                return new PagedTopics
-                {
-                    Topics = dic.Keys.First().OrderByDescending(t => t.CreatedDate).ToList(),
-                    ContinuationToken = dic.Values.First()
-                };
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+                Topics = dic.Keys.First().OrderByDescending(t => t.CreatedDate).ToList(),
+                ContinuationToken = dic.Values.First()
+            };
         }
 
         public async Task<Topic> GetTopic(string id)
@@ -87,7 +78,7 @@ namespace Online.Store.Azure.Services
         {
             var topic = await GetTopic(id);
 
-            if(topic != null)
+            if (topic != null)
             {
                 topic.Posts.Add(reply);
                 await _repository.UpdateItemAsync<Topic>(id, topic);
@@ -245,6 +236,7 @@ namespace Online.Store.Azure.Services
         #endregion
     }
 
+    // Service Interface
     public interface IStoreService
     {
         Task<List<Topic>> GetTopics();
