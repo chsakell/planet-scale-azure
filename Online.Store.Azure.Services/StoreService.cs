@@ -21,14 +21,14 @@ namespace Online.Store.Azure.Services
         /// <summary>
         /// The DocumentDB _repository
         /// </summary>
-        private IDocumentDBRepository<DocumentDBStoreRepository> _repository;
+        private IDocumentDBRepository _docDbRepository;
 
         private IRedisCacheRepository _cacheRepository;
 
-        public StoreService(IDocumentDBRepository<DocumentDBStoreRepository> _repository,
+        public StoreService(IDocumentDBRepository _repository,
                             IRedisCacheRepository cacheRepository)
         {
-            this._repository = _repository;
+            this._docDbRepository = _repository;
             this._cacheRepository = cacheRepository;
         }
 
@@ -36,20 +36,20 @@ namespace Online.Store.Azure.Services
 
         public async Task<List<Topic>> GetTopics()
         {
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+            await _docDbRepository.InitAsync(_FORUM_COLLECTION_ID);
 
             string query = "select c.id, c.title, c.content, c.mediaDescription, c.mediaUrl, c.mediaType, c.userId, c.createdDate from c";
 
-            var justTopics = await _repository.CreateDocumentQueryAsync<Topic>(query, new Microsoft.Azure.Documents.Client.FeedOptions() { EnableCrossPartitionQuery = true });
+            var justTopics = await _docDbRepository.CreateDocumentQueryAsync<Topic>(query, new Microsoft.Azure.Documents.Client.FeedOptions() { EnableCrossPartitionQuery = true });
 
             return justTopics.ToList();
         }
 
         public async Task<PagedTopics> GetTopics(int size, string continuationToken)
         {
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+            await _docDbRepository.InitAsync(_FORUM_COLLECTION_ID);
 
-            var dic = await _repository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
+            var dic = await _docDbRepository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
 
             return new PagedTopics
             {
@@ -60,18 +60,18 @@ namespace Online.Store.Azure.Services
 
         public async Task<Topic> GetTopic(string id)
         {
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+            await _docDbRepository.InitAsync(_FORUM_COLLECTION_ID);
 
-            var topic = await _repository.GetItemAsync<Topic>(id);
+            var topic = await _docDbRepository.GetItemAsync<Topic>(id);
 
             return topic;
         }
 
         public async Task AddTopicAsync(Topic topic)
         {
-            await _repository.InitAsync(_FORUM_COLLECTION_ID);
+            await _docDbRepository.InitAsync(_FORUM_COLLECTION_ID);
 
-            await _repository.CreateItemAsync<Topic>(topic);
+            await _docDbRepository.CreateItemAsync<Topic>(topic);
         }
 
         public async Task<Topic> AddTopicReply(string id, Post reply)
@@ -81,7 +81,7 @@ namespace Online.Store.Azure.Services
             if (topic != null)
             {
                 topic.Posts.Add(reply);
-                await _repository.UpdateItemAsync<Topic>(id, topic);
+                await _docDbRepository.UpdateItemAsync<Topic>(id, topic);
             }
 
             return topic;
@@ -94,8 +94,8 @@ namespace Online.Store.Azure.Services
 
         public async Task<Product> GetProductDetails(string productId)
         {
-            await _repository.InitAsync(_PRODUCT_COLLECTION_ID);
-            var product = await _repository.GetItemAsync<Product>(productId);
+            await _docDbRepository.InitAsync(_PRODUCT_COLLECTION_ID);
+            var product = await _docDbRepository.GetItemAsync<Product>(productId);
             return product;
         }
 
@@ -104,9 +104,9 @@ namespace Online.Store.Azure.Services
         private async Task<IEnumerable<Product>> GetAllProducts()
         {
             List<Product> products = new List<Product>();
-            await _repository.InitAsync(_PRODUCT_COLLECTION_ID);
+            await _docDbRepository.InitAsync(_PRODUCT_COLLECTION_ID);
 
-            return await _repository.GetItemsAsync<Product>();
+            return await _docDbRepository.GetItemsAsync<Product>();
         }
         #endregion
 

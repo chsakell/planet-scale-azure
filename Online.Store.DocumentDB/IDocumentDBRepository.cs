@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Online.Store.DocumentDB
 {
-    public interface IDocumentDBRepository<DatabaseDB>
+    public interface IDocumentDBRepository
     {
         Task<T> GetItemAsync<T>(string id) where T : class;
 

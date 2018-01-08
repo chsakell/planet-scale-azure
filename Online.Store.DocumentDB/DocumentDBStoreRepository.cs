@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Online.Store.DocumentDB
 {
-    public class DocumentDBStoreRepository : DocumentDBRepositoryBase<DocumentDBStoreRepository>, IDocumentDBRepository<DocumentDBStoreRepository>
+    public class DocumentDBStoreRepository : DocumentDBRepositoryBase
     {
         private List<string> ConnectionPolicies;
         public DocumentDBStoreRepository(IConfiguration configuration)

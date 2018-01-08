@@ -71,7 +71,7 @@ namespace Online_Store
                 option.InstanceName = "master";
             });
 
-            services.AddScoped<IDocumentDBRepository<DocumentDBStoreRepository>, DocumentDBStoreRepository>();
+            services.AddScoped<IDocumentDBRepository, DocumentDBStoreRepository>();
             services.AddScoped<IRedisCacheRepository, RedisCacheReposistory>();
             // services.AddScoped<IShardingRepository, ShardingRepository>();
             services.AddScoped<IServiceBusRepository, ServiceBusRepository>();

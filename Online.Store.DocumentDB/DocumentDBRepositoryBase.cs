@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Online.Store.DocumentDB
 {
-    public abstract class DocumentDBRepositoryBase<DatabaseDB> : IDocumentDBRepository<DatabaseDB>
+    public abstract class DocumentDBRepositoryBase : IDocumentDBRepository
     {
         #region Repository Configuration
 
