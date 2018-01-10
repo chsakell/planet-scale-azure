@@ -31,9 +31,12 @@ namespace Online.Store.DocumentDB
             ConnectionPolicy connectionPolicy = new ConnectionPolicy();
 
             //Setting read region selection preference
-            foreach (var policy in ConnectionPolicies)
+            if (ConnectionPolicies != null)
             {
-                connectionPolicy.PreferredLocations.Add(policy);
+                foreach (var policy in ConnectionPolicies)
+                {
+                    connectionPolicy.PreferredLocations.Add(policy);
+                }
             }
 
             // Check Microsoft.Azure.Documents.LocationNames
