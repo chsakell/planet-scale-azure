@@ -16,7 +16,8 @@ namespace Online.Store.Azure.Services
         {
             _storageRepository = storageRepository;
 
-            _storageRepository.Connect(configuration["Storage:AccountName"], configuration["Storage:AccountKey"]);
+            _storageRepository.Connect(configuration["Storage:AccountName"], 
+                                       configuration["Storage:AccountKey"]);
         }
 
         public async Task<string> UploadMediaAsync(Stream stream, string filename, string contentType)

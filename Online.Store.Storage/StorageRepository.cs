@@ -16,10 +16,12 @@ namespace Online.Store.Storage
         public void Connect(string accountName, string accountKey)
         {
             string connection =
-              string.Format(@"DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}",
-              accountName, accountKey);
+              string.Format(@"DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1}"
+              ,accountName, accountKey);
 
-            cloudStorageAccount = accountName == "devstoreaccount1" ? CloudStorageAccount.DevelopmentStorageAccount : CloudStorageAccount.Parse(connection);
+            cloudStorageAccount = accountName == "devstoreaccount1" ? 
+                CloudStorageAccount.DevelopmentStorageAccount : 
+                CloudStorageAccount.Parse(connection);
             cloudBlobClient = cloudStorageAccount.CreateCloudBlobClient();
         }
 
