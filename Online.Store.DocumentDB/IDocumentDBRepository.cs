@@ -26,7 +26,8 @@ namespace Online.Store.DocumentDB
 
         IEnumerable<T> CreateDocumentQuery<T>() where T : class;
 
-        Task<Dictionary<List<T>, string>> CreateDocumentQueryAsync<T>(int size, string continuationToken) where T : class;
+        Task<Dictionary<List<T>, string>> CreateDocumentQueryAsync<T>(int size, 
+            string continuationToken, string query = null) where T : class;
 
         Task<Document> CreateItemAsync<T>(T item) where T : class;
 

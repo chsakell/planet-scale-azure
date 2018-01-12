@@ -158,30 +158,47 @@ namespace Online.Store.DocumentDB
             return _client.CreateDocumentQuery<T>(_collection.DocumentsLink).AsEnumerable();
         }
 
-        public async Task<Dictionary<List<T>, string>> CreateDocumentQueryAsync<T>(int size, string continuationToken) where T : class
+        public async Task<Dictionary<List<T>, string>> CreateDocumentQueryAsync<T>(int size,
+                string continuationToken, string query = null) where T : class
         {
-            Dictionary<List<T>, string> result = new Dictionary<List<T>, string>();
-
-            var options = new FeedOptions
+            try
             {
-                MaxItemCount = size
-            };
+                Dictionary<List<T>, string> result = new Dictionary<List<T>, string>();
 
-            if(!string.IsNullOrEmpty(continuationToken))
-            {
-                options.RequestContinuation = continuationToken;
+                var options = new FeedOptions
+                {
+                    MaxItemCount = size
+                };
+
+                if (!string.IsNullOrEmpty(continuationToken))
+                {
+                    options.RequestContinuation = continuationToken;
+                }
+
+                IDocumentQuery<T> documentQuery;
+                if (string.IsNullOrEmpty(query))
+                {
+                    documentQuery = _client.CreateDocumentQuery<T>(_collection.DocumentsLink, options).AsDocumentQuery();
+                }
+                else
+                {
+                    documentQuery = _client.CreateDocumentQuery<T>(_collection.DocumentsLink, query, options).AsDocumentQuery();
+                }
+
+
+                var response = await documentQuery.ExecuteNextAsync<T>();
+
+                var list = new List<T>();
+                list.AddRange(response);
+
+                result.Add(list, response.ResponseContinuation);
+
+                return result;
             }
-
-            var query = _client.CreateDocumentQuery<T>(_collection.DocumentsLink, options).AsDocumentQuery();
-
-            var response = await query.ExecuteNextAsync<T>();
-
-            var list = new List<T>();
-            list.AddRange(response);
-
-            result.Add(list, response.ResponseContinuation);
-
-            return result;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<Document> CreateItemAsync<T>(T item) where T : class

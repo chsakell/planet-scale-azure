@@ -26,7 +26,7 @@ namespace Online.Store.Controllers
         [HttpGet]
         public async Task<IEnumerable<ProductViewModel>> Get()
         {
-            var products = await _storeService.GetProducts(null);
+            var products = await _storeService.GetProducts();
 
             var productsViewData = new List<ProductViewModel>();
 

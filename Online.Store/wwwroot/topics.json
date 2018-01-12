@@ -1,51 +1,89 @@
 [
-    {
+  {
+    "id": "",
+    "title": "How is my order shipped?",
+    "content": "I would like to know more about order shipping. Can you provide some information?",
+    "mediaDescription": null,
+    "mediaUrl": null,
+    "mediaType": null,
+    "createdDate": "2016-12-15T20:14:11.6343279+02:00",
+    "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
+    "userName": "Christos Sakel",
+    "posts": [
+      {
         "id": "",
-        "title": "How do I contact sales?",
-        "content": "I would really like to purchase several products from your service. How do I contact your sales department?",
-        "mediaDescription": null,
-        "mediaUrl": null,
-        "mediaType": null,
-        "createdDate": "2016-12-15T20:14:11.6343279+02:00",
-        "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
-        "userName": "Christos Sakel",
-        "posts": [
-            {
-                "id": "",
-                "title": "This is a response",
-                "content": "hello world!!",
-                "mediaDescription": "this is my kitchen dude",
-                "mediaUrl": "",
-                "mediaType": "image/jpeg",
-                "createdDate": "2017-09-25T20:08:12.9136216+03:00",
-                "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
-                "userName": "Christos Sakel",
-                "posts": []
-            }
-        ]
-    },
-    {
-        "id": "",
-        "title": "The products on this site are AMAZING!",
-        "content": "I have searched other e-commerce sites before, but Contoso is the best!",
-        "mediaDescription": null,
-        "mediaUrl": null,
-        "mediaType": null,
-        "createdDate": "2016-12-14T09:40:36.3965383-06:00",
-        "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
-        "userName": "Christos Sakel",
-        "posts": []
-    },
-    {
-        "id": "",
-        "title": "This is a new discussion",
-        "content": "During tha last years, there has been an significant change regarding the amount of data being produced and consumed by applications while data-models and scemas are evolving more frequently than used to",
-        "mediaDescription": "This is cosmos db",
+        "title": "Abour order shipping",
+        "content": "Orders are shipped Monday through Friday, excluding UK public holidays. Any orders placed on Saturday or Sunday will be shipped the following week!",
+        "mediaDescription": "",
         "mediaUrl": "",
-        "mediaType": "image/png",
-        "createdDate": "2017-09-25T20:11:29.4198573+03:00",
+        "mediaType": "",
+        "createdDate": "2017-09-25T20:08:12.9136216+03:00",
         "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
         "userName": "Christos Sakel",
         "posts": []
-    }
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "When to expect my order",
+    "content": "How long does it take for my order to reach me",
+    "mediaDescription": null,
+    "mediaUrl": null,
+    "mediaType": null,
+    "createdDate": "2016-12-14T09:40:36.3965383-06:00",
+    "userId": "bb18006e-e8ae-4ca1-8aca-f41a5f204c2b",
+    "userName": "Christos Sakel",
+    "posts": [
+      {
+        "id": "",
+        "title": "Order delivery",
+        "content": "Orders are despatched within 5 working days after payment confirmation. Typically, UK and EU orders take between 24-72 hours after dispatch. For US orders ground service is used and can take up to 7-10 working days depending on the delivery address.",
+        "mediaDescription": "",
+        "mediaUrl": "",
+        "mediaType": "",
+        "createdDate": "2017-09-25T20:08:12.9136216+03:00",
+        "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+        "userName": "Christos Sakel",
+        "posts": []
+      },
+      {
+        "id": "",
+        "title": "Order delivery (new)",
+        "content": "Delivery dates are not guaranteed in the event of service interruptions or failures caused by events beyond the control of COMO SHAMBHALA. These interruptions include, but are not limited to, delays caused by the transportation system, shipping carrier or processing of cardholder's credit/debit card.",
+        "mediaDescription": "",
+        "mediaUrl": "",
+        "mediaType": "",
+        "createdDate": "2017-09-25T20:08:12.9136216+03:00",
+        "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+        "userName": "Christos Sakel",
+        "posts": []
+      }
+    ]
+  },
+  {
+    "id": "",
+    "title": "Shipping countries?",
+    "content": "Which countries do you ship to?",
+    "mediaDescription": "",
+    "mediaUrl": "",
+    "mediaType": "",
+    "createdDate": "2017-09-25T20:11:29.4198573+03:00",
+    "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+    "userName": "Christos Sakel",
+    "posts": [
+      {
+        "id": "",
+        "title": "About country shipping",
+        "content": "Currently, from our website we only ships to addresses within the EU member states and the USA mainland addresses only (excluding New Jersey and Alaska).",
+        "mediaDescription": "",
+        "mediaUrl": "",
+        "mediaType": "",
+        "createdDate": "2017-09-25T20:08:12.9136216+03:00",
+        "userId": "4f8568be-0b58-4ff0-b4be-cf7c967f159a",
+        "userName": "Christos Sakel",
+        "posts": []
+      }
+    ]
+  }
 ]

@@ -49,7 +49,9 @@ namespace Online.Store.Azure.Services
         {
             await _docDbRepository.InitAsync(_FORUM_COLLECTION_ID);
 
-            var dic = await _docDbRepository.CreateDocumentQueryAsync<Topic>(2, continuationToken);
+            string query = "select c.id, c.title, c.content, c.mediaDescription, c.mediaUrl, c.mediaType, c.userId, c.createdDate from c";
+
+            var dic = await _docDbRepository.CreateDocumentQueryAsync<Topic>(2, continuationToken, query);
 
             return new PagedTopics
             {
@@ -87,9 +89,12 @@ namespace Online.Store.Azure.Services
             return topic;
         }
 
-        public async Task<IEnumerable<Product>> GetProducts(string filter)
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-            return await GetAllProducts();
+            List<Product> products = new List<Product>();
+            await _docDbRepository.InitAsync(_PRODUCT_COLLECTION_ID);
+
+            return await _docDbRepository.GetItemsAsync<Product>();
         }
 
         public async Task<Product> GetProductDetails(string productId)
@@ -98,17 +103,6 @@ namespace Online.Store.Azure.Services
             var product = await _docDbRepository.GetItemAsync<Product>(productId);
             return product;
         }
-
-
-        #region Private methods
-        private async Task<IEnumerable<Product>> GetAllProducts()
-        {
-            List<Product> products = new List<Product>();
-            await _docDbRepository.InitAsync(_PRODUCT_COLLECTION_ID);
-
-            return await _docDbRepository.GetItemsAsync<Product>();
-        }
-        #endregion
 
         #endregion
 
@@ -244,7 +238,7 @@ namespace Online.Store.Azure.Services
         Task<Topic> GetTopic(string id);
         Task<Topic> AddTopicReply(string id, Post reply);
         Task AddTopicAsync(Topic topic);
-        Task<IEnumerable<Product>> GetProducts(string filter);
+        Task<IEnumerable<Product>> GetProducts();
         Task<Product> GetProductDetails(string productId);
         Task<CartDTO> GetCart(string cartId);
         Task<CartDTO> AddProductToCart(string cardId, string productId);
