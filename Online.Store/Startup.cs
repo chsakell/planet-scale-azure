@@ -68,7 +68,7 @@ namespace Online_Store
 
                 // If you want to use local redis
                 //option.Configuration = "localhost";
-                option.InstanceName = "master";
+                option.InstanceName = "master-";
             });
 
             services.AddScoped<IDocumentDBRepository, DocumentDBStoreRepository>();

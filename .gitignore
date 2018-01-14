@@ -265,3 +265,4 @@ Online.Store.WebJob/appsettings.json
 
 # DevOps script
 Online.Store/App_Data/devops/devops.ps1
+Online.Store/App_Data/devops/get-secrets.ps1
