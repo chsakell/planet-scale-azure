@@ -10,8 +10,6 @@ namespace Online.Store.ServiceBus
 {
     public class ServiceBusRepository : IServiceBusRepository
     {
-        //const string _serviceBusConnString = "Endpoint=sb://onlinestore-eu.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=/JFobx/Tta7hiFuxTXdXZEhh6QElguTzjMquyiQHSTg=";
-
         IQueueClient _queueClient;
         IConfiguration _configuration;
         string _serviceBusNamespace;
@@ -26,8 +24,9 @@ namespace Online.Store.ServiceBus
         public void InitQueueClient(string serviceBusAccessKeyName, string serviceBusAccessKey, string queue)
         {
             var connectionString =
-                $"Endpoint=sb://{_serviceBusNamespace}.servicebus.windows.net/;SharedAccessKeyName={serviceBusAccessKeyName};SharedAccessKey={serviceBusAccessKey}";
-
+                $"Endpoint=sb://{_serviceBusNamespace}" +
+                $".servicebus.windows.net/;SharedAccessKeyName={serviceBusAccessKeyName};" +
+                "SharedAccessKey={serviceBusAccessKey}";
 
             _queueClient = new QueueClient(connectionString, queue);
         }
