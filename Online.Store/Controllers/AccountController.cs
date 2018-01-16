@@ -43,15 +43,15 @@ namespace Online.Store.Controllers
         [HttpGet]
         public async Task<IActionResult> SignOut()
         {
-            await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            // await HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+            // await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Index", "Home");
-            //var callbackUrl = Url.Action(nameof(HomeController.Index), "Home", values: null, protocol: Request.Scheme);
-            //return SignOut(
-            //    new AuthenticationProperties { RedirectUri = callbackUrl },
-            //    CookieAuthenticationDefaults.AuthenticationScheme,
-            //    OpenIdConnectDefaults.AuthenticationScheme);
+            //return RedirectToAction("Index", "Home");
+            var callbackUrl = Url.Action(nameof(HomeController.Index), "Home", values: null, protocol: Request.Scheme);
+            return SignOut(
+                new AuthenticationProperties { RedirectUri = callbackUrl },
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                OpenIdConnectDefaults.AuthenticationScheme);
         }
 
         [HttpPost(Name = "RegisterAD")]
