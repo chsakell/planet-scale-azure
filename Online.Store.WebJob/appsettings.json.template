@@ -3,7 +3,7 @@
     "DefaultConnection": ""
   },
   "ServiceBus:Namespace": "",
-  "ServiceBus:Queue": "",
-  "ServiceBus:ReadAccessKeyName": "",
+  "ServiceBus:Queue": "orders",
+  "ServiceBus:ReadAccessKeyName": "Read",
   "ServiceBus:ReadAccessKey": ""
 }
