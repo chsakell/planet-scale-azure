@@ -26,7 +26,7 @@ namespace Online.Store.ServiceBus
             var connectionString =
                 $"Endpoint=sb://{_serviceBusNamespace}" +
                 $".servicebus.windows.net/;SharedAccessKeyName={serviceBusAccessKeyName};" +
-                "SharedAccessKey={serviceBusAccessKey}";
+                $"SharedAccessKey={serviceBusAccessKey}";
 
             _queueClient = new QueueClient(connectionString, queue);
         }
