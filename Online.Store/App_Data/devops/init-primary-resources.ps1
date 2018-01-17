@@ -163,3 +163,5 @@ catch {
     Write-Host "Traffic Manager Profile created successfully.."
 }
 
+# Send a beep
+[console]::beep(1000,500)

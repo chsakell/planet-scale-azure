@@ -252,17 +252,9 @@ $settings = @{
     "SearchService:Name" = "$searchServiceInfo";
     "SearchService:ApiKey" = "$searchServicePrimaryKey";
     "Storage:AccountKey" = "$storageAccountKey";
-    "MediaServices:AccountKey" = "SjcR8Jl6tBXmWgrR8VG5hhl11vsZMoHU/zpWfyhS8AY=";
-    "SQL:ElasticDbUsername" = "test";
-    "SQL:ElasticDbPassword" = "test";
     "RedisCache:Endpoint" = "$parentResourceGroup.redis.cache.windows.net:6380";
     "RedisCache:Key" = "$cachePrimaryKey";
-    "AzureAd:Instance" = "https://login.microsoftonline.com/";
-    "AzureAd:Domain" = "PlanetScaleStoreTenant.onmicrosoft.com";
-    "AzureAd:TenantId" = "01888d05-7894-4567-a492-37e26936a362";
-    "AzureAd:ClientId" = "c956f8f1-5495-411d-94c1-ed93c2d6d822";
-    "AzureAd:CallbackPath" = "/signin-oidc";
-    "AzureAd:ClientSecret" = "2+iF75CbOs6ZzkySGHaK+vcVNhIcIcGMAuGG+cFsvr8=";
+    "AzureAd:ClientSecret" = "MZn8K9DE2hGiUM+6TvsnOmnAXcG+eH/ptAMGH+bvCJ4=";
     "Region"= "$region";
     "ServiceBus:Namespace" = "$parentResourceGroup";
     "ServiceBus:Queue" = "orders";
@@ -295,3 +287,6 @@ $WebAppPropertiesObject = @{"siteConfig" = @{"AlwaysOn" = $true}}
 $WebAppResourceType = 'microsoft.web/sites'
 $webAppResource = Get-AzureRmResource -ResourceType $WebAppResourceType -ResourceGroupName $resourceGroupName -ResourceName $webappName
 $webAppResource | Set-AzureRmResource -PropertyObject $WebAppPropertiesObject -Force
+
+# Send a beep
+[console]::beep(1000,500)
