@@ -105,7 +105,7 @@ namespace Online_Store
                     {
                         await next();
                     }
-                    else
+                    else if(bool.Parse(Configuration["Production:UseAlwaysHTTPS"]))
                     {
                         var toHttps = "https://" + context.Request.Host + context.Request.Path;
                         context.Response.Redirect(toHttps);
