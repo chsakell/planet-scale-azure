@@ -76,8 +76,6 @@ if ($cdnNotPresent)
     
     Write-Host "CDN profile $cdnProfileName succesfully created.."
 
-    # Adding endpoint to the storage account
-
     # Create a new endpoint
     # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell#creating-cdn-profiles-and-endpoints
 
@@ -93,7 +91,6 @@ if ($cdnNotPresent)
          -Location $ResourceGroupLocation -EndpointName $cdnEnpointName `
          -OriginName "$PrimaryName" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
     }
-    
 }
 else
 {
@@ -105,7 +102,6 @@ else
 # https://docs.microsoft.com/en-us/azure/cosmos-db/manage-account-with-powershell
 
 $documentDbDatabase = "$PrimaryName";
-
 
 $query = Find-AzureRmResource -ResourceNameContains $documentDbDatabase -ResourceType "Microsoft.DocumentDb/databaseAccounts"
 
@@ -142,26 +138,25 @@ else
     Write-Host "DocumentDB account $documentDbDatabase already exists.."
 }
 #####################################################################################################
-# Create the Traffic Manager Account
+# Create the Traffic Manager Profile
 
 $tmpProfileName = "$PrimaryName";
 $tmpDnsName = "$PrimaryName";
 
-try {
-    Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -ErrorAction Stop
-    Write-Host "Traffic Maanger $tmpProfileName already exists.."
- }
-catch {
-     $ErrorMessage = $_.Exception.Message;
-     Write-Host $ErrorMessage;
+Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -ev tmpNotPresent -ea 0
+if($tmpNotPresent) {
+    Write-Host "Creating Traffic Manager Profile $tmpProfileName.."
 
-     Write-Host "Creating Traffic Manager Profile $tmpProfileName.."
-
-     New-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -TrafficRoutingMethod Performance `
+    New-AzureRmTrafficManagerProfile -Name $tmpProfileName `
+    -ResourceGroupName $PrimaryName -TrafficRoutingMethod Performance `
     -RelativeDnsName $tmpDnsName -Ttl 30 -MonitorProtocol HTTP -MonitorPort 80 -MonitorPath "/"
 
     Write-Host "Traffic Manager Profile created successfully.."
 }
+else {
+    Write-Host "Traffic Maanger $tmpProfileName already exists.."
+}
+ 
 
 # Send a beep
 [console]::beep(1000,500)
