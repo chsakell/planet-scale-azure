@@ -46,7 +46,7 @@ $runningDeployment = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/deploym
     -Headers $headers -Method Get
 $runningDeploymentStatus = $runningDeployment.deployment.status;
 
-while($runningDeploymentStatus -eq "running"){
+while($runningDeploymentStatus -eq "running" -or $runningDeploymentStatus -eq "queued" ){
     Write-Host "Publishing artifacts to [$webappName] Status: $runningDeploymentStatus"
     # Sleep for 2 seconds..
     Start-Sleep -s 2
