@@ -1,18 +1,20 @@
 ﻿# AppVeyor Environments & Deployments
 # https://www.appveyor.com/docs/api/environments-deployments/
 
+param (
+    [Parameter(Mandatory = $true)] [string] $token,
+    [Parameter(Mandatory = $true)] [string] $accountName,
+    [Parameter(Mandatory = $true)] [string] $projectSlug,
+    [Parameter(Mandatory = $true)] [string] $webappName,
+    [Parameter(Mandatory = $true)] [string] $resourceGroupName,
+    [Parameter(Mandatory = $true)] [string] $deploymentEnvironment
+)
+
 # AppVeyor settings
-$token = 'appveyor-api-token' # API Token Page in AppVeyor
-$accountName = 'appveyor-account'
-$projectSlug = 'appveyor-project-from-url' # AppVeyor project's URL e.g dotnetcoreangular-to-azure
 $headers = @{
   "Authorization" = "Bearer $token"
   "Content-type" = "application/json"
 }
-$deploymentEnvironment = "dotnetcoretoazure"
-# Azure App Service settings
-$webappName = "dotnetcoretoazure"
-$resourceGroupName = "dotnetcoretoazure"
 
 ####################################################################\
 # Get project's last build
@@ -74,7 +76,7 @@ if($runningDeploymentStatus -eq "success") {
     Write-Output "Invoking 'npm install' on $webappName ..."
 
     $response = Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $auth)} -Method Post `
-                -ContentType "application/json" -Body $body
+                -ContentType "application/json" -Body $body -TimeoutSec 1500 -ErrorAction SilentlyContinue
 
     Write-Output $response
     Write-Output $response.Output
