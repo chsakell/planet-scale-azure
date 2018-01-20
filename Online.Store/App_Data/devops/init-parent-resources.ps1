@@ -129,23 +129,21 @@ Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Cache"
 
 $cacheName = "$PrimaryName-" + "$ResourceGroupLocation";
 
-try {
-    Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName -ErrorAction Stop
-    Write-Host "Redis Cache $cacheName already exists.."
- }
-catch {
-     $ErrorMessage = $_.Exception.Message;
-     Write-Host $ErrorMessage;
-     
-     Write-Host "The $cacheName Redis Cache does not exist."
-     Write-Host "Creating the $cacheName Redis Cache in the $ResourceGroupLocation region..."
-    
-     New-AzureRmRedisCache -ResourceGroupName $resourceGroupName -Name $cacheName `
-      -Location $ResourceGroupLocation -Size 250MB
+$redisCache = Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName -ErrorAction SilentlyContinue
 
-     Write-Host "$cacheName Redis Cache successfully created.." 
-     Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName
- }
+if($redisCache) {
+    Write-Host "Redis Cache $cacheName already exists.."
+}
+else {
+    Write-Host "The $cacheName Redis Cache does not exist."
+    Write-Host "Creating the $cacheName Redis Cache in the $ResourceGroupLocation region..."
+    
+    New-AzureRmRedisCache -ResourceGroupName $resourceGroupName -Name $cacheName `
+    -Location $ResourceGroupLocation -Size 250MB
+
+    Write-Host "$cacheName Redis Cache successfully created.." 
+    Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName
+}
 
  #####################################################################################################
 # Create the Search Engine
@@ -154,7 +152,7 @@ catch {
 # Register the ARM provider idempotently. This must be done once per subscription
 # Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Search"
 
-$searchEngineName = "$PrimaryName-" + "$ResourceGroupLocation";  #"your-service-name-lowercase-with-dashes"
+$searchEngineName = "$PrimaryName-" + "$ResourceGroupLocation";
 $sku = "basic" # or "basic" or "standard" for paid services
 
 # You can get a list of potential locations with

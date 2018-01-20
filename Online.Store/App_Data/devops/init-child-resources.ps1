@@ -43,7 +43,8 @@ param (
     [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
     [Parameter(Mandatory = $true)] [bool] $CreateDatabase,
     [Parameter(Mandatory = $true)] [string] $Database,
-    [Parameter(Mandatory = $true)] [string] $DocumentDBPolicies
+    [Parameter(Mandatory = $true)] [string] $DocumentDBPolicies,
+    [Parameter(Mandatory = $true)] [string] $AzureIDClientSecret
 )
 
 Write-Host "PrimaryName: $PrimaryName"
@@ -254,7 +255,7 @@ $settings = @{
     "Storage:AccountKey" = "$storageAccountKey";
     "RedisCache:Endpoint" = "$parentResourceGroup.redis.cache.windows.net:6380";
     "RedisCache:Key" = "$cachePrimaryKey";
-    "AzureAd:ClientSecret" = "MZn8K9DE2hGiUM+6TvsnOmnAXcG+eH/ptAMGH+bvCJ4=";
+    "AzureAd:ClientSecret" = "$AzureIDClientSecret";
     "Region"= "$region";
     "ServiceBus:Namespace" = "$parentResourceGroup";
     "ServiceBus:Queue" = "orders";
