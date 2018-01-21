@@ -9,6 +9,25 @@ param (
     [Parameter(Mandatory = $true)] [string] $resourceGroupName,
     [Parameter(Mandatory = $true)] [string] $deploymentEnvironment
 )
+Clear-Host
+# Function to check if node process running (npm install..)
+ Function NodeRunning {
+[cmdletbinding()]
+Param ([string]$webappName, [string]$auth) 
+    Process {
+        $processesAPI = "https://$webappName.scm.azurewebsites.net/api/processes/";
+
+        Write-Host "Invoking 'get processes' on $webappName ..."
+
+        $processes = Invoke-RestMethod -Uri $processesAPI `
+        -Headers @{Authorization=("Basic {0}" -f $auth)} -Method Get `
+        -ErrorAction SilentlyContinue
+
+        $nodeProcesses = ($processes | Where-Object {$_.name -eq "node"});
+
+        return $nodeProcesses;
+    } 
+}
 
 # AppVeyor settings
 $headers = @{
@@ -75,11 +94,27 @@ if($runningDeploymentStatus -eq "success") {
 
     Write-Output "Invoking 'npm install' on $webappName ..."
 
-    $response = Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $auth)} -Method Post `
-                -ContentType "application/json" -Body $body -TimeoutSec 1500 -ErrorAction SilentlyContinue
+    Try {
+        $response = Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $auth)} -Method Post `
+                    -ContentType "application/json" -Body $body -TimeoutSec 1500 -ErrorAction Stop
+    
+        Write-Output $response
+        Write-Output $response.Output
+    }
+    Catch {
+        Write-Host "Waiting for npm install...";
 
-    Write-Output $response
-    Write-Output $response.Output
+        $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
+        $nodeProcesses;
+        while(!($nodeProcesses -eq $null)) {
+            Write-Host "npm install still running..";
+            # Sleep for 10 seconds..
+            Start-Sleep -s 10
+            $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
+        }
+    }
+
+
     Write-Host "Deployment finished succesfully.."
 }
 else {
