@@ -108,8 +108,8 @@ if($runningDeploymentStatus -eq "success") {
         $nodeProcesses;
         while(!($nodeProcesses -eq $null)) {
             Write-Host "npm install still running..";
-            # Sleep for 10 seconds..
-            Start-Sleep -s 10
+            # Sleep for 20 seconds..
+            Start-Sleep -s 20
             $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
         }
     }
@@ -127,4 +127,7 @@ $timeEllapsed = NEW-TIMESPAN –Start $StartDate –End $EndDate
 $totalMinutes = $timeEllapsed.Minutes
 $totalSeconds = $timeEllapsed.Seconds
 
-Write-Host "Total Deployment Time: $totalMinutes and $totalSeconds seconds"
+Write-Host "Total Deployment Time: $totalMinutes minutes and $totalSeconds seconds"
+
+# Send a beep
+[console]::beep(1000,500)

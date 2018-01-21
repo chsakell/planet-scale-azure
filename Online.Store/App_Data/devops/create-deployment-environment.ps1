@@ -377,3 +377,5 @@ if($queryEnvironment) {
 
 }
 
+# Send a beep
+[console]::beep(1000,500)
