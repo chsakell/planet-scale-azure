@@ -17,6 +17,9 @@ param (
     [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation
 )
 
+ECHO OFF
+Clear-Host
+
 #####################################################################################################
 # Create the parent Resource Group
 # Get list of locations and select one.

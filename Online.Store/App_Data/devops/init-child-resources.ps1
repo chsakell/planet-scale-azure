@@ -47,6 +47,9 @@ param (
     [Parameter(Mandatory = $true)] [string] $AzureIDClientSecret
 )
 
+ECHO OFF
+Clear-Host
+
 Write-Host "PrimaryName: $PrimaryName"
 Write-Host "ResourceGroupLocation $ResourceGroupLocation"
 Write-Host "Version $Version"
