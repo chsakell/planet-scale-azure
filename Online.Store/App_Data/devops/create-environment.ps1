@@ -3,7 +3,6 @@
 
 param (
     [Parameter(Mandatory = $true)] [string] $token,
-    [Parameter(Mandatory = $true)] [string] $accountName,
     [Parameter(Mandatory = $true)] [string] $projectSlug,
     [Parameter(Mandatory = $true)] [string] $webappName,
     [Parameter(Mandatory = $true)] [string] $resourceGroupName
