@@ -26,6 +26,9 @@ param (
     [Parameter(Mandatory = $false)] [string] $SecondaryServerName
 )
 
+ECHO OFF
+Clear-Host
+
 if([string]::IsNullOrEmpty($PrimaryServerName)) { 
     $PrimaryServerName = "$PrimaryResourceGroupName"
 }
@@ -42,8 +45,13 @@ Write-Host "SecondaryServerName: $SecondaryServerName"
 
 Write-Host "Setting active Geo-Replication from $PrimaryServerName to $SecondaryServerName for database $Database"
 
-$primaryDatabase = Get-AzureRmSqlDatabase -DatabaseName $Database -ResourceGroupName $PrimaryResourceGroupName -ServerName $PrimaryServerName
+$primaryDatabase = Get-AzureRmSqlDatabase -DatabaseName $Database `
+    -ResourceGroupName $PrimaryResourceGroupName -ServerName $PrimaryServerName
 
-$primaryDatabase | New-AzureRmSqlDatabaseSecondary -PartnerResourceGroupName "$SecondaryResourceGroupName" -PartnerServerName "$SecondaryServerName" -AllowConnections "All"
+$primaryDatabase | New-AzureRmSqlDatabaseSecondary -PartnerResourceGroupName "$SecondaryResourceGroupName" `
+    -PartnerServerName "$SecondaryServerName" -AllowConnections "All"
 
 Write-Host "Active Geo-Replication has been set succcessfully.."
+
+# Send a beep
+[console]::beep(1000,500)
