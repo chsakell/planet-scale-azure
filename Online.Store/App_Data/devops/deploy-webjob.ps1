@@ -36,10 +36,11 @@ param (
     [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
     [Parameter(Mandatory = $true)] [string] $WebappParentResourceGroup,
     [Parameter(Mandatory = $true)] [string] $WebappResourceGroup,
-    [Parameter(Mandatory = $true)] [string] $WebjobAppLocation
+    [Parameter(Mandatory = $true)] [string] $WebjobAppLocation,
+    [Parameter(Mandatory = $true)] [string] $DeploymentDestinationFolder
 )
 
-
+Clear-Host
 # https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
 
 $serviceBusNameSpace = "$WebappParentResourceGroup"
@@ -71,7 +72,10 @@ dotnet publish "$WebjobAppLocation\Online.Store.WebJob.csproj" -c Release
 
 # Zip publish folder..
 $publishFolder = "$WebjobAppLocation\bin\Release\netcoreapp2.0\publish"
-$deploymentFolder = "$publishFolder\deployment"
+$currentDateTime =  (Get-Date -Format s).Replace(":","-");
+$deploymentFolder = "$DeploymentDestinationFolder\$WebappResourceGroup-$currentDateTime";
+Write-Host "Deployment folder: $deploymentFolder";
+
 if(!(Test-Path -Path $deploymentFolder )){
     New-Item -ItemType directory -Path $deploymentFolder
     Write-Host "Deployment folder created"
@@ -82,12 +86,18 @@ else
 }
 $zipFile = "$deploymentFolder\orders.zip"
 
- If(Test-path $zipFile) { Remove-item $zipFile }
+ If(Test-path $zipFile) { 
+    Remove-item $zipFile
+    
+    # Sleep for 10 seconds..
+    Start-Sleep -s 10   
+ }
 
 # Zip the file
 # Be carefull to zip only the files, not the folder
 Write-Host "Zipping file.."
 Compress-Archive -Path $publishFolder\* -DestinationPath $zipFile
+Start-Sleep -s 10
 
 # Start WebJob deployment 
 # https://github.com/projectkudu/kudu/wiki/Deploying-a-WebJob-using-PowerShell-ARM-Cmdlets
@@ -124,3 +134,6 @@ $apiUrl = "https://$webAppName.scm.azurewebsites.net/api/continuouswebjobs/$webj
 $result = Invoke-RestMethod -Uri $apiUrl -Headers $Header -Method put -InFile "$zipFile" -ContentType 'application/zip' 
 #NOTE: Update the above script with the parameters highlighted and run in order to push a new Webjob under the specified WebApp.
 Write-Host "WebJob uploaded.."
+
+# Send a beep
+[console]::beep(1000,500)
