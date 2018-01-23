@@ -3,4 +3,5 @@ export class RegisterVM {
     public username: string;
     public password: string;
     public confirmPassword: string;
+    public useIdentity: boolean;
 }

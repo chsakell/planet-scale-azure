@@ -1,2 +1,3 @@
-<user-register-presentation (onRegister)="registerUser($event)">
+<user-register-presentation [useIdentity]="useIdentity$ | async" 
+(onRegister)="registerUser($event)" (onLogin)="loginUser($event)">
 </user-register-presentation>

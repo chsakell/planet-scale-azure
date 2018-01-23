@@ -10,5 +10,6 @@ namespace Online.Store.ViewModels
     {
         public CartDTO Cart { get; set; }
         public UserViewModel User { get; set; }
+        public bool UseIdentity { get; set; }
     }
 }

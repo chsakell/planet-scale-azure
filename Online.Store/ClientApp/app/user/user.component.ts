@@ -13,12 +13,14 @@ export class UserComponent implements OnInit {
 
     redirectToLogin$: Observable<boolean>;
     user$: Observable<User>;
+    useIdentity$: Observable<boolean>;
 
     private subscription: ISubscription;
 
     constructor(private store: Store<any>) {
         this.redirectToLogin$ = this.store.select<boolean>(state => state.user.userState.redirectToLogin);
         this.user$ = this.store.select<User>(state => state.user.userState.user);
+        this.useIdentity$ = this.store.select<boolean>(state => state.user.userState.useIdentity);
     }
 
     ngOnInit() {

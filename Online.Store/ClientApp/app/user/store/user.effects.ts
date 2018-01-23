@@ -12,7 +12,7 @@ import * as notifyActions from '../../notifications/store/notifications.actions'
 import { Product } from './../../models/product';
 import { ProductService } from '../../core/services/product.service';
 import { Cart } from "../../models/cart";
-import { ResultVM } from '../../models/result-vm';
+import { ResultVM, Result } from '../../models/result-vm';
 import { AccountService } from '../../core/services/account.service';
 import { UserCart } from '../../models/user-cart';
 import { MessageType } from '../../models/message';
@@ -27,7 +27,7 @@ export class UserEffects {
         return this.accountService.registerUser(action.user)
             .mergeMap((data: ResultVM) => {
                 return [
-                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Registration completed successfully. Redirecting to login..' }),
+                    new notifyActions.SetMessageAction( { type: MessageType.SUCCESS, message: 'Registration completed successfully.' }),
                     new userActions.RegisterUserCompleteAction(data)
                 ];
             })
@@ -41,7 +41,8 @@ export class UserEffects {
     .switchMap((action: userActions.LoginUserAction) => {
         return this.accountService.loginUser(action.user)
             .map((data: ResultVM) => {
-                return new userActions.LoginUserCompleteAction(data);
+                return data.result === Result.SUCCESS ? new userActions.LoginUserCompleteAction(data) : 
+                new notifyActions.SetMessageAction( { type: MessageType.Error, message: data.message });
             })
             .catch((error: any) => {
                 return of(new notifyActions.SetMessageAction( { type: MessageType.Error, message: 'Failed to signin user' }))

@@ -20,6 +20,9 @@ using Microsoft.AspNetCore.Authentication;
 using Online.Store.ServiceBus;
 using Online.Store.Storage;
 using Online.Store.AzureSearch;
+using Online.Store.Models;
+using Microsoft.AspNetCore.Identity;
+using Online.Store.Identity;
 
 namespace Online_Store
 {
@@ -48,15 +51,31 @@ namespace Online_Store
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                 b => b.MigrationsAssembly("Online.Store.SqlServer")));
 
-            if (!string.IsNullOrEmpty(Configuration["AzureAd:ClientId"]))
+            services.AddDbContext<ApplicationIdentityDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection"),
+                b => b.MigrationsAssembly("Online.Store")));
+
+            if (!bool.Parse(Configuration["UseIdentity"]))
             {
-                services.AddAuthentication(sharedOptions =>
+                if (!string.IsNullOrEmpty(Configuration["AzureAd:ClientId"]))
                 {
-                    sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    services.AddAuthentication(sharedOptions =>
+                    {
+                        sharedOptions.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                        sharedOptions.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+                    })
+                    .AddAzureAd(options => Configuration.Bind("AzureAd", options))
+                    .AddCookie();
+                }
+            }
+            else
+            {
+                services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+                {
+                    config.SignIn.RequireConfirmedEmail = false;
                 })
-                .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-                .AddCookie();
+                .AddEntityFrameworkStores<ApplicationIdentityDbContext>()
+                .AddDefaultTokenProviders();
             }
 
             // Configure Cache

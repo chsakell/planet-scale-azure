@@ -105,7 +105,7 @@ namespace Online.Store.Controllers
                         return Ok(new ResultViewModel()
                         {
                             Result = Result.SUCCESS,
-                            Data = new { username = adUser.SignInNames[0].Value, id = adUser.ObjectId }
+                            Data = new { username = adUser.SignInNames[0].Value, id = adUser.ObjectId, redirect = true }
                         });
                     }
                     else

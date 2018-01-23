@@ -9,12 +9,31 @@
             <li>
                 <div class="row">
                     <div class="col-md-12">
-                        Login with Active Directory
-                        <div class="social-buttons">
-                            <a href="/Account/Signin" class="btn btn-fb">
-                               Sign in  <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span></a>
+                        <div *ngIf="!useIdentity">
+                            Login with Active Directory
+                            <div class="social-buttons">
+                                <a href="/Account/Signin" class="btn btn-fb">
+                                    Sign in
+                                    <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span>
+                                </a>
+                            </div>
                         </div>
-                        or register a new account
+                        <div *ngIf="useIdentity">
+                            <div class="form-group">
+                                <label for="LoginUsername">Username</label>
+                                <input class="form-control" type="text" name="LoginUsername" value="" [(ngModel)]="login.username">
+                            </div>
+                            <div class="form-group">
+                                <label for="LoginPassword">Password</label>
+                                <input class="form-control" type="password" name="LoginPassword" [(ngModel)]="login.password">
+                            </div>
+                            <div class="bottom">
+                                <button type="button" class="btn btn-primary" (click)="signIn()">Sign in
+                                    <i class="fa fa-user-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <span>or register a new account</span>
                         <form (submit)="register()" novalidate="novalidate">
                             <div class="form-group">
                                 <label for="Email">Email</label>
@@ -33,7 +52,9 @@
                                 <input class="form-control" type="password" name="ConfirmPassword" [(ngModel)]="user.confirmPassword">
                             </div>
                             <div class="bottom">
-                                <button type="submit" class="btn btn-primary">Register <i class="fa fa-user-plus"></i> </button>
+                                <button type="submit" class="btn btn-primary">Register
+                                    <i class="fa fa-user-plus"></i>
+                                </button>
                             </div>
                         </form>
                     </div>

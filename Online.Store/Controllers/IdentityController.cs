@@ -260,8 +260,8 @@ namespace Online.Store.Controllers
             });
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        [Route("/identity/signout")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

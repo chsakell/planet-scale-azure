@@ -17,12 +17,14 @@ import { ResultVM } from '../../models/result-vm';
 export class AccountService {
 
     private accountURI: string;
+    private identityURI: string;
     private headers: Headers;
     private requestOptions: RequestOptions;
 
     constructor(private http: Http, @Inject('BASE_URL') baseUrl: string) {
 
         this.accountURI = baseUrl + 'account/';
+        this.identityURI = baseUrl + 'api/identity/';
 
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
@@ -32,14 +34,15 @@ export class AccountService {
     }
 
     registerUser(user: RegisterVM): Observable<ResultVM> {
-
-        return this.http.post(this.accountURI + 'register', JSON.stringify(user), this.requestOptions)
+        debugger;
+        let url = user.useIdentity === true ? this.identityURI : this.accountURI;
+        return this.http.post(url + 'register', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
     loginUser(user: LoginVM): Observable<ResultVM> {
-        return this.http.post(this.accountURI + 'login', JSON.stringify(user), this.requestOptions)
+        return this.http.post(this.identityURI + 'login', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }

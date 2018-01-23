@@ -7,5 +7,6 @@ export interface UserState {
     cartTotal: number,
     user?: User,
     redirectToLogin: boolean,
-    orders: Order[] 
+    orders: Order[],
+    useIdentity: boolean 
 };

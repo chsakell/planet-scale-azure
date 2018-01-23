@@ -2,7 +2,8 @@
 <ul class="nav navbar-nav navbar-right" *ngIf="(user$ | async)">
     <li>
         <p class="navbar-text">{{(user$ | async).username}}
-            <a href="/account/signout" title="Sign out"> <span class="glyphicon glyphicon-off" aria-hidden="false"></span></a>  
+            <a *ngIf="(useIdentity$ | async) === false" href="/account/signout" title="Sign out"> <span class="glyphicon glyphicon-off" aria-hidden="false"></span></a>
+            <a *ngIf="(useIdentity$ | async) === true" href="/home/signout" title="Sign out"> <span class="glyphicon glyphicon-off" aria-hidden="false"></span></a>  
         </p>
     </li>
 </ul>
