@@ -266,8 +266,7 @@ namespace Online.Store.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            // return RedirectToAction(nameof(HomeController.Index), "Home");
-            return Ok();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [HttpPost]
