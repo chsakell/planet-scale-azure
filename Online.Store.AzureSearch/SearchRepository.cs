@@ -42,7 +42,16 @@ namespace Online.Store.AzureSearch
 
         public async Task CreateOrUpdateIndexerAsync(string indexerName, string dataSource, string index)
         {
-            await _serviceClient.Indexers.CreateOrUpdateAsync(new Indexer(indexerName, dataSource, index));
+            try
+            {
+                var indexers = await _serviceClient.Indexers.ListAsync();
+
+                foreach (var indexer in indexers.Indexers) {
+                    await _serviceClient.Indexers.DeleteAsync(indexer.Name);
+                }
+            }
+            catch { }
+            await _serviceClient.Indexers.CreateAsync(new Indexer(indexerName, dataSource, index));
         }
 
         public async Task<List<T>> SearchAsync<T>(string searchIndex, string term, List<string> returnFields) where T : class

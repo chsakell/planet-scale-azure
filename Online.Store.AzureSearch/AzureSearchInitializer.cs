@@ -18,6 +18,7 @@ namespace Online.Store.AzureSearch
         {
             string _azureSearchServiceName = configuration["SearchService:Name"];
             string _azureSearchServiceKey = configuration["SearchService:ApiKey"];
+            _productsIndexer += "-" + _azureSearchServiceName;
 
             // Create or Update the product index
             if (!string.IsNullOrEmpty(_azureSearchServiceName) && !string.IsNullOrEmpty(_azureSearchServiceKey))
