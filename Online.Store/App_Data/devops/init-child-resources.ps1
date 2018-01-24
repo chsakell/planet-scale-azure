@@ -44,7 +44,10 @@ param (
     [Parameter(Mandatory = $true)] [bool] $CreateDatabase,
     [Parameter(Mandatory = $true)] [string] $Database,
     [Parameter(Mandatory = $true)] [string] $DocumentDBPolicies,
-    [Parameter(Mandatory = $true)] [string] $AzureIDClientSecret
+    [Parameter(Mandatory = $false)] [string] $AzureIDClientSecret,
+    [Parameter(Mandatory = $false)] [bool] $UseIdentity,
+    [Parameter(Mandatory = $false)] [string] $IdentitySqlServerLogin,
+    [Parameter(Mandatory = $false)] [string] $IdentitySqlServerPassword
 )
 
 ECHO OFF
@@ -199,7 +202,7 @@ if($CreateDatabase) {
         -RequestedServiceObjectiveName "Basic" `
         -MaxSizeBytes 524288000
 
-        Write-Host "Azure SQL Database $databaseName successfully created..."
+        Write-Host "Azure SQL Database $Database successfully created..."
 
     }
 }
@@ -258,12 +261,17 @@ $settings = @{
     "Storage:AccountKey" = "$storageAccountKey";
     "RedisCache:Endpoint" = "$parentResourceGroup.redis.cache.windows.net:6380";
     "RedisCache:Key" = "$cachePrimaryKey";
-    "AzureAd:ClientSecret" = "$AzureIDClientSecret";
     "Region"= "$region";
     "ServiceBus:Namespace" = "$parentResourceGroup";
     "ServiceBus:Queue" = "orders";
     "ServiceBus:WriteAccessKeyName" = "write";
     "ServiceBus:WriteAccessKey" = "$writeAccessKey";
+}
+
+$settings.Add("UseIdentity", $UseIdentity.ToString());
+
+if($AzureIDClientSecret) {
+  $settings.Add("AzureAd:ClientSecret", "$AzureIDClientSecret");
 }
 
 Write-Host "Setting App Settings for $webappName"
@@ -279,6 +287,12 @@ Write-Host "App Settings updated successfully..."
 $connString = @{}
 # Add or Update a desired Connection String within the Hash collection
 $connString["DefaultConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$serverName.database.windows.net,1433;Initial Catalog=$Database;Persist Security Info=False;User ID=$SqlServerLogin;Password=$SqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
+
+if($UseIdentity -and $IdentitySqlServerLogin -and $IdentitySqlServerPassword) {
+    $identityServer = $PrimaryName;
+    $IdentityDatabase = "identitydb";
+    $connString["IdentityConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$identityServer.database.windows.net,1433;Initial Catalog=$IdentityDatabase;Persist Security Info=False;User ID=$IdentitySqlServerLogin;Password=$IdentitySqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
+}
 
 Write-Host "Setting Connection String for $webappName"
 # Save Connection String to Azure Web App
