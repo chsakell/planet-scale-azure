@@ -14,7 +14,10 @@ Azure Region for the primary resource group
 #>
 param (
     [Parameter(Mandatory = $true)] [string] $PrimaryName,
-    [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation
+    [Parameter(Mandatory = $true)] [string] $ResourceGroupLocation,
+    [Parameter(Mandatory = $false)] [bool] $CreateIdentityDatabase,
+    [Parameter(Mandatory = $false)] [string] $SqlServerLogin,
+    [Parameter(Mandatory = $false)] [string] $SqlServerPassword
 )
 
 ECHO OFF
@@ -159,7 +162,72 @@ if($tmpNotPresent) {
 else {
     Write-Host "Traffic Maanger $tmpProfileName already exists.."
 }
- 
 
+#####################################################################################################
+# Create the identitydb SQL Server for authentication
+
+if($CreateIdentityDatabase -and $SqlServerLogin -and $SqlServerPassword)
+{
+    Write-Host "Checking for Identity Server and Database.."
+
+    $serverName =  "$PrimaryName";
+    $resourceGroupName = $PrimaryName;
+    # Set an admin login and password for your database
+    # The login information for the server
+
+    # Create the logical server
+    # https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqlserver?view=azurermps-5.1.1
+    # https://docs.microsoft.com/en-us/azure/sql-database/sql-database-get-started-powershell
+
+    $serverInstance = Get-AzureRmSqlServer -ServerName $serverName -ResourceGroupName $resourceGroupName -ErrorAction SilentlyContinue
+    if ($serverInstance) { 
+        Write-Host "SQL Server $serverName already exists..."
+    }
+    else {
+        Write-Host "Trying to create SQL Server $serverName.."
+
+        New-AzureRmSqlServer -ResourceGroupName $resourceGroupName `
+        -ServerName $serverName `
+        -Location $ResourceGroupLocation `
+        -SqlAdministratorCredentials $(New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $SqlServerLogin, $(ConvertTo-SecureString -String $SqlServerPassword -AsPlainText -Force))
+
+        Write-Host "SQL Server $serverName successfully created..."
+
+        # Allow access to Azure Services
+        # https://docs.microsoft.com/en-us/powershell/module/azure/new-azuresqldatabaseserverfirewallrule?view=azuresmps-4.0.0
+        Write-Host "Allowing access to Azure Services..."
+
+        New-AzureSqlDatabaseServerFirewallRule -ServerName $serverName -AllowAllAzureServices
+    }
+    #####################################################################################################
+    # Create the identitydb SQL Server Database for authentication
+    # Create the database
+    # https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqldatabase?view=azurermps-5.1.1
+    # https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers
+    # https://docs.microsoft.com/en-us/azure/sql-database/sql-database-what-is-a-dtu
+    # https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.sql.models.database.requestedserviceobjectivename?view=azure-dotnet
+    $Database = "identitydb";
+
+    if($CreateIdentityDatabase) {
+        $azureDatabase = Get-AzureRmSqlDatabase -ResourceGroupName $resourceGroupName `
+         -ServerName $serverName -DatabaseName $Database -ErrorAction SilentlyContinue
+
+        if ($azureDatabase) { 
+            Write-Host "Azure SQL Database $Database already exists..."
+        }
+        else {
+            Write-Host "Trying to create Azure SQL Database $Database at Server $serverName.."
+
+            New-AzureRmSqlDatabase  -ResourceGroupName $resourceGroupName `
+            -ServerName $serverName `
+            -DatabaseName $Database `
+            -RequestedServiceObjectiveName "Basic" `
+            -MaxSizeBytes 524288000
+
+            Write-Host "Azure SQL Database $Database successfully created..."
+
+        }
+    }
+}
 # Send a beep
 [console]::beep(1000,500)
