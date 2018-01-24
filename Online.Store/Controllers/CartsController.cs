@@ -29,7 +29,6 @@ namespace Online.Store.Controllers
             _storeService = storeService;
             bool.TryParse(configuration["UseIdentity"], out _useIdentity);
             _contextAccessor = contextAccessor;
-            
         }
 
         // GET: api/Carts

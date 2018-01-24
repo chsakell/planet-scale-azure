@@ -13,6 +13,7 @@ using Online.Store.SqlServer;
 using Online.Store.ViewModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Online.Store.Controllers
 {
@@ -24,12 +25,20 @@ namespace Online.Store.Controllers
         private IStoreService _storeService;
         private IServiceBusService _serviceBusService;
         private ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _contextAccessor;
+        private readonly bool _useIdentity;
+        private UserManager<ApplicationUser> _userManager;
 
-        public OrdersController(IStoreService storeService, IServiceBusService serviceBusService, ApplicationDbContext context)
+        public OrdersController(IStoreService storeService, IServiceBusService serviceBusService, 
+            ApplicationDbContext context,
+            IConfiguration configuration,
+            IHttpContextAccessor contextAccessor)
         {
             _storeService = storeService;
             _serviceBusService = serviceBusService;
             _context = context;
+            bool.TryParse(configuration["UseIdentity"], out _useIdentity);
+            _contextAccessor = contextAccessor;
         }
 
         // GET: api/orders/id
@@ -56,9 +65,19 @@ namespace Online.Store.Controllers
 
             if (cart != null && cartId == Request.Cookies["cart"])
             {
-                string userId = User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
-                                   .Select(c => c.Value).SingleOrDefault();
+                string userId = null;
 
+                if (!_useIdentity)
+                {
+                    userId = User.Claims.Where(c => c.Type == "http://schemas.microsoft.com/identity/claims/objectidentifier")
+                                       .Select(c => c.Value).SingleOrDefault();
+                }
+                else
+                {
+                    _userManager = (UserManager<ApplicationUser>)_contextAccessor.HttpContext.RequestServices.GetService(typeof(UserManager<ApplicationUser>));
+                    var user = await _userManager.GetUserAsync(User);
+                    userId = user.Id;
+                }
                 Order order = new Order
                 {
                     UserId = userId,
