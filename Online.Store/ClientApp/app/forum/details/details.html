@@ -7,8 +7,8 @@
                         <div>
                             <button type="button" class="btn btn-default" *ngIf="!viewReply && user" (click)="viewReply = true">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="false"></span> Add a reply</button>
-                            <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics/{{topic.id}}" class="btn btn-primary">
-                                <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span> Sign in to Add a Reply</a>
+                            <span *ngIf="!user">
+                                <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span> Sign in to Add a Reply</span>
                         </div>
                         <div class="panel panel-default" *ngIf="viewReply">
                             <div class="panel-heading">Reply</div>

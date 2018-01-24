@@ -5,8 +5,10 @@
                 <div class="text-center padding10">
                     <button type="button" class="btn btn-default" *ngIf="!viewCreateTopic && user" (click)="viewCreateTopic = true">
                         <span class="glyphicon glyphicon-plus" aria-hidden="false"></span> Create Topic</button>
-                    <a *ngIf="!user" href="/Account/Signin/?redirect=forum/topics" class="btn btn-primary">
-                        Sign in to create Topic <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span></a>
+                    <span *ngIf="!user" class="">
+                        Sign in to create Topic
+                        <span class="glyphicon 	glyphicon glyphicon-log-in" aria-hidden="false"></span>
+                    </span>
                 </div>
                 <div class="panel panel-default" *ngIf="viewCreateTopic">
                     <div class="panel-heading">New Topic</div>
@@ -39,9 +41,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading text-right">
                         <button type="button" class="btn btn-default" *ngIf="currentPage > 1" (click)="getPrevious()">
-                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="false"></span> Previous</button>
+                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="false"></span> Previous</button>
                         <button type="button" class="btn btn-default" *ngIf="nextToken || (currentPage < totalPages)" (click)="getNext()">
-                                Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span></button>
+                            Next
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
+                        </button>
                     </div>
                     <div class="topic topic-danger" *ngFor="let topic of topics; let i = index">
                         <h4>
