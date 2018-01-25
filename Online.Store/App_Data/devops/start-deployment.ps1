@@ -7,7 +7,8 @@ param (
     [Parameter(Mandatory = $true)] [string] $projectSlug,
     [Parameter(Mandatory = $true)] [string] $webappName,
     [Parameter(Mandatory = $true)] [string] $resourceGroupName,
-    [Parameter(Mandatory = $true)] [string] $deploymentEnvironment
+    [Parameter(Mandatory = $true)] [string] $deploymentEnvironment,
+    [Parameter(Mandatory = $false)] [string] $build
 )
 Clear-Host
 # Function to check if node process running (npm install..)
@@ -49,6 +50,11 @@ $body = @{
     projectSlug = "$projectSlug";
     buildVersion = $latestBuild.build.version;
 }
+
+if($build) {
+    $body.buildVersion = "$build";
+}
+
 ConvertTo-Json $body
 
 $StartDate=(GET-DATE)
