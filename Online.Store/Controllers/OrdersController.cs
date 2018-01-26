@@ -51,6 +51,19 @@ namespace Online.Store.Controllers
             var ordersDB = _context.Orders
                     .Include(order => order.OrderDetails).Where(o => o.UserId == id).ToList();
 
+            var cachedOrders = await _storeService.GetOrders(id);
+
+            if (cachedOrders != null)
+            {
+                foreach (var order in cachedOrders)
+                {
+                    if (!ordersDB.Any(o => o.DateCreated == order.DateCreated))
+                    {
+                        ordersDB.Add(order);
+                    }
+                }
+            }
+
             orders = Mapper.Map<List<Order>, List<OrderViewModel>>(ordersDB);
 
             return orders;
@@ -81,7 +94,7 @@ namespace Online.Store.Controllers
                 Order order = new Order
                 {
                     UserId = userId,
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.Now.ToUniversalTime(),
                     GrandTotal = 0
                 };
 
@@ -101,9 +114,12 @@ namespace Online.Store.Controllers
 
                 await _serviceBusService.SubmitOrderAsync(order);
 
-                await _storeService.RemoveCart(cartId);
+                await _storeService.RemoveCart("cart-" + cartId);
 
                 Response.Cookies.Delete("cart");
+
+                // Add order to cache
+                await _storeService.AddOrder(userId, order);
 
                 return Ok(new ResultViewModel()
                 {

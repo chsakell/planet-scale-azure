@@ -215,6 +215,25 @@ namespace Online.Store.Azure.Services
             return cart;
         }
 
+        public async Task AddOrder(string userId, Order order)
+        {
+            List<Order> orders = await _cacheRepository.GetItemAsync<List<Order>>("order-" + userId);
+            
+            if(orders == null)
+            {
+                orders = new List<Order>();
+            }
+
+            orders.Add(order);
+
+            await _cacheRepository.SetItemAsync("orders-" + userId, orders, 1);
+        }
+
+        public async Task<List<Order>> GetOrders(string userId)
+        {
+            return await _cacheRepository.GetItemAsync<List<Order>>("orders-" + userId);
+        }
+
         #endregion
 
         #region Sharding
@@ -244,6 +263,7 @@ namespace Online.Store.Azure.Services
         Task<CartDTO> AddProductToCart(string cardId, string productId);
         Task<CartDTO> RemoveProductFromCart(string cardId, string productId);
         Task RemoveCart(string key);
-        //int? AddOrder(Order order);
+        Task AddOrder(string userId, Order order);
+        Task<List<Order>> GetOrders(string userId);
     }
 }
