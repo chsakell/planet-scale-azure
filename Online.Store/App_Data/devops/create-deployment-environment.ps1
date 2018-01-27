@@ -1,5 +1,27 @@
 ﻿# AppVeyor Environments & Deployments
 # https://www.appveyor.com/docs/api/environments-deployments/
+<#
+.SYNOPSIS
+Starts a deployment in AppVeyor
+
+.Author: Christos Sakellarios
+
+.PARAMETER token
+AppVeyor API Token
+
+.PARAMETER accountName
+AppVeyor account
+
+.PARAMETER projectSlug
+Last part from the project's url in AppVeyor
+
+.PARAMETER webappName
+App Service name <child-resource-group>
+
+.PARAMETER resourceGroupName
+App Service name <child-resource-group>
+
+#>
 
 param (
     [Parameter(Mandatory = $true)] [string] $token,
