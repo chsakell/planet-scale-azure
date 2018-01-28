@@ -85,7 +85,7 @@ else
 
 
 #####################################################################################################
-# Create an App Service plan in Free tier.
+# Create an App Service plan in Standard tier.
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/new-azurermappserviceplan?view=azurermps-5.1.1
 $webappName = "$resourceGroupName";
 
@@ -123,6 +123,51 @@ else {
 
     Write-Host "App Service $webappName successfully created at $resourceGroupName"
 }
+
+#####################################################################################################
+# Configure Auto Scaling.
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.insights/new-azurermautoscalerule?view=azurermps-5.1.1
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.insights/new-azurermautoscaleprofile?view=azurermps-5.1.1
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.insights/add-azurermautoscalesetting
+
+Write-Host "Configuring auto scaling.."
+$webAppResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $resourceGroupName -ResourceType "Microsoft.web/sites").ResourceId
+
+$autoScaleRule = New-AzureRmAutoscaleRule -MetricName "CpuTime" `
+                         -MetricResourceId "$webAppResourceId" `
+                         -Operator GreaterThan `
+                         -MetricStatistic Average `
+                         -Threshold 70 `
+                         -TimeGrain 00:01:00 `
+                         -TimeWindow 00:10:00 `
+                         -ScaleActionCooldown 00:10:00 `
+                         -ScaleActionDirection Increase `
+                         -ScaleActionValue "2"
+
+$autoScaleProfile = New-AzureRmAutoscaleProfile -DefaultCapacity "1" `
+                                                -MaximumCapacity "10" `
+                                                -MinimumCapacity "1" `
+                                                -Rules $autoScaleRule `
+                                                -Name "autoscale-when-cpu-high"
+
+
+$webAppPlanResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $resourceGroupName -ResourceType "Microsoft.web/serverFarms").ResourceId
+
+$autoScaleSetting = Get-AzureRmAutoscaleSetting -ResourceGroupName "$webappName" -Name "autoscale-when-cpu-high" -ErrorAction SilentlyContinue
+
+if($autoScaleSetting) {
+Remove-AzureRmAutoscaleSetting `
+      -ResourceGroupName $webappName `
+      -Name "autoscale-when-cpu-high" `
+}
+else {
+Add-AzureRmAutoscaleSetting -Location "westeurope" `
+                            -Name "autoscale-when-cpu-high" `
+                            -ResourceGroup "$resourceGroupName" `
+                            -TargetResourceId "$webAppPlanResourceId" `
+                            -AutoscaleProfiles $autoScaleProfile
+}
+Write-Host "Autoscale when CPU is high has been configured.."
 
 #####################################################################################################
 # Add the Traffic Manager Endpoint if not exists
