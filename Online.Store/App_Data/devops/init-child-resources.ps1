@@ -131,7 +131,7 @@ else {
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.insights/add-azurermautoscalesetting
 
 Write-Host "Configuring auto scaling.."
-$webAppResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $resourceGroupName -ResourceType "Microsoft.web/sites").ResourceId
+$webAppResourceId = (Get-AzureRmResource -ResourceGroupName $resourceGroupName -ResourceName $webappName -ResourceType "Microsoft.web/sites").ResourceId
 
 $autoScaleRule = New-AzureRmAutoscaleRule -MetricName "CpuTime" `
                          -MetricResourceId "$webAppResourceId" `
@@ -161,7 +161,7 @@ Remove-AzureRmAutoscaleSetting `
       -Name "autoscale-when-cpu-high" `
 }
 else {
-Add-AzureRmAutoscaleSetting -Location "westeurope" `
+Add-AzureRmAutoscaleSetting -Location "$ResourceGroupLocation" `
                             -Name "autoscale-when-cpu-high" `
                             -ResourceGroup "$resourceGroupName" `
                             -TargetResourceId "$webAppPlanResourceId" `
