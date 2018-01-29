@@ -48,5 +48,7 @@ The first 4 parts describe the features for each `Azure Service` used and their 
 
 In case you are in a `Windows` OS it is highly advised to install [Visual Studio 2017](https://www.visualstudio.com/downloads/). The project however can be built and run outside of Visual Studio as well *(using the .NET Core CLI)* 
 
+For each `Azure Service` there is a corresponding library project with generic repositories. The front-tier is built with `Angular` and [ngrx/store](https://github.com/ngrx/store) 
+
 <h2>License</h2>
 Code released under the <a href="https://github.com/chsakell/planet-scale-azure/blob/master/licence" target="_blank"> MIT license</a>.
