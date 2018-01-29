@@ -4,7 +4,7 @@
 
 This is the repository associated with the e-book [Globally-distributed applications with Microsoft Azure](https://leanpub.com/globally-distributed-applications-with-microsoft-azure)
 
-![Globally-distributed applications with Microsoft Azure](/Online.Store/wwwroot/images/app/schema-architecture.png?raw=true "Globally-distributed applications with Microsoft Azure")
+<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="/Online.Store/wwwroot/images/app/schema-architecture.png?raw=true"   width="60%" style="width:60%" /></a>
 
 ## Architecture
 
@@ -17,6 +17,7 @@ This is the repository associated with the e-book [Globally-distributed applicat
 * [Azure Search](https://azure.microsoft.com/en-us/services/search/)
 * [Azure Redis Cache](https://azure.microsoft.com/en-us/services/cache/)
 * [Service Bus](https://azure.microsoft.com/en-us/services/service-bus/)
+* [App Services & WebJobs](https://azure.microsoft.com/en-us/services/app-service/)
 * [Azure SQL Databases](https://azure.microsoft.com/en-us/services/sql-database/)
 * [SQL Active Geo-Replication](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-geo-replication-overview)
 * [Azure Active Directory B2C](https://azure.microsoft.com/en-us/services/active-directory-b2c/)
@@ -27,13 +28,13 @@ Users can be authenticated either using [ASP.NET Core Identity](https://docs.mic
 
 The first 4 parts describe the features for each `Azure Service` used and their role in the design of the `Online.Store` application. It provides step by step instructions to configure `Online.Store` application settings and secret keys so that you can deploy it all over the globe. The final chapter explains the `PowerShell` scripts that you can use to automate processes in a globally distributed application *(resource provisioning, releases or rolling back updates)*
 
-![Globally-distributed applications with Microsoft Azure](/Online.Store/wwwroot/images/app/schema-replicas.png?raw=true "Globally-distributed applications with Microsoft Azure")
+<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="/Online.Store/wwwroot/images/app/schema-replicas.png?raw=true"   width="60%" style="width:60%" /></a>
 
 ## Continuous Integration & Delivery
 
-`Continuous Intragration & Delivery` is based in [AppVeyor](https://www.appveyor.com/) which is totally free to use for open-source projects 
+`Continuous Intregration & Delivery` is based in [AppVeyor](https://www.appveyor.com/) which is totally free to use for open-source projects 
 
-![Globally-distributed applications with Microsoft Azure](/Online.Store/wwwroot/images/app/schema-traffic-manager-current-status.png?raw=true "Globally-distributed applications with Microsoft Azure")
+<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="/Online.Store/wwwroot/images/app/schema-traffic-manager-current-status.png?raw=true"   width="60%" style="width:60%" /></a>
 
 ## Online.Store project
 
