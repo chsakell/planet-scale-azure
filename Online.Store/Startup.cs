@@ -118,18 +118,18 @@ namespace Online_Store
             }
             else
             {
-                app.Use(async (context, next) =>
-                {
-                    if (context.Request.IsHttps)
-                    {
-                        await next();
-                    }
-                    //else //if(bool.Parse(Configuration["Production:UseAlwaysHTTPS"]))
-                    //{
-                    //    var toHttps = "https://" + context.Request.Host + context.Request.Path;
-                    //    context.Response.Redirect(toHttps);
-                    //}
-                });
+                //app.Use(async (context, next) =>
+                //{
+                //    if (context.Request.IsHttps)
+                //    {
+                //        await next();
+                //    }
+                //    //else //if(bool.Parse(Configuration["Production:UseAlwaysHTTPS"]))
+                //    //{
+                //    //    var toHttps = "https://" + context.Request.Host + context.Request.Path;
+                //    //    context.Response.Redirect(toHttps);
+                //    //}
+                //});
 
                 app.UseExceptionHandler("/Home/Error");
             }
