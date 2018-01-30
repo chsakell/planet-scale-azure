@@ -82,7 +82,7 @@ namespace Online_Store
             services.AddDistributedRedisCache(option =>
             {
                 option.Configuration = string.Format(RedisCacheConnStringFormat,
-                            Configuration["RedisCache:Endpoint"],
+                            Configuration["RedisCache:Endpoint"] + ".redis.cache.windows.net:6380",
                             Configuration["RedisCache:Key"]);
 
                 // If you want to use local redis

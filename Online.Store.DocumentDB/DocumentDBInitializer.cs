@@ -25,7 +25,7 @@ namespace Online.Store.DocumentDB
 
         public static void Initialize(IConfiguration configuration)
         {
-            Endpoint = configuration["DocumentDB:Endpoint"];
+            Endpoint = string.Format("https://{0}.documents.azure.com:443/",configuration["DocumentDB:Endpoint"]);
             Key = configuration["DocumentDB:Key"];
             DatabaseId = configuration["DocumentDB:DatabaseId"];
             storageAccount = configuration["Storage:AccountName"];

@@ -10,7 +10,7 @@ namespace Online.Store.AzureSearch
     {
         public SearchStoreRepository(IConfiguration configuration)
         {
-            _documentDbEndpoint = configuration["DocumentDB:Endpoint"];
+            _documentDbEndpoint = string.Format("https://{0}.documents.azure.com:443/", configuration["DocumentDB:Endpoint"]);
             _documentDbAccountKey = configuration["DocumentDB:Key"];
             _documentDbDatabase = configuration["DocumentDB:DatabaseId"];
 

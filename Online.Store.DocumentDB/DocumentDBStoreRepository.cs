@@ -15,7 +15,7 @@ namespace Online.Store.DocumentDB
         private List<string> ConnectionPolicies;
         public DocumentDBStoreRepository(IConfiguration configuration)
         {
-            Endpoint = configuration["DocumentDB:Endpoint"];
+            Endpoint = string.Format("https://{0}.documents.azure.com:443/", configuration["DocumentDB:Endpoint"]);
             Key = configuration["DocumentDB:Key"];
             DatabaseId = configuration["DocumentDB:DatabaseId"];
 
