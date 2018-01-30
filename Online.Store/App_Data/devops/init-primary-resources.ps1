@@ -23,6 +23,14 @@ param (
 ECHO OFF
 Clear-Host
 
+# prefixes
+$storagePrefix = "storage";
+$cdnPrefix = "cdn";
+$cosmosDbPrefix = "cosmosdb";
+$trafficManagerPrefix = "traffic";
+$sqlServerPrefix = "sqlserver";
+$endpointPrefix = "endpoint";
+
 #####################################################################################################
 # Create the parent Resource Group
 # Get list of locations and select one.
@@ -45,7 +53,7 @@ else
 # Create the Storage Account
 # https://docs.microsoft.com/en-us/azure/storage/common/storage-powershell-guide-full
 # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
-$storageAccountName = "$PrimaryName";
+$storageAccountName = "$PrimaryName" + "$storagePrefix";
 
 Get-AzureRmStorageAccount -ResourceGroupName $PrimaryName `
                           -Name $storageAccountName -ev storageNotPresent -ea 0
@@ -70,7 +78,7 @@ else
 #####################################################################################################
 # Create the CDN Account
 # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell
-$cdnProfileName = "$PrimaryName";
+$cdnProfileName = "$PrimaryName-$cdnPrefix";
 
 Get-AzureRmCdnProfile -ProfileName $cdnProfileName -ResourceGroupName $PrimaryName -ev cdnNotPresent -ea 0
 if ($cdnNotPresent)
@@ -85,8 +93,8 @@ if ($cdnNotPresent)
     # Create a new endpoint
     # https://docs.microsoft.com/en-us/azure/cdn/cdn-manage-powershell#creating-cdn-profiles-and-endpoints
 
-    $cdnEnpointName = "$PrimaryName";
-    $endpointHost =  "$PrimaryName.blob.core.windows.net"
+    $cdnEnpointName = "$PrimaryName-$endpointPrefix";
+    $endpointHost =  "$storageAccountName.blob.core.windows.net"
 
     $availability = Get-AzureRmCdnEndpointNameAvailability -EndpointName $cdnEnpointName
 
@@ -95,7 +103,7 @@ if ($cdnNotPresent)
 
         New-AzureRmCdnEndpoint -ProfileName $cdnProfileName -ResourceGroupName $PrimaryName `
          -Location $ResourceGroupLocation -EndpointName $cdnEnpointName `
-         -OriginName "$PrimaryName" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
+         -OriginName "$storageAccountName" -OriginHostName $endpointHost -OriginHostHeader $endpointHost
     }
 }
 else
@@ -107,7 +115,7 @@ else
 # https://docs.microsoft.com/en-us/azure/cosmos-db/scripts/create-database-account-powershell?toc=%2fpowershell%2fmodule%2ftoc.json
 # https://docs.microsoft.com/en-us/azure/cosmos-db/manage-account-with-powershell
 
-$documentDbDatabase = "$PrimaryName";
+$documentDbDatabase = "$PrimaryName-$cosmosDbPrefix";
 
 $query = Find-AzureRmResource -ResourceNameContains $documentDbDatabase -ResourceType "Microsoft.DocumentDb/databaseAccounts"
 
@@ -146,7 +154,7 @@ else
 #####################################################################################################
 # Create the Traffic Manager Profile
 
-$tmpProfileName = "$PrimaryName";
+$tmpProfileName = "$PrimaryName-$trafficManagerPrefix";
 $tmpDnsName = "$PrimaryName";
 
 Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -ev tmpNotPresent -ea 0
@@ -170,7 +178,7 @@ if($CreateIdentityDatabase -and $SqlServerLogin -and $SqlServerPassword)
 {
     Write-Host "Checking for Identity Server and Database.."
 
-    $serverName =  "$PrimaryName";
+    $serverName =  "$PrimaryName-$sqlServerPrefix";
     $resourceGroupName = $PrimaryName;
     # Set an admin login and password for your database
     # The login information for the server

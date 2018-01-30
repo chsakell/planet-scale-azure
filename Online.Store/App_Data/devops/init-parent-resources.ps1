@@ -20,6 +20,11 @@ param (
 ECHO OFF
 Clear-Host
 
+# prefixes
+$serviceBusPrefix = "servicebus";
+$redisCachePrefix = "rediscache";
+$searchServicePrefix = "search";
+
 #####################################################################################################
 # Create the parent Resource Group
 # Get list of locations and select one.
@@ -44,7 +49,7 @@ else
 # Create the Service Bus
 # https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-manage-with-ps
 
-$serviceBusNameSpace = "$PrimaryName-" + $ResourceGroupLocation;
+$serviceBusNameSpace = "$PrimaryName-$ResourceGroupLocation-$serviceBusPrefix";
 
 $serviceBusExists = Test-AzureName -ServiceBusNamespace $serviceBusNameSpace
 
@@ -130,7 +135,7 @@ Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Cache"
 
 # Get-Help New-AzureRmRedisCache -detailed
 
-$cacheName = "$PrimaryName-" + "$ResourceGroupLocation";
+$cacheName = "$PrimaryName-$ResourceGroupLocation-$redisCachePrefix";
 
 $redisCache = Get-AzureRmRedisCache -Name $cacheName -ResourceGroupName $resourceGroupName -ErrorAction SilentlyContinue
 
@@ -155,7 +160,7 @@ else {
 # Register the ARM provider idempotently. This must be done once per subscription
 # Register-AzureRmResourceProvider -ProviderNamespace "Microsoft.Search"
 
-$searchEngineName = "$PrimaryName-" + "$ResourceGroupLocation";
+$searchEngineName = "$PrimaryName-$ResourceGroupLocation-$searchServicePrefix";
 $sku = "basic" # or "basic" or "standard" for paid services
 
 # You can get a list of potential locations with

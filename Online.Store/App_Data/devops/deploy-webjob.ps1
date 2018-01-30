@@ -43,8 +43,19 @@ param (
 Clear-Host
 # https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
 
-$serviceBusNameSpace = "$WebappParentResourceGroup"
-$webAppName = "$WebappResourceGroup";
+# prefixes
+$appServicePlanPrefix = "appserviceplan";
+$appServicePrefix = "appservice";
+$trafficManagerPrefix = "trafficmanager";
+$sqlServerPrefix = "sqlserver";
+$cosmosDbPrefix = "cosmosdb";
+$storagePrefix = "storage";
+$serviceBusPrefix = "servicebus";
+$redisCachePrefix = "rediscache";
+$searchServicePrefix = "search";
+
+$serviceBusNameSpace = "$WebappParentResourceGroup-$serviceBusPrefix";
+$webAppName = "$WebappResourceGroup-$appServicePrefix";
 $queueName = "orders"
 
 $readAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $WebappParentResourceGroup `
@@ -54,7 +65,7 @@ $webjobAppSettings = @{
   "ConnectionStrings" = @{
     "DefaultConnection" = "Server=tcp:$PrimaryDatabaseServer.database.windows.net,1433;Initial Catalog=$Database;Persist Security Info=False;User ID=$SqlServerLogin;Password=$SqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   };
-  "ServiceBus:Namespace" = "$WebappParentResourceGroup";
+  "ServiceBus:Namespace" = "$serviceBusNameSpace";
   "ServiceBus:Queue" = "$queueName";
   "ServiceBus:ReadAccessKeyName" = "read";
   "ServiceBus:ReadAccessKey" = "$readAccessKey";

@@ -29,12 +29,14 @@ param (
 ECHO OFF
 Clear-Host
 
+$sqlServerPrefix = "sqlserver";
+
 if([string]::IsNullOrEmpty($PrimaryServerName)) { 
-    $PrimaryServerName = "$PrimaryResourceGroupName"
+    $PrimaryServerName = "$PrimaryResourceGroupName-$sqlServerPrefix";
 }
 
 if([string]::IsNullOrEmpty($SecondaryServerName)) { 
-    $SecondaryServerName = "$SecondaryResourceGroupName"
+    $SecondaryServerName = "$SecondaryResourceGroupName-$sqlServerPrefix";
 }
 
 Write-Host "Database: $Database"

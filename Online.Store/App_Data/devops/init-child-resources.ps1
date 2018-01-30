@@ -53,6 +53,18 @@ param (
 ECHO OFF
 Clear-Host
 
+# prefixes
+$appServicePlanPrefix = "plan";
+$appServicePrefix = "web";
+$trafficManagerPrefix = "traffic";
+$sqlServerPrefix = "sqlserver";
+$cosmosDbPrefix = "cosmosdb";
+$storagePrefix = "storage";
+$serviceBusPrefix = "servicebus";
+$redisCachePrefix = "rediscache";
+$searchServicePrefix = "search";
+
+
 Write-Host "PrimaryName: $PrimaryName"
 Write-Host "ResourceGroupLocation $ResourceGroupLocation"
 Write-Host "Version $Version"
@@ -87,21 +99,22 @@ else
 #####################################################################################################
 # Create an App Service plan in Standard tier.
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/new-azurermappserviceplan?view=azurermps-5.1.1
-$webappName = "$resourceGroupName";
+$appServicePlan = "$resourceGroupName-$appServicePlanPrefix";
+$webappName = "$resourceGroupName-$appServicePrefix";
 
-Get-AzureRmAppServicePlan -ResourceGroupName $resourceGroupName -Name $webappName  -ev planNotPresent -ea 0
+Get-AzureRmAppServicePlan -ResourceGroupName $resourceGroupName -Name $appServicePlan  -ev planNotPresent -ea 0
 
 if ($planNotPresent)
 {
     # App Service Plan doesn't exist
-    Write-Host "Trying to create App Service Plan $resourceGroupName "
-    New-AzureRmAppServicePlan -Name $webappName -Location $ResourceGroupLocation `
+    Write-Host "Trying to create App Service Plan $appServicePlan "
+    New-AzureRmAppServicePlan -Name $appServicePlan -Location $ResourceGroupLocation `
         -ResourceGroupName $resourceGroupName -Tier Standard -WorkerSize Small
 }
 else
 {
     # App Service Plan exist
-    Write-Host "App Service Plan:  $webappName  already exists.."
+    Write-Host "App Service Plan:  $appServicePlan  already exists.."
 }
 #####################################################################################################
 # Create the App Service.
@@ -119,7 +132,7 @@ else {
     Write-Host "Trying to create App Service $webappName "
 
     New-AzureRmWebApp -Name $webappName -Location $ResourceGroupLocation `
-        -AppServicePlan $webappName -ResourceGroupName $resourceGroupName
+        -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroupName
 
     Write-Host "App Service $webappName successfully created at $resourceGroupName"
 }
@@ -151,13 +164,13 @@ $autoScaleProfile = New-AzureRmAutoscaleProfile -DefaultCapacity "1" `
                                                 -Name "autoscale-when-cpu-high"
 
 
-$webAppPlanResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $resourceGroupName -ResourceType "Microsoft.web/serverFarms").ResourceId
+$webAppPlanResourceId = (Get-AzureRmResource -ResourceGroupName $resourceGroupName -ResourceName $appServicePlan -ResourceType "Microsoft.web/serverFarms").ResourceId
 
-$autoScaleSetting = Get-AzureRmAutoscaleSetting -ResourceGroupName "$webappName" -Name "autoscale-when-cpu-high" -ErrorAction SilentlyContinue
+$autoScaleSetting = Get-AzureRmAutoscaleSetting -ResourceGroupName "$resourceGroupName" -Name "autoscale-when-cpu-high" -ErrorAction SilentlyContinue
 
 if($autoScaleSetting) {
 Remove-AzureRmAutoscaleSetting `
-      -ResourceGroupName $webappName `
+      -ResourceGroupName $resourceGroupName `
       -Name "autoscale-when-cpu-high" `
 }
 else {
@@ -172,17 +185,17 @@ Write-Host "Autoscale when CPU is high has been configured.."
 #####################################################################################################
 # Add the Traffic Manager Endpoint if not exists
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.trafficmanager/new-azurermtrafficmanagerendpoint?view=azurermps-5.1.1
-$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName $PrimaryName `
+$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName "$PrimaryName-$trafficManagerPrefix" `
                      -ResourceGroupName $PrimaryName -Type AzureEndpoints -ErrorAction SilentlyContinue
 
 if(!$TrafficManagerEndpoint) {
 
-    $webAppResourceId = (Get-AzureRmResource -ResourceGroupName $webappName -ResourceName $webappName -ResourceType "Microsoft.web/sites").ResourceId
+    $webAppResourceId = (Get-AzureRmResource -ResourceGroupName $resourceGroupName -ResourceName $webappName -ResourceType "Microsoft.web/sites").ResourceId
 
     Write-Host "Adding new Traffic Manager Endpoint [$webappName]..."
 
     New-AzureRmTrafficManagerEndpoint -EndpointStatus Disabled -Name $webappName `
-         -ProfileName $PrimaryName -ResourceGroupName $PrimaryName -Type AzureEndpoints `
+         -ProfileName "$PrimaryName-$trafficManagerPrefix" -ResourceGroupName $PrimaryName -Type AzureEndpoints `
          -TargetResourceId "$webAppResourceId"
 
     Write-Host "Endpoint [$webappName] added successfully.."
@@ -195,7 +208,7 @@ if(!$TrafficManagerEndpoint) {
 # Create the Logical SQL Server and Database
 # https://docs.microsoft.com/en-us/azure/sql-database/sql-database-get-started-powershell
 
-$serverName =  "$resourceGroupName";
+$serverName =  "$resourceGroupName-$sqlServerPrefix";
 # Set an admin login and password for your database
 # The login information for the server
 
@@ -256,7 +269,7 @@ if($CreateDatabase) {
 # Set App Service settings
 
 $primaryResourceGroupName = "$PrimaryName";
-$documentDbDatabase = "$PrimaryName"
+$documentDbDatabase = "$PrimaryName-$cosmosDbPrefix"
 $region = "$ResourceGroupLocation-$Version";
 # Retrieve the primary account keys
 $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
@@ -266,28 +279,29 @@ $docDbPrimaryMasterKey = Invoke-AzureRmResourceAction -Action listKeys `
     -Name $documentDbDatabase | select -ExpandProperty  primaryMasterKey
 
 # Get Storage Account Key
+$storaceAccountName =  "$PrimaryName" + "$storagePrefix";
 $storageAccountKey = (Get-AzureRmStorageAccountKey -ResourceGroupName $primaryResourceGroupName `
- -AccountName $primaryResourceGroupName).Value[0] 
+ -AccountName $storaceAccountName).Value[0] 
 
-$parentResourceGroup = "$PrimaryName-$ResourceGroupLocation"
+$parentResourceGroup = "$PrimaryName-$ResourceGroupLocation";
 # Get Redis Cache Key
-$cacheName = "$PrimaryName-$ResourceGroupLocation"
+$cacheName = "$PrimaryName-$ResourceGroupLocation-$redisCachePrefix";
 $cachePrimaryKey = (Get-AzureRmRedisCacheKey -Name $cacheName -ResourceGroupName $parentResourceGroup).PrimaryKey
 
 # Get Service Bus Queue orders Write Rule Key
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.servicebus/Get-AzureRmServiceBusKey?view=azurermps-5.1.1
 $queueName = "orders"
-$serviceBusNameSpace = "$PrimaryName-" + $ResourceGroupLocation;
+$serviceBusNameSpace = "$PrimaryName-$ResourceGroupLocation-$serviceBusPrefix";
 $writeAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $parentResourceGroup `
      -Namespace $serviceBusNameSpace -Queue $queueName -Name "write").PrimaryKey
 
 # Get Search Service Primary Key
 # https://docs.microsoft.com/en-us/azure/search/search-manage-powershell
-$searchServiceInfo = "$PrimaryName-" + $ResourceGroupLocation;
+$searchServiceInfo = "$PrimaryName-$ResourceGroupLocation-$searchServicePrefix";
 # Get information about your new service and store it in $resource
 $searchService = Get-AzureRmResource `
     -ResourceType "Microsoft.Search/searchServices" `
-    -ResourceGroupName $searchServiceInfo `
+    -ResourceGroupName $parentResourceGroup `
     -ResourceName $searchServiceInfo `
     -ApiVersion "2015-08-19"
 
@@ -304,10 +318,10 @@ $settings = @{
     "SearchService:Name" = "$searchServiceInfo";
     "SearchService:ApiKey" = "$searchServicePrimaryKey";
     "Storage:AccountKey" = "$storageAccountKey";
-    "RedisCache:Endpoint" = "$parentResourceGroup.redis.cache.windows.net:6380";
+    "RedisCache:Endpoint" = "$cacheName";
     "RedisCache:Key" = "$cachePrimaryKey";
     "Region"= "$region";
-    "ServiceBus:Namespace" = "$parentResourceGroup";
+    "ServiceBus:Namespace" = "$serviceBusNameSpace";
     "ServiceBus:Queue" = "orders";
     "ServiceBus:WriteAccessKeyName" = "write";
     "ServiceBus:WriteAccessKey" = "$writeAccessKey";
@@ -334,7 +348,7 @@ $connString = @{}
 $connString["DefaultConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$serverName.database.windows.net,1433;Initial Catalog=$Database;Persist Security Info=False;User ID=$SqlServerLogin;Password=$SqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
 
 if($UseIdentity -and $IdentitySqlServerLogin -and $IdentitySqlServerPassword) {
-    $identityServer = $PrimaryName;
+    $identityServer = "$PrimaryName-$sqlServerPrefix";
     $IdentityDatabase = "identitydb";
     $connString["IdentityConnection"] = @{ Type = "SqlAzure"; Value = "Server=tcp:$identityServer.database.windows.net,1433;Initial Catalog=$IdentityDatabase;Persist Security Info=False;User ID=$IdentitySqlServerLogin;Password=$IdentitySqlServerPassword;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" }
 }
