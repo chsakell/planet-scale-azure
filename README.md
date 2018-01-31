@@ -22,7 +22,9 @@ This is the repository associated with the e-book [Globally-distributed applicat
 * [SQL Active Geo-Replication](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-geo-replication-overview)
 * [Azure Active Directory B2C](https://azure.microsoft.com/en-us/services/active-directory-b2c/)
 
-Users can be authenticated either using [ASP.NET Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity) or [Azure Active Directory B2C](https://azure.microsoft.com/en-us/services/active-directory-b2c/)
+Users authenticate using either [ASP.NET Core Identity](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity) or [Azure Active Directory B2C](https://azure.microsoft.com/en-us/services/active-directory-b2c/)
+
+<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="https://chsakell.files.wordpress.com/2018/01/read-book.png" /></a>
 
 ## The book
 
