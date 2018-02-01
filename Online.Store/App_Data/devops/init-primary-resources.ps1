@@ -27,7 +27,6 @@ Clear-Host
 $storagePrefix = "storage";
 $cdnPrefix = "cdn";
 $cosmosDbPrefix = "cosmosdb";
-$trafficManagerPrefix = "traffic";
 $sqlServerPrefix = "sqlserver";
 $endpointPrefix = "endpoint";
 
@@ -154,7 +153,7 @@ else
 #####################################################################################################
 # Create the Traffic Manager Profile
 
-$tmpProfileName = "$PrimaryName-$trafficManagerPrefix";
+$tmpProfileName = "$PrimaryName";
 $tmpDnsName = "$PrimaryName";
 
 Get-AzureRmTrafficManagerProfile -Name $tmpProfileName -ResourceGroupName $PrimaryName -ev tmpNotPresent -ea 0
