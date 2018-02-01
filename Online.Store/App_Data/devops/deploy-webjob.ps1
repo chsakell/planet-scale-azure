@@ -37,17 +37,16 @@ param (
     [Parameter(Mandatory = $true)] [string] $WebappParentResourceGroup,
     [Parameter(Mandatory = $true)] [string] $WebappResourceGroup,
     [Parameter(Mandatory = $true)] [string] $WebjobAppLocation,
-    [Parameter(Mandatory = $true)] [string] $DeploymentDestinationFolder
+    [Parameter(Mandatory = $true)] [string] $DeploymentDestinationFolder,
+    [Parameter(Mandatory = $false)] [string] $slot
 )
 
 Clear-Host
 # https://docs.microsoft.com/en-us/azure/app-service/web-sites-create-web-jobs
 
 # prefixes
-$appServicePlanPrefix = "appserviceplan";
-$appServicePrefix = "appservice";
-$trafficManagerPrefix = "trafficmanager";
-$sqlServerPrefix = "sqlserver";
+$appServicePlanPrefix = "plan";
+$sqlServerPrefix = "sql";
 $cosmosDbPrefix = "cosmosdb";
 $storagePrefix = "storage";
 $serviceBusPrefix = "servicebus";
@@ -55,7 +54,7 @@ $redisCachePrefix = "rediscache";
 $searchServicePrefix = "search";
 
 $serviceBusNameSpace = "$WebappParentResourceGroup-$serviceBusPrefix";
-$webAppName = "$WebappResourceGroup-$appServicePrefix";
+$webAppName = "$WebappResourceGroup";
 $queueName = "orders"
 
 $readAccessKey = (Get-AzureRmServiceBusKey -ResourceGroup  $WebappParentResourceGroup `
@@ -116,21 +115,39 @@ $Apiversion = "2015-08-01"
 $webjobName = "orders"
 
 #Function to get Publishing credentials for the WebApp :
-function Get-PublishingProfileCredentials($resourceGroupName, $webAppName) {
-    $resourceType = "Microsoft.Web/sites/config"
-    $resourceName = "$webAppName/publishingcredentials"
-    $publishingCredentials = Invoke-AzureRmResourceAction -ResourceGroupName $WebappResourceGroup `
-     -ResourceType $resourceType -ResourceName $resourceName -Action list -ApiVersion $Apiversion -Force
-       return $publishingCredentials
+function Get-PublishingProfileCredentials($resourceGroupName, $webAppName, $slot) {
+
+    $publishProfile = Get-AzureRmWebAppSlotPublishingProfile -ResourceGroupName "$resourceGroupName" `
+    -Name "$webappName" -Format "WebDeploy" -Slot "$slot"
+
+    return $publishProfile;
 }
 
 #Pulling authorization access token :
-function Get-KuduApiAuthorisationHeaderValue($resourceGroupName, $webAppName) {
-    $publishingCredentials = Get-PublishingProfileCredentials $WebappResourceGroup $webAppName
-    return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $publishingCredentials.Properties.PublishingUserName, $publishingCredentials.Properties.PublishingPassword))))
+#Pulling authorization access token :
+function Get-KuduApiAuthorisationHeaderValue($resourceGroupName, $webAppName, $slot) {
+    $publishProfile = Get-PublishingProfileCredentials $WebappResourceGroup $webAppName $slot
+    $xml = [xml]$publishProfile
+    $msDeployNode = $xml | Select-XML -XPath "//*[@publishMethod='MSDeploy']"
+
+    $publishUrl = $msDeployNode.Node.publishUrl
+    Write-Host $publishUrl
+    $userName = $msDeployNode.Node.userName
+    $password = $msDeployNode.Node.userPWD
+    return ("Basic {0}" -f [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $userName, $password))))
 }
 
-$accessToken = Get-KuduApiAuthorisationHeaderValue $WebappResourceGroup $webAppname
+$apiUrl = "https://$webAppName.scm.azurewebsites.net/api/continuouswebjobs/$webjobName" # WebJob Type: continous/triggered
+
+if($slot -and $slot -ne "production") {
+    $apiUrl = "https://$webAppName-$slot.scm.azurewebsites.net/api/continuouswebjobs/$webjobName" # WebJob Type: continous/triggered
+}
+
+if(!$slot) {
+  $slot = "production";
+}
+
+$accessToken = Get-KuduApiAuthorisationHeaderValue $WebappResourceGroup $webAppname $slot
 
 #Generating header to create and publish the Webjob :
 $Header = @{
@@ -141,7 +158,10 @@ $Header = @{
 # Webjob uploading
 # https://github.com/projectkudu/kudu/wiki/WebJobs-API
 Write-Host "Uploading WebJob..."
-$apiUrl = "https://$webAppName.scm.azurewebsites.net/api/continuouswebjobs/$webjobName" # WebJob Type: continous/triggered
+
+
+Write-Host "API URL: $apiUrl" 
+
 $result = Invoke-RestMethod -Uri $apiUrl -Headers $Header -Method put -InFile "$zipFile" -ContentType 'application/zip' 
 #NOTE: Update the above script with the parameters highlighted and run in order to push a new Webjob under the specified WebApp.
 Write-Host "WebJob uploaded.."

@@ -27,7 +27,7 @@ Clear-Host
 $storagePrefix = "storage";
 $cdnPrefix = "cdn";
 $cosmosDbPrefix = "cosmosdb";
-$sqlServerPrefix = "sqlserver";
+$sqlServerPrefix = "sql";
 $endpointPrefix = "endpoint";
 
 #####################################################################################################
@@ -167,7 +167,7 @@ if($tmpNotPresent) {
     Write-Host "Traffic Manager Profile created successfully.."
 }
 else {
-    Write-Host "Traffic Maanger $tmpProfileName already exists.."
+    Write-Host "Traffic Manager $tmpProfileName already exists.."
 }
 
 #####################################################################################################

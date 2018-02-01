@@ -36,7 +36,8 @@ param (
     [Parameter(Mandatory = $true)] [string] $webappName,
     [Parameter(Mandatory = $true)] [string] $resourceGroupName,
     [Parameter(Mandatory = $true)] [string] $deploymentEnvironment,
-    [Parameter(Mandatory = $false)] [string] $build
+    [Parameter(Mandatory = $false)] [string] $build,
+    [Parameter(Mandatory = $false)] [string] $slot
 )
 Clear-Host
 # Function to check if node process running (npm install..)
@@ -45,6 +46,10 @@ Clear-Host
 Param ([string]$webappName, [string]$auth) 
     Process {
         $processesAPI = "https://$webappName.scm.azurewebsites.net/api/processes/";
+
+        if($slot) {
+            $processesAPI = "https://$webappName-$slot.scm.azurewebsites.net/api/processes/";
+        }
 
         Write-Host "Invoking 'get processes' on $webappName ..."
 
@@ -100,7 +105,7 @@ $runningDeployment = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/deploym
 $runningDeploymentStatus = $runningDeployment.deployment.status;
 
 while($runningDeploymentStatus -eq "running" -or $runningDeploymentStatus -eq "queued" ){
-    Write-Host "Publishing artifacts to [$webappName] Status: $runningDeploymentStatus"
+    Write-Host "Publishing artifacts to [$webappName] Slot: $slot Status: $runningDeploymentStatus"
     # Sleep for 2 seconds..
     Start-Sleep -s 2
     $runningDeployment = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/deployments/$deploymentId" `
@@ -108,13 +113,17 @@ while($runningDeploymentStatus -eq "running" -or $runningDeploymentStatus -eq "q
     $runningDeploymentStatus = $runningDeployment.deployment.status;
 }
 if($runningDeploymentStatus -eq "success") {
+    if(!$slot) {
+        $slot = "production";
+    }
+
     Write-Host "Artifacts deployed succsfully.."
     # Run additional scripts here..
     # Get App Service publish profile
 
     Write-Host "Retrieving publish profile information.."
     $publishProfile = Get-AzureRmWebAppSlotPublishingProfile -ResourceGroupName "$resourceGroupName" `
-        -Name "$webappName" -Format "WebDeploy" -Slot "production"
+        -Name "$webappName" -Format "WebDeploy" -Slot "$slot"
 
     $xml = [xml]$publishProfile
     $msDeployNode = $xml | Select-XML -XPath "//*[@publishMethod='MSDeploy']"
@@ -126,7 +135,11 @@ if($runningDeploymentStatus -eq "success") {
     $body = '{ "command": "npm install", "dir": "site/wwwroot" }'
     $apiUrl = "https://$webappName.scm.azurewebsites.net/api/command"
 
-    Write-Output "Invoking 'npm install' on $webappName ..."
+    if($slot -ne "production") {
+        $apiUrl = "https://$webappName-$slot.scm.azurewebsites.net/api/command"
+    }
+
+    Write-Output "Invoking 'npm install' on $webappName Slot: $slot ..."
 
     Try {
         $response = Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $auth)} -Method Post `

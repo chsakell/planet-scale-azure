@@ -21,23 +21,13 @@ The Secondary Server's name. If null the SecondaryResourceGroupName will be used
 param (
     [Parameter(Mandatory = $true)] [string] $Database,
     [Parameter(Mandatory = $true)] [string] $PrimaryResourceGroupName,
-    [Parameter(Mandatory = $false)] [string] $PrimaryServerName,
+    [Parameter(Mandatory = $true)] [string] $PrimaryServerName,
     [Parameter(Mandatory = $true)] [string] $SecondaryResourceGroupName,
-    [Parameter(Mandatory = $false)] [string] $SecondaryServerName
+    [Parameter(Mandatory = $true)] [string] $SecondaryServerName
 )
 
 ECHO OFF
 Clear-Host
-
-$sqlServerPrefix = "sqlserver";
-
-if([string]::IsNullOrEmpty($PrimaryServerName)) { 
-    $PrimaryServerName = "$PrimaryResourceGroupName-$sqlServerPrefix";
-}
-
-if([string]::IsNullOrEmpty($SecondaryServerName)) { 
-    $SecondaryServerName = "$SecondaryResourceGroupName-$sqlServerPrefix";
-}
 
 Write-Host "Database: $Database"
 Write-Host "PrimaryResourceGroupName: $PrimaryResourceGroupName"

@@ -27,7 +27,8 @@ param (
     [Parameter(Mandatory = $true)] [string] $token,
     [Parameter(Mandatory = $true)] [string] $projectSlug,
     [Parameter(Mandatory = $true)] [string] $webappName,
-    [Parameter(Mandatory = $true)] [string] $resourceGroupName
+    [Parameter(Mandatory = $true)] [string] $resourceGroupName,
+    [Parameter(Mandatory = $false)] [string] $slot
 )
 
 $headers = @{
@@ -35,12 +36,16 @@ $headers = @{
   "Content-type" = "application/json"
 }
 
+if(!$slot) {
+    $slot = "production";
+}
+
 ####################################################################
 # Get App Service publish profile
 # https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/get-azurermwebappslotpublishingprofile?view=azurermps-5.1.1
 
 $publishProfile = Get-AzureRmWebAppSlotPublishingProfile -ResourceGroupName "$resourceGroupName" `
-    -Name "$webappName" -Format "WebDeploy" -Slot "production"
+    -Name "$webappName" -Format "WebDeploy" -Slot "$slot"
 
 $xml = [xml]$publishProfile
 $msDeployNode = $xml | Select-XML -XPath "//*[@publishMethod='MSDeploy']"
@@ -51,10 +56,12 @@ $password = $msDeployNode.Node.userPWD
 
 
 # Get Environment
+$deploymentEnvironmentName = "$webappName-$slot"
+
 $environments = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/environments/" `
     -Headers $headers -Method Get
 
-$queryEnvironment = ($environments | Where-Object name -eq $webappName)
+$queryEnvironment = ($environments | Where-Object name -eq $deploymentEnvironmentName)
 
 if($queryEnvironment) {
     $deploymentEnvironmentId = $queryEnvironment.deploymentEnvironmentId;
@@ -63,7 +70,7 @@ if($queryEnvironment) {
     # Update Environment
     $updatedEnvironment = @{
         deploymentEnvironmentId = "$deploymentEnvironmentId";
-        name = "$webappName";
+        name = "$deploymentEnvironmentName";
         environmentAccessKey = "WebDeploy";
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     settings = @{
         providerSettings = @(
@@ -236,7 +243,7 @@ if($queryEnvironment) {
 
     # Add an Environment 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             $newEnvironment = @{
-    name = "$webappName";
+    name = "$deploymentEnvironmentName";
     provider = "WebDeploy";
     settings = @{
         providerSettings = @(
