@@ -36,7 +36,7 @@ The first 4 parts describe the features for each `Azure Service` used and their 
 
 `Continuous Intregration & Delivery` is based in [AppVeyor](https://www.appveyor.com/) which is totally free to use for open-source projects 
 
-<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="/Online.Store/wwwroot/images/app/schema-traffic-manager-current-status.png?raw=true"   width="60%" style="width:60%" /></a>
+<a href="https://leanpub.com/globally-distributed-applications-with-microsoft-azure"><img src="/Online.Store/wwwroot/images/app/schema-chaining-georeplication.png?raw=true"   width="60%" style="width:60%" /></a>
 
 ## Online.Store project
 
