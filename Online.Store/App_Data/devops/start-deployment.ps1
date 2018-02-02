@@ -27,6 +27,9 @@ App Service name <child-resource-group>
 
 .PARAMETER build
 build to deployed - optional. If omitted the lastest build will be used
+
+.PARAMETER slot
+slot to deployed - optional. If omitted production will be used
 #>
 
 param (
@@ -117,7 +120,7 @@ if($runningDeploymentStatus -eq "success") {
         $slot = "production";
     }
 
-    Write-Host "Artifacts deployed succsfully.."
+    Write-Host "Artifacts deployed succesfully.."
     # Run additional scripts here..
     # Get App Service publish profile
 
@@ -149,8 +152,9 @@ if($runningDeploymentStatus -eq "success") {
         Write-Output $response.Output
     }
     Catch {
-        Write-Host "Waiting for npm install...";
+        Write-Host "Waiting for npm install to finish...";
 
+        <#
         $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
         $nodeProcesses;
         while(!($nodeProcesses -eq $null)) {
@@ -159,6 +163,7 @@ if($runningDeploymentStatus -eq "success") {
             Start-Sleep -s 20
             $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
         }
+        #>
     }
 
 

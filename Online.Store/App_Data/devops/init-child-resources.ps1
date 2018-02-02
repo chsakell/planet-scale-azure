@@ -10,9 +10,9 @@ Basic name to be used for resources
 .PARAMETER ResourceGroupLocation
 Azure Region for the resource group. Must be the same with the parent one
 
-.PARAMETER Version
-Sub region Version. Usually you will need two for business continuity
-e.g a or b
+.PARAMETER SqlServerVersion
+SQL Server version prefix
+e.g a or b => planetscalestore-westeurope-app-sql-a
 
 .PARAMETER SqlServerLogin
 SQL Logical Server's admin username.

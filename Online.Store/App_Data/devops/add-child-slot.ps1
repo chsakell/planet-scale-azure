@@ -84,12 +84,11 @@ $azureSlot = Get-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `
 
 if ($azureSlot)
 {
-    # App Service Plan doesn't exist
     Write-Host "Azure Slot already exists.."
 }
 else
 {
-    # App Service Plan exist
+    # Upgrade slot doesn't exist
     Write-Host "Creating Azure Slot to $webappName .."
 
     New-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `

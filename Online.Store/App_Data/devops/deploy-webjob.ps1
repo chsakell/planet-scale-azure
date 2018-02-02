@@ -28,6 +28,9 @@ App Service Resource Group & Name
 Local path of the Online.Store.WebJob project
 e.g. "C:\workspace\chsakell\planet-scale-azure\Online.Store.WebJob"
 
+.PARAMETER slot
+The slot to deploy the webjob. If omitted then production is used
+
 #>
 param (
     [Parameter(Mandatory = $true)] [string] $PrimaryDatabaseServer,
