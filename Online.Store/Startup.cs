@@ -85,7 +85,7 @@ namespace Online_Store
                             Configuration["RedisCache:Endpoint"] + ".redis.cache.windows.net:6380",
                             Configuration["RedisCache:Key"]);
 
-                // If you want to use local redis
+                // If you want to use local redis, first install locally
                 //option.Configuration = "localhost";
                 option.InstanceName = "master-";
             });
