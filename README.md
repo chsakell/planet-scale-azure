@@ -1,6 +1,6 @@
 # Globally-distributed applications with Microsoft Azure
 
-[![Build status](https://ci.appveyor.com/api/projects/status/n4p67xq9llkhiqn1/branch/master?svg=true)](https://ci.appveyor.com/project/chsakell/planet-scale-azure/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/72n7u4i4rs4hrrs8/branch/master?svg=true)](https://ci.appveyor.com/project/chsakell/planet-scale-azure/branch/master)
 
 This is the repository associated with the e-book [Globally-distributed applications with Microsoft Azure](https://leanpub.com/globally-distributed-applications-with-microsoft-azure)
 
