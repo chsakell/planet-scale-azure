@@ -287,7 +287,8 @@ if($AzureIDClientSecret) {
 Write-Host "Setting App Settings for $webappName"
 $printSettings = ConvertTo-Json $settings -Depth 2
 $printSettings
-Set-AzureWebsite $webappName -AppSettings $settings
+# Set-AzureWebsite $webappName -AppSettings $settings
+Set-AzureRmWebApp -ResourceGroupName "$resourceGroupName" -Name "$webappName" -AppSettings $settings
 Write-Host "App Settings updated successfully..."
 
 
