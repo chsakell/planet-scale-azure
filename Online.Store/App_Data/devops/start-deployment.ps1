@@ -153,7 +153,7 @@ if($runningDeploymentStatus -eq "success") {
     }
     Catch {
         Write-Host "Waiting for npm install to finish...";
-
+        Write-Host "Wait for a few minutes before npm install finishes"
         <#
         $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
         $nodeProcesses;

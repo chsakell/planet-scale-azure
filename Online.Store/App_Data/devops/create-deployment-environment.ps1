@@ -56,7 +56,11 @@ $password = $msDeployNode.Node.userPWD
 
 
 # Get Environment
-$deploymentEnvironmentName = "$webappName-$slot"
+$deploymentEnvironmentName = "$webappName"
+
+if($slot -and $slot -ne "production") {
+    $deploymentEnvironmentName = "$webappName-$slot"
+}
 
 $environments = Invoke-RestMethod -Uri "https://ci.appveyor.com/api/environments/" `
     -Headers $headers -Method Get
