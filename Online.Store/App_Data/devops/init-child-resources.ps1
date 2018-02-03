@@ -276,6 +276,12 @@ $settings = @{
     "ServiceBus:Queue" = "orders";
     "ServiceBus:WriteAccessKeyName" = "write";
     "ServiceBus:WriteAccessKey" = "$writeAccessKey";
+    # You can add the follow as well, but they supposed to be same for
+    # all App Services and exist in the appsettings.json file
+    # "CDN:Endpoint" = "https://$PrimaryName-endpoint.azureedge.net";
+    # "DocumentDB:Endpoint" = "$PrimaryName-$cosmosDbPrefix";
+    # "DocumentDB:DatabaseId" = "$PrimaryName";
+    # "Storage:AccountName" = "$PrimaryName" + "storage";
 }
 
 $settings.Add("UseIdentity", $UseIdentity.ToString());

@@ -153,7 +153,8 @@ if($runningDeploymentStatus -eq "success") {
     }
     Catch {
         Write-Host "Waiting for npm install to finish...";
-        Write-Host "Wait for a few minutes before npm install finishes"
+        Write-Host "Wait for a few minutes before npm install finishes";
+        Write-Host "You can also open the Kudu interface in the App Service to check the npm install status";
         <#
         $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
         $nodeProcesses;
