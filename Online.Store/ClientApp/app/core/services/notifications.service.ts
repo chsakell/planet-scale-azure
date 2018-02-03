@@ -33,7 +33,7 @@ export class NotifyService {
                         this._service.success('Success', notification.message);
                         break;
                     case MessageType.Error:
-                        this._service.error('Error', notification.message);
+                        this._service.html(notification.message, 'error');
                         break;
                     default:
                         this._service.info('Info', notification.message);

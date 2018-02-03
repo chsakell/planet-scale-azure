@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Online.Store.Core;
 using Online.Store.Models;
 using Online.Store.Models.AccountViewModels;
 using Online.Store.Services;
@@ -83,10 +84,10 @@ namespace Online.Store.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return BadRequest(new ResultViewModel()
+            return Ok(new ResultViewModel()
             {
                 Result = Result.ERROR,
-                Message = "Bad request"
+                Message = ModelState.ListMessages()
             });
         }
 
@@ -252,12 +253,14 @@ namespace Online.Store.Controllers
                     });
                 }
             }
-
-            return BadRequest(new ResultViewModel()
+            else
             {
-                Result = Result.ERROR,
-                Message = "Bad request"
-            });
+                return Ok(new ResultViewModel()
+                {
+                    Result = Result.ERROR,
+                    Message = ModelState.ListMessages()
+                });
+            }
         }
 
         [HttpGet]

@@ -34,7 +34,6 @@ export class AccountService {
     }
 
     registerUser(user: RegisterVM): Observable<ResultVM> {
-        debugger;
         let url = user.useIdentity === true ? this.identityURI : this.accountURI;
         return this.http.post(url + 'register', JSON.stringify(user), this.requestOptions)
             .map((res: Response) => res.json())

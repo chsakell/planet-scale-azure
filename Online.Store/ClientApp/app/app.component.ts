@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     firstRouteEnd: boolean = false;
 
     public options = {
-        position: ["bottom", "right"],
+        position: ["bottom", "left"],
         timeOut: 5000,
         lastOnBottom: true,
         showProgressBar: true
