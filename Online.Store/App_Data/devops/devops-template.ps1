@@ -102,6 +102,14 @@ $primaryName = "primary-name-here"
                         -slot "upgrade"
 
 #####################################################################################################
+# Enable / Disable Traffic Manager Profile endpoints
+
+.\set-traffic-manager-endpoint.ps1 -EndpointName "$primaryName-westeurope-app" `
+                                   -TraficManagerProfile "$primaryName" `
+                                   -ResourceGroupName "$primaryName" `
+                                   -Enable $true
+
+#####################################################################################################
 # Swap deployment slots
 Switch-AzureRmWebAppSlot -ResourceGroupName "$primaryName-westeurope-app" `
                          -Name "$primaryName-westeurope-app" `
