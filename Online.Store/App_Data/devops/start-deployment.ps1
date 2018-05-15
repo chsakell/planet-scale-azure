@@ -123,6 +123,7 @@ if($runningDeploymentStatus -eq "success") {
     Write-Host "Artifacts deployed succesfully.."
     # Run additional scripts here..
     # Get App Service publish profile
+    <#
 
     Write-Host "Retrieving publish profile information.."
     $publishProfile = Get-AzureRmWebAppSlotPublishingProfile -ResourceGroupName "$resourceGroupName" `
@@ -155,18 +156,8 @@ if($runningDeploymentStatus -eq "success") {
         Write-Host "Waiting for npm install to finish...";
         Write-Host "Wait for a few minutes before npm install finishes";
         Write-Host "You can also open the Kudu interface in the App Service to check the npm install status";
-        <#
-        $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
-        $nodeProcesses;
-        while(!($nodeProcesses -eq $null)) {
-            Write-Host "npm install still running..";
-            # Sleep for 20 seconds..
-            Start-Sleep -s 20
-            $nodeProcesses = NodeRunning -webappName $webappName -auth $auth;
-        }
-        #>
     }
-
+    #>
 
     Write-Host "Deployment finished succesfully.."
 }
