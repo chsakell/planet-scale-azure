@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Create the sub-region resources [App Service, SQL Server, Database(optional)]
+Create the App Service's slot resources [SQL Server]
 
 .Author: Christos Sakellarios
 
@@ -10,9 +10,9 @@ Basic name to be used for resources
 .PARAMETER ResourceGroupLocation
 Azure Region for the resource group. Must be the same with the parent one
 
-.PARAMETER SqlServerVersion
-SQL Server version prefix
-e.g a or b => planetscalestore-westeurope-app-sql-a
+.PARAMETER Version
+Sub region Version. Usually you will need two for business continuity
+e.g a or b
 
 .PARAMETER SqlServerLogin
 SQL Logical Server's admin username.
@@ -39,7 +39,6 @@ param (
     [Parameter(Mandatory = $true)] [string] $SqlServerVersion,
     [Parameter(Mandatory = $true)] [string] $SqlServerLogin,
     [Parameter(Mandatory = $true)] [string] $SqlServerPassword,
-    [Parameter(Mandatory = $true)] [bool] $CreateDatabase,
     [Parameter(Mandatory = $true)] [string] $Database,
     [Parameter(Mandatory = $true)] [string] $DocumentDBPolicies,
     [Parameter(Mandatory = $false)] [string] $AzureIDClientSecret,
@@ -66,94 +65,38 @@ Write-Host "ResourceGroupLocation $ResourceGroupLocation"
 Write-Host "Version $Version"
 Write-Host "SqlServerLogin $SqlServerLogin"
 Write-Host "SqlServerPassword $SqlServerPassword"
-Write-Host "CreateDatabase $CreateDatabase"
-Write-Host "Database $Database"
-
-
-#####################################################################################################
-# Create the sub Resource Group that contains the Web App and SQL Server/database
-# Get list of locations and select one.
-# Get-AzureRmLocation | select Location 
 
 $resourceGroupName = "$PrimaryName-$ResourceGroupLocation-app";
 
-Get-AzureRmResourceGroup -Name $resourceGroupName -ev notPresent -ea 0
-
-if ($notPresent)
-{
-    # ResourceGroup doesn't exist
-    Write-Host "Trying to create Resource Group: $resourceGroupName "
-    New-AzureRmResourceGroup -Name $resourceGroupName -Location $ResourceGroupLocation
-}
-else
-{
-    # ResourceGroup exist
-    Write-Host "Resource Group:  $resourceGroupName  already exists.."
-}
-
 
 #####################################################################################################
-# Create an App Service plan in Standard tier.
-# https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/new-azurermappserviceplan?view=azurermps-5.1.1
+# Create the App Service Slot
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/get-azurermwebappslot?view=azurermps-5.1.1
+# https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/new-azurermwebappslot?view=azurermps-5.1.1
+
 $appServicePlan = "$resourceGroupName-$appServicePlanPrefix";
 $webappName = "$resourceGroupName";
+$slotName = "upgrade";
 
-Get-AzureRmAppServicePlan -ResourceGroupName $resourceGroupName -Name $appServicePlan  -ev planNotPresent -ea 0
+$azureSlot = Get-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `
+                      -Name "$webappName" -Slot "$slotName" `
+                      -ErrorAction SilentlyContinue
 
-if ($planNotPresent)
+if ($azureSlot)
 {
-    # App Service Plan doesn't exist
-    Write-Host "Trying to create App Service Plan $appServicePlan "
-    New-AzureRmAppServicePlan -Name $appServicePlan -Location $ResourceGroupLocation `
-        -ResourceGroupName $resourceGroupName -Tier "Standard" -WorkerSize Small
+    Write-Host "Azure Slot already exists.."
 }
 else
 {
-    # App Service Plan exist
-    Write-Host "App Service Plan:  $appServicePlan  already exists.."
+    # Upgrade slot doesn't exist
+    Write-Host "Creating Azure Slot to $webappName .."
+
+    New-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `
+                          -Name "$webappName" -AppServicePlan "$appServicePlan" `
+                          -Slot "$slotName"
+
+    Write-Host "$slotName Azure Slot created.."
 }
-#####################################################################################################
-# Create the App Service.
-# https://docs.microsoft.com/en-us/azure/app-service/app-service-powershell-samples
-
-$appServiceExists = Get-AzureRmResource -Name $webappName -ResourceType "Microsoft.Web/sites" -ea 0
-
-# Check if the namespace already exists or needs to be created
-if ($appServiceExists) {
-    # App Service Plan doesn't exist
-    Write-Host "App Service $webappName already exists.."
-}
-else {
-    # App Service Plan doesn't exist
-    Write-Host "Trying to create App Service $webappName "
-
-    New-AzureRmWebApp -Name $webappName -Location $ResourceGroupLocation `
-        -AppServicePlan $appServicePlan -ResourceGroupName $resourceGroupName
-
-    Write-Host "App Service $webappName successfully created at $resourceGroupName"
-}
-
-#####################################################################################################
-# Add the Traffic Manager Endpoint if not exists
-# https://docs.microsoft.com/en-us/powershell/module/azurerm.trafficmanager/new-azurermtrafficmanagerendpoint?view=azurermps-5.1.1
-$TrafficManagerEndpoint = Get-AzureRmTrafficManagerEndpoint -Name $webappName -ProfileName "$PrimaryName" `
-                     -ResourceGroupName $PrimaryName -Type AzureEndpoints -ErrorAction SilentlyContinue
-
-if(!$TrafficManagerEndpoint) {
-
-    $webAppResourceId = (Get-AzureRmResource -ResourceGroupName $resourceGroupName -Name $webappName -ResourceType "Microsoft.Web/sites").ResourceId
-
-    Write-Host "Adding new Traffic Manager Endpoint [$webappName]..."
-
-    New-AzureRmTrafficManagerEndpoint -EndpointStatus Disabled -Name $webappName `
-         -ProfileName "$PrimaryName" -ResourceGroupName $PrimaryName -Type AzureEndpoints `
-         -TargetResourceId "$webAppResourceId"
-
-    Write-Host "Endpoint [$webappName] added successfully.."
-} else {
-    Write-Host "Traffic Manager Endpoint [$webappName] already exists..."
-}
-
 
 #####################################################################################################
 # Create the Logical SQL Server and Database
@@ -187,34 +130,6 @@ else {
 
     New-AzureRmSqlServerFirewallRule -ResourceGroupName $resourceGroupName `
         -ServerName $serverName -AllowAllAzureIPs -ea 0
-}
-
-#####################################################################################################
-# Create the database
-# https://docs.microsoft.com/en-us/powershell/module/azurerm.sql/new-azurermsqldatabase?view=azurermps-5.1.1
-# https://docs.microsoft.com/en-us/azure/sql-database/sql-database-service-tiers
-# https://docs.microsoft.com/en-us/azure/sql-database/sql-database-what-is-a-dtu
-# https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.sql.models.database.requestedserviceobjectivename?view=azure-dotnet
-
-if($CreateDatabase) {
-    $azureDatabase = Get-AzureRmSqlDatabase -ResourceGroupName $resourceGroupName `
-     -ServerName $serverName -DatabaseName $Database -ErrorAction SilentlyContinue
-
-    if ($azureDatabase) { 
-        Write-Host "Azure SQL Database $Database already exists..."
-    }
-    else {
-        Write-Host "Trying to create Azure SQL Database $Database at Server $serverName.."
-
-        New-AzureRmSqlDatabase  -ResourceGroupName $resourceGroupName `
-        -ServerName $serverName `
-        -DatabaseName $Database `
-        -RequestedServiceObjectiveName "Basic" `
-        -MaxSizeBytes 524288000
-
-        Write-Host "Azure SQL Database $Database successfully created..."
-
-    }
 }
 
 #####################################################################################################
@@ -277,12 +192,6 @@ $settings = @{
     "ServiceBus:Queue" = "orders";
     "ServiceBus:WriteAccessKeyName" = "write";
     "ServiceBus:WriteAccessKey" = "$writeAccessKey";
-    # You can add the follow as well, but they supposed to be same for
-    # all App Services and exist in the appsettings.json file
-    # "CDN:Endpoint" = "https://$PrimaryName-endpoint.azureedge.net";
-    # "DocumentDB:Endpoint" = "$PrimaryName-$cosmosDbPrefix";
-    # "DocumentDB:DatabaseId" = "$PrimaryName";
-    # "Storage:AccountName" = "$PrimaryName" + "storage";
 }
 
 $settings.Add("UseIdentity", $UseIdentity.ToString());
@@ -294,8 +203,9 @@ if($AzureIDClientSecret) {
 Write-Host "Setting App Settings for $webappName"
 $printSettings = ConvertTo-Json $settings -Depth 2
 $printSettings
-# Set-AzureWebsite $webappName -AppSettings $settings
-Set-AzureRmWebApp -ResourceGroupName "$resourceGroupName" -Name "$webappName" -AppSettings $settings
+Set-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `
+                      -Name "$webappName" -AppServicePlan "$appServicePlan" `
+                      -Slot "$slotName" -AppSettings $settings
 Write-Host "App Settings updated successfully..."
 
 
@@ -314,13 +224,14 @@ if($UseIdentity -and $IdentitySqlServerLogin -and $IdentitySqlServerPassword) {
 
 Write-Host "Setting Connection String for $webappName"
 # Save Connection String to Azure Web App
-$azureSlot = Set-AzureRmWebAppSlot -ResourceGroupName $resourceGroupName -Name $webappName -Slot production -ConnectionStrings $connString
+$newAzureSlot = Set-AzureRmWebAppSlot -ResourceGroupName $resourceGroupName -Name $webappName -Slot "$slotName" -ConnectionStrings $connString
 Write-Host "Connection String saved succeffully.."
 
 #####################################################################################################
 # Set Always-On property True - Required for continuous Web Jobs
 $WebAppPropertiesObject = @{"siteConfig" = @{"AlwaysOn" = $true}}
-$WebAppResourceType = 'microsoft.Web/sites'
-$webAppResource = Get-AzureRmResource -ResourceType $WebAppResourceType -ResourceGroupName $resourceGroupName -Name $webappName
-$webAppResource
+
+$azureSlot = Get-AzureRmWebAppSlot -ResourceGroupName "$resourceGroupName" `
+                      -Name "$webappName" -Slot "$slotName" `
+                      -ErrorAction SilentlyContinue
 Set-AzureRmResource -ResourceId $azureSlot.Id -PropertyObject $WebAppPropertiesObject -Force
