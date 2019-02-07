@@ -41,6 +41,7 @@ param (
     [Parameter(Mandatory = $true)] [string] $WebappResourceGroup,
     [Parameter(Mandatory = $true)] [string] $WebjobAppLocation,
     [Parameter(Mandatory = $true)] [string] $DeploymentDestinationFolder,
+    [Parameter(Mandatory = $true)] [string] $DotNetCoreVersion,
     [Parameter(Mandatory = $false)] [string] $slot
 )
 
@@ -84,7 +85,7 @@ Set-Content -Path $webjobAppSettingsLocation -Value $webjobAppSettings -Encoding
 dotnet publish "$WebjobAppLocation\Online.Store.WebJob.csproj" -c Release
 
 # Zip publish folder..
-$publishFolder = "$WebjobAppLocation\bin\Release\netcoreapp2.0\publish"
+$publishFolder = "$WebjobAppLocation\bin\Release\netcoreapp$DotNetCoreVersion\publish"
 $currentDateTime =  (Get-Date -Format s).Replace(":","-");
 $deploymentFolder = "$DeploymentDestinationFolder\$WebappResourceGroup-$currentDateTime";
 Write-Host "Deployment folder: $deploymentFolder";

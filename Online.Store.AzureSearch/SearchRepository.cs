@@ -29,7 +29,7 @@ namespace Online.Store.AzureSearch
         public async Task CreateOrUpdateIndexAsync<T>(string indexName, string suggesterName, List<string> suggesterFields)
         {
             List<Suggester> suggesters = new List<Suggester>();
-            suggesters.Add(new Suggester(suggesterName, SuggesterSearchMode.AnalyzingInfixMatching, suggesterFields));
+            suggesters.Add(new Suggester(suggesterName, suggesterFields));
             var definition = new Index()
             {
                 Name = indexName,

@@ -60,6 +60,7 @@ $primaryName = "primary-name-here"
                     -WebappResourceGroup "$primaryName-westeurope-app" `
                     -WebjobAppLocation "PATH-TO\planet-scale-azure\Online.Store.WebJob" `
                     -DeploymentDestinationFolder "PATH-TO-SOME-FOLDER-ON-YOUR-PC" `
+                    -DotNetCoreVersion "2.2" ` # in order to resolve the publish path
                     -slot "upgrade"
 
 
